@@ -1,10 +1,12 @@
 import type { Project } from "@/lib/projects";
 import { asset } from "@/lib/asset";
+import { BrowserFrame, domainOf } from "./BrowserFrame";
 import { ProjectMockup } from "./ProjectMockup";
 
 /**
- * Proje görseli. Ekran görüntüsü varsa onu, yoksa markanın diline sadık
- * kalan nötr bir yer tutucu gösterir.
+ * Proje görseli. Ekran görüntüsü varsa tarayıcı çerçevesi içinde,
+ * yoksa proje türüne göre üretilen arayüz çizimini gösterir.
+ * İki durumda da sunum aynı olduğu için kartlar birbiriyle uyumlu durur.
  */
 export function ProjectVisual({
   project,
@@ -17,15 +19,21 @@ export function ProjectVisual({
 }) {
   if (project.image) {
     return (
-      // eslint-disable-next-line @next/next/no-img-element
-      <img
-        src={asset(project.image)}
-        alt={`${project.title} ekran görüntüsü`}
-        loading="lazy"
-        className={`h-full w-full object-cover ${
-          zoomOnHover ? "transition duration-700 group-hover:scale-105" : ""
-        } ${className}`}
-      />
+      <div className={`h-full w-full ${className}`}>
+        <BrowserFrame label={domainOf(project.url)}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={asset(project.image)}
+            alt={`${project.title} ekran görüntüsü`}
+            loading="lazy"
+            className={`h-full w-full object-cover object-top ${
+              zoomOnHover
+                ? "transition-transform duration-700 group-hover:scale-[1.03]"
+                : ""
+            }`}
+          />
+        </BrowserFrame>
+      </div>
     );
   }
 

@@ -1,4 +1,5 @@
 import type { Project } from "@/lib/projects";
+import { BrowserFrame, domainOf } from "./BrowserFrame";
 
 /**
  * Proje ekran görüntüsü yoksa, proje türüne göre stilize bir arayüz
@@ -10,30 +11,25 @@ export function ProjectMockup({ project }: { project: Project }) {
     .split("")
     .reduce((a, c) => a + c.charCodeAt(0), 0);
 
-  if (project.type === "Kişiye Özel Yazılım") return <DashboardMock seed={seed} />;
+  // Mobil tasarım maketi çerçevesiz gösterilir (telefon + palet düzeni)
   if (project.type === "Web Tasarım") return <MobileMock seed={seed} />;
-  return <SiteMock seed={seed} />;
+
+  return (
+    <BrowserFrame label={domainOf(project.url)}>
+      <div className="h-full w-full p-[4%]">
+        {project.type === "Kişiye Özel Yazılım" ? (
+          <DashboardMock seed={seed} />
+        ) : (
+          <SiteMock seed={seed} />
+        )}
+      </div>
+    </BrowserFrame>
+  );
 }
 
 const bar = "rounded-full bg-ink/15";
 const barSoft = "rounded-full bg-ink/[0.08]";
 const block = "rounded-sm bg-ink/[0.06]";
-
-function Chrome({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex h-full w-full flex-col bg-paper-2 p-[5%]">
-      <div className="flex items-center gap-1.5 pb-[3.5%]">
-        <span className="h-1.5 w-1.5 rounded-full bg-ink/20" />
-        <span className="h-1.5 w-1.5 rounded-full bg-ink/15" />
-        <span className="h-1.5 w-1.5 rounded-full bg-ink/10" />
-        <span className="ml-2 h-2.5 flex-1 rounded-full bg-white" />
-      </div>
-      <div className="min-h-0 flex-1 overflow-hidden rounded-sm bg-white p-[4%]">
-        {children}
-      </div>
-    </div>
-  );
-}
 
 function TopNav({ accentRight = true }: { accentRight?: boolean }) {
   return (
@@ -58,8 +54,7 @@ function SiteMock({ seed }: { seed: number }) {
   const variant = seed % 3;
 
   return (
-    <Chrome>
-      <div className="flex h-full flex-col gap-[4%]">
+    <div className="flex h-full flex-col gap-[4%]">
         <TopNav accentRight={variant !== 1} />
 
         {variant === 0 && (
@@ -119,7 +114,6 @@ function SiteMock({ seed }: { seed: number }) {
           </>
         )}
       </div>
-    </Chrome>
   );
 }
 
@@ -130,7 +124,6 @@ function DashboardMock({ seed }: { seed: number }) {
   const hot = seed % heights.length;
 
   return (
-    <Chrome>
       <div className="flex h-full gap-[3.5%]">
         {/* kenar menü */}
         <div className="flex w-[20%] flex-col gap-1.5">
@@ -188,7 +181,6 @@ function DashboardMock({ seed }: { seed: number }) {
           </div>
         </div>
       </div>
-    </Chrome>
   );
 }
 
