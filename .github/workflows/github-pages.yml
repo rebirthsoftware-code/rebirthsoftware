@@ -14,10 +14,11 @@ name: GitHub Pages
 
 on:
   push:
-    # Deponun varsayılan dalı 'claude/website-review-fztdup'. GitHub Pages
-    # ortamı yalnızca varsayılan daldan yayına izin verdiği için ikisi de
-    # dinleniyor; varsayılan dal ileride main yapılırsa bu satır sadeleşir.
-    branches: [main, claude/website-review-fztdup]
+    # SADECE varsayılan dal. GitHub Pages ortamı yalnızca varsayılan daldan
+    # yayına izin verir; başka bir dal eklenirse aşağıdaki concurrency kuralı
+    # yayını yapacak işi iptal edip başarısız olanı bırakabiliyor.
+    # Varsayılan dal main yapılırsa burayı [main] olarak değiştirin.
+    branches: [claude/website-review-fztdup]
   workflow_dispatch:
 
 permissions:

@@ -56,9 +56,12 @@ Adres: `https://rebirthsoftware-code.github.io/rebirthsoftware/`
 > bu yaptı. GitHub Pages ortamı **yalnızca varsayılan daldan** yayına izin
 > verir; bu yüzden `main`'e yapılan push'ların yayın adımı sessizce
 > reddedilir. İş akışı şimdilik iki dalı da dinliyor.
+> İş akışı bu yüzden **yalnızca varsayılan dalı** dinliyor. İki dal birden
+> dinlenirse, aynı anda gelen iki push'ta `concurrency` kuralı yayını yapacak
+> işi iptal edip ortam kısıtına takılanı bırakabiliyor.
+>
 > Kalıcı çözüm: **Settings → General → Default branch** üzerinden varsayılan
-> dalı `main` yapın, sonra iş akışındaki `branches:` satırını sadece
-> `[main]` bırakın.
+> dalı `main` yapın, sonra iş akışındaki `branches:` satırını `[main]` yapın.
 
 İş akışının durumunu repo sayfasındaki **Actions** sekmesinden izleyebilirsiniz.
 İlk yayın 1-2 dakika sürer.
