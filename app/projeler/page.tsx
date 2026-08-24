@@ -8,7 +8,7 @@ import { projects, projectTypes } from "@/lib/projects";
 export const metadata: Metadata = {
   title: "Referanslar",
   description:
-    "Tamamladığımız kurumsal web sitesi ve kişiye özel yazılım projeleri: sorun, çözüm ve elde edilen sonuçlar.",
+ "Tamamladığımız kurumsal web sitesi ve kişiye özel yazılım projeleri: sorun, çözüm ve elde edilen sonuçlar.",
   alternates: { canonical: "/projeler" },
 };
 
@@ -27,7 +27,7 @@ export default function ProjectsPage() {
             {projectTypes.map((t) => (
               <span
                 key={t}
-                className="rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-xs text-ink-300"
+                className="rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-xs text-carbon-300"
               >
                 {t}
               </span>

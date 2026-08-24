@@ -1,3 +1,4 @@
+import { Reveal, RevealLines } from "./motion";
 import { Container, Eyebrow } from "./ui";
 
 export function PageHero({
@@ -12,22 +13,32 @@ export function PageHero({
   children?: React.ReactNode;
 }) {
   return (
-    <section className="relative overflow-hidden border-b border-white/10">
-      <div className="bg-aurora pointer-events-none absolute inset-0" />
-      <div className="bg-grid pointer-events-none absolute inset-0" />
+    <section className="noise relative overflow-hidden border-b border-white/10 pt-36 pb-16 sm:pt-44 sm:pb-24">
       <Container className="relative">
-        <div className="animate-rise max-w-3xl py-16 sm:py-20">
-          {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
-          <h1 className="mt-5 text-3xl leading-tight font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl">
-            {title}
-          </h1>
-          {description ? (
-            <p className="mt-5 text-lg leading-relaxed text-ink-300">
-              {description}
-            </p>
-          ) : null}
-          {children ? <div className="mt-8">{children}</div> : null}
-        </div>
+        {eyebrow ? (
+          <Reveal>
+            <Eyebrow>{eyebrow}</Eyebrow>
+          </Reveal>
+        ) : null}
+
+        <RevealLines
+          className="headline mt-7 max-w-4xl text-carbon-50"
+          lines={[title]}
+          delay={100}
+        />
+
+        {description ? (
+          <Reveal delay={300}>
+            <div className="mt-8 flex max-w-2xl gap-5">
+              <span className="mt-3 h-px w-12 shrink-0 bg-flame-500" />
+              <p className="text-[17px] leading-relaxed text-carbon-300">
+                {description}
+              </p>
+            </div>
+          </Reveal>
+        ) : null}
+
+        {children ? <Reveal delay={420}><div className="mt-10">{children}</div></Reveal> : null}
       </Container>
     </section>
   );

@@ -9,7 +9,7 @@ import { site, whatsappLink } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Ücretsiz Teklif Al",
   description:
-    "Projenizi anlatın; kapsam, süre ve sabit fiyat teklifini 1 iş günü içinde gönderelim. Bağlayıcılığı yoktur.",
+ "Projenizi anlatın; kapsam, süre ve sabit fiyat teklifini 1 iş günü içinde gönderelim. Bağlayıcılığı yoktur.",
   alternates: { canonical: "/teklif-al" },
 };
 
@@ -38,13 +38,13 @@ export default function QuotePage() {
                 </h2>
                 <ol className="mt-5 space-y-4">
                   {[
-                    "Formu gönderiyorsunuz, aynı gün içinde ulaşıyoruz.",
-                    "15-20 dakikalık kısa bir görüşmede ihtiyacı netleştiriyoruz.",
-                    "Kapsam, süre ve sabit fiyatı içeren teklifi yazılı gönderiyoruz.",
-                    "Uygun bulursanız sözleşmeyle başlıyoruz; bulmazsanız hiçbir yükümlülüğünüz olmuyor.",
+ "Formu gönderiyorsunuz, aynı gün içinde ulaşıyoruz.",
+ "15-20 dakikalık kısa bir görüşmede ihtiyacı netleştiriyoruz.",
+ "Kapsam, süre ve sabit fiyatı içeren teklifi yazılı gönderiyoruz.",
+ "Uygun bulursanız sözleşmeyle başlıyoruz; bulmazsanız hiçbir yükümlülüğünüz olmuyor.",
                   ].map((t, i) => (
-                    <li key={t} className="flex gap-3 text-sm text-ink-300">
-                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-500/15 text-xs font-semibold text-brand-300">
+                    <li key={t} className="flex gap-3 text-sm text-carbon-300">
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-flame-500/15 text-xs font-semibold text-flame-500">
                         {i + 1}
                       </span>
                       <span className="leading-relaxed">{t}</span>
@@ -62,7 +62,7 @@ export default function QuotePage() {
                     href={site.phoneHref}
                     className="flex items-center gap-3 rounded-xl border border-white/10 px-4 py-3 text-sm text-white transition hover:bg-white/5"
                   >
-                    <Icon name="phone" className="h-4 w-4 text-brand-400" />
+                    <Icon name="phone" className="h-4 w-4 text-flame-500" />
                     {site.phone}
                   </a>
                   <a
@@ -71,14 +71,14 @@ export default function QuotePage() {
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 rounded-xl border border-white/10 px-4 py-3 text-sm text-white transition hover:bg-white/5"
                   >
-                    <Icon name="whatsapp" className="h-4 w-4 text-accent-400" />
+                    <Icon name="whatsapp" className="h-4 w-4 text-flame-500" />
                     WhatsApp&apos;tan yaz
                   </a>
                   <a
                     href={`mailto:${site.email}`}
                     className="flex items-center gap-3 rounded-xl border border-white/10 px-4 py-3 text-sm text-white transition hover:bg-white/5"
                   >
-                    <Icon name="mail" className="h-4 w-4 text-brand-400" />
+                    <Icon name="mail" className="h-4 w-4 text-flame-500" />
                     {site.email}
                   </a>
                 </div>

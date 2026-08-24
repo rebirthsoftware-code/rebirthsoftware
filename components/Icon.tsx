@@ -48,6 +48,18 @@ const paths: Record<string, React.ReactNode> = {
     </>
   ),
   check: <path d="m4 12 5 5L20 6" />,
+  arrowUpRight: (
+    <>
+      <path d="M7 17 17 7" />
+      <path d="M9 7h8v8" />
+    </>
+  ),
+  arrowDown: (
+    <>
+      <path d="M12 5v14" />
+      <path d="m5 12 7 7 7-7" />
+    </>
+  ),
   arrow: (
     <>
       <path d="M5 12h14" />

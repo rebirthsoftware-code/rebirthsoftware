@@ -7,11 +7,11 @@ import { whatsappLink } from "@/lib/site";
 import { Icon } from "./Icon";
 
 const budgets = [
-  "Henüz netleşmedi",
-  "15.000 ₺ - 30.000 ₺",
-  "30.000 ₺ - 60.000 ₺",
-  "60.000 ₺ - 120.000 ₺",
-  "120.000 ₺ ve üzeri",
+ "Henüz netleşmedi",
+ "15.000 ₺ - 30.000 ₺",
+ "30.000 ₺ - 60.000 ₺",
+ "60.000 ₺ - 120.000 ₺",
+ "120.000 ₺ ve üzeri",
 ];
 
 type Status = "idle" | "loading" | "success" | "error";
@@ -64,7 +64,7 @@ export function ContactForm({
         localErrors.email = "Geçerli bir e-posta adresi girin.";
       if (payload.message.trim().length < 10)
         localErrors.message =
-          "Projenizi birkaç cümleyle anlatın (en az 10 karakter).";
+ "Projenizi birkaç cümleyle anlatın (en az 10 karakter).";
       if (!payload.consent)
         localErrors.consent = "Devam etmek için onay vermelisiniz.";
 
@@ -75,14 +75,14 @@ export function ContactForm({
       }
 
       const text = [
-        "Merhaba, teklif talebim:",
+ "Merhaba, teklif talebim:",
         `Ad Soyad: ${payload.name}`,
         payload.company ? `Firma: ${payload.company}` : null,
         `E-posta: ${payload.email}`,
         payload.phone ? `Telefon: ${payload.phone}` : null,
         payload.service ? `Hizmet: ${payload.service}` : null,
         payload.budget ? `Bütçe: ${payload.budget}` : null,
-        "",
+ "",
         payload.message,
       ]
         .filter(Boolean)
@@ -121,13 +121,13 @@ export function ContactForm({
   if (status === "success") {
     return (
       <div className="card p-8 text-center">
-        <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-accent-500/15 text-accent-400">
+        <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-flame-500/15 text-flame-500">
           <Icon name="check" className="h-7 w-7" />
         </span>
         <h3 className="mt-5 text-xl font-semibold text-white">
           {isStaticExport ? "WhatsApp'a yönlendirildiniz" : "Talebiniz bize ulaştı"}
         </h3>
-        <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-ink-300">
+        <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-carbon-300">
           {isStaticExport
             ? "Bilgileriniz hazır bir mesaja dönüştürüldü. WhatsApp penceresi açılmadıysa aşağıdaki butonu kullanabilirsiniz."
             : "En geç 1 iş günü içinde size dönüş yapacağız. Daha hızlı ilerlemek isterseniz WhatsApp'tan da yazabilirsiniz."}
@@ -138,13 +138,13 @@ export function ContactForm({
           rel="noopener noreferrer"
           className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
         >
-          <Icon name="whatsapp" className="h-4 w-4 text-accent-400" />
+          <Icon name="whatsapp" className="h-4 w-4 text-flame-500" />
           WhatsApp&apos;tan yaz
         </a>
         <button
           type="button"
           onClick={() => setStatus("idle")}
-          className="mt-4 block w-full text-xs text-ink-500 underline-offset-4 hover:underline"
+          className="mt-4 block w-full text-xs text-carbon-500 underline-offset-4 hover:underline"
         >
           Yeni bir talep gönder
         </button>
@@ -239,15 +239,15 @@ export function ContactForm({
         </label>
       </div>
 
-      <label className="mt-5 flex cursor-pointer items-start gap-3 text-xs leading-relaxed text-ink-400">
+      <label className="mt-5 flex cursor-pointer items-start gap-3 text-xs leading-relaxed text-carbon-400">
         <input
           type="checkbox"
           name="consent"
           required
-          className="mt-0.5 h-4 w-4 shrink-0 rounded border-white/20 bg-white/5 accent-brand-500"
+          className="mt-0.5 h-4 w-4 shrink-0 rounded border-white/20 bg-white/5 accent-flame-500"
         />
         <span>
-          <a href="/kvkk" className="text-brand-300 underline-offset-2 hover:underline">
+          <a href="/kvkk" className="text-flame-500 underline-offset-2 hover:underline">
             KVKK Aydınlatma Metni
           </a>
           &apos;ni okudum; bilgilerimin teklif süreci için işlenmesini kabul
@@ -268,14 +268,14 @@ export function ContactForm({
       <button
         type="submit"
         disabled={status === "loading"}
-        className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand-500 px-6 py-3.5 text-sm font-semibold text-white shadow-glow transition hover:bg-brand-400 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+        className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-flame-500 px-6 py-3.5 text-sm font-semibold text-white  transition hover:bg-flame-500 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
       >
         {status === "loading" ? "Gönderiliyor…" : "Teklif Talebi Gönder"}
         {status === "loading" ? null : (
           <Icon name="arrow" className="h-4 w-4" />
         )}
       </button>
-      <p className="mt-3 text-xs text-ink-500">
+      <p className="mt-3 text-xs text-carbon-500">
         {isStaticExport
           ? "Bu önizleme sürümünde form, doldurduğunuz bilgileri WhatsApp mesajına dönüştürür."
           : "Bilgileriniz üçüncü kişilerle paylaşılmaz. Genellikle 1 iş günü içinde dönüş yapıyoruz."}
@@ -285,7 +285,7 @@ export function ContactForm({
 }
 
 const inputCls =
-  "w-full rounded-xl border border-white/10 bg-ink-900/70 px-4 py-3 text-sm text-white placeholder:text-ink-500 transition outline-none focus:border-brand-400/70 focus:ring-2 focus:ring-brand-500/25";
+ "w-full rounded-xl border border-white/10 bg-carbon-900/70 px-4 py-3 text-sm text-white placeholder:text-carbon-500 transition outline-none focus:border-flame-500/70 focus:ring-2 focus:ring-flame-500/25";
 
 function Field({
   label,
@@ -298,7 +298,7 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="mb-2 block text-xs font-medium tracking-wide text-ink-300 uppercase">
+      <span className="mb-2 block text-xs font-medium tracking-wide text-carbon-300 uppercase">
         {label}
       </span>
       {children}

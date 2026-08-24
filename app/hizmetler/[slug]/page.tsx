@@ -41,8 +41,8 @@ export default async function ServiceDetailPage({
   const others = services.filter((s) => s.slug !== service.slug).slice(0, 3);
 
   const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Service",
+ "@context": "https://schema.org",
+ "@type": "Service",
     name: service.title,
     description: service.short,
     provider: { "@type": "Organization", name: site.name, url: site.url },
@@ -67,7 +67,7 @@ export default async function ServiceDetailPage({
         <Container>
           <div className="grid gap-12 lg:grid-cols-12">
             <div className="lg:col-span-7">
-              <p className="prose-tr text-base leading-relaxed text-ink-200">
+              <p className="prose-tr text-base leading-relaxed text-carbon-200">
                 {service.description}
               </p>
 
@@ -106,7 +106,7 @@ export default async function ServiceDetailPage({
                 <h3 className="text-base font-semibold text-white">
                   Fiyat ve süre öğrenin
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-ink-400">
+                <p className="mt-2 text-sm leading-relaxed text-carbon-400">
                   15 dakikalık kısa bir görüşme, ihtiyacınızı netleştirmeye
                   yetiyor. Görüşme sonrası kalem kalem, sabit fiyatlı teklifi
                   yazılı olarak gönderiyoruz.
@@ -119,13 +119,13 @@ export default async function ServiceDetailPage({
                     href={site.phoneHref}
                     className="flex items-center justify-center gap-2 rounded-full border border-white/15 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/5"
                   >
-                    <Icon name="phone" className="h-4 w-4 text-brand-400" />
+                    <Icon name="phone" className="h-4 w-4 text-flame-500" />
                     {site.phone}
                   </a>
                 </div>
 
                 <div className="mt-7 border-t border-white/10 pt-5">
-                  <h4 className="text-xs font-semibold tracking-wide text-ink-400 uppercase">
+                  <h4 className="text-xs font-semibold tracking-wide text-carbon-400 uppercase">
                     Diğer hizmetler
                   </h4>
                   <ul className="mt-3 space-y-2">
@@ -133,7 +133,7 @@ export default async function ServiceDetailPage({
                       <li key={o.slug}>
                         <Link
                           href={`/hizmetler/${o.slug}`}
-                          className="flex items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-sm text-ink-300 transition hover:bg-white/5 hover:text-white"
+                          className="flex items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-sm text-carbon-300 transition hover:bg-white/5 hover:text-white"
                         >
                           {o.title}
                           <Icon name="arrow" className="h-4 w-4 shrink-0" />

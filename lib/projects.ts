@@ -13,8 +13,9 @@ export type Project = {
   url?: string;
   /** Görsel: /public/projeler klasörüne ekle, örn "/projeler/ornek.jpg" */
   image?: string;
-  /** Kart arka planı için degrade renkleri */
-  gradient: [string, string];
+  /** İsteğe bağlı: görsel yokken kart arka planına degrade uygular.
+   *  Boş bırakılırsa nötr koyu bir yer tutucu kullanılır (önerilen). */
+  gradient?: [string, string];
   featured?: boolean;
 };
 
@@ -44,7 +45,6 @@ export const projects: Project[] = [
       "İngilizce sayfalar üzerinden ilk yurt dışı siparişi alındı",
     ],
     stack: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel"],
-    gradient: ["#0ea5e9", "#4338ca"],
     featured: true,
   },
   {
@@ -65,7 +65,6 @@ export const projects: Project[] = [
       "Randevu formu üzerinden düzenli ilk görüşme talepleri",
     ],
     stack: ["Next.js", "MDX Blog", "Tailwind CSS"],
-    gradient: ["#334155", "#0f766e"],
     featured: true,
   },
   {
@@ -87,7 +86,6 @@ export const projects: Project[] = [
       "Aylık raporlama işi 2 günden 5 dakikaya indi",
     ],
     stack: ["Next.js", "PostgreSQL", "Prisma", "Rol bazlı yetkilendirme"],
-    gradient: ["#7c3aed", "#db2777"],
     featured: true,
   },
   {
@@ -108,7 +106,6 @@ export const projects: Project[] = [
       "Gelmeyen hasta oranı hatırlatmalarla belirgin şekilde azaldı",
     ],
     stack: ["Next.js", "PostgreSQL", "E-posta bildirimleri"],
-    gradient: ["#059669", "#0891b2"],
   },
   {
     slug: "kuzey-insaat",
@@ -128,7 +125,6 @@ export const projects: Project[] = [
       "Proje sayfaları üzerinden düzenli iletişim formu girişi",
     ],
     stack: ["Next.js", "Tailwind CSS", "Görsel optimizasyonu"],
-    gradient: ["#b45309", "#78350f"],
   },
   {
     slug: "form-tasarim-yenileme",
@@ -148,7 +144,6 @@ export const projects: Project[] = [
       "Sayfada kalma süresi arttı",
     ],
     stack: ["UI/UX", "Tasarım sistemi", "Responsive düzen"],
-    gradient: ["#e11d48", "#7c2d12"],
   },
 ];
 

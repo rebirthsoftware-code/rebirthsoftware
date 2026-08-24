@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { CtaSection } from "@/components/CtaSection";
 import { Icon } from "@/components/Icon";
 import { ProjectCard } from "@/components/ProjectCard";
+import { ProjectVisual } from "@/components/ProjectVisual";
 import { Button, CheckItem, Container } from "@/components/ui";
 import { getProject, projects } from "@/lib/projects";
 
@@ -41,12 +42,12 @@ export default async function ProjectDetailPage({
   return (
     <>
       <section className="relative overflow-hidden border-b border-white/10">
-        <div className="bg-aurora pointer-events-none absolute inset-0" />
+        <div className="" />
         <Container className="relative">
           <div className="py-14 sm:py-16">
             <Link
               href="/projeler"
-              className="inline-flex items-center gap-1.5 text-sm text-ink-400 transition hover:text-white"
+              className="inline-flex items-center gap-1.5 text-sm text-carbon-400 transition hover:text-white"
             >
               <Icon name="arrow" className="h-4 w-4 rotate-180" />
               Tüm projeler
@@ -55,20 +56,20 @@ export default async function ProjectDetailPage({
             <div className="mt-6 grid items-start gap-10 lg:grid-cols-12">
               <div className="lg:col-span-7">
                 <div className="flex flex-wrap items-center gap-2 text-xs">
-                  <span className="rounded-full bg-brand-500/15 px-3 py-1 font-medium text-brand-300">
+                  <span className="rounded-full bg-flame-500/15 px-3 py-1 font-medium text-flame-500">
                     {project.type}
                   </span>
-                  <span className="rounded-full border border-white/10 px-3 py-1 text-ink-300">
+                  <span className="rounded-full border border-white/10 px-3 py-1 text-carbon-300">
                     {project.sector}
                   </span>
-                  <span className="rounded-full border border-white/10 px-3 py-1 text-ink-300">
+                  <span className="rounded-full border border-white/10 px-3 py-1 text-carbon-300">
                     {project.year}
                   </span>
                 </div>
                 <h1 className="mt-5 text-3xl leading-tight font-semibold tracking-tight text-white sm:text-4xl">
                   {project.title}
                 </h1>
-                <p className="mt-4 text-lg leading-relaxed text-ink-300">
+                <p className="mt-4 text-lg leading-relaxed text-carbon-300">
                   {project.summary}
                 </p>
                 {project.url ? (
@@ -76,7 +77,7 @@ export default async function ProjectDetailPage({
                     href={project.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand-300 hover:text-brand-200"
+                    className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-flame-500 hover:text-flame-400"
                   >
                     <Icon name="globe" className="h-4 w-4" />
                     Siteyi ziyaret et
@@ -85,26 +86,8 @@ export default async function ProjectDetailPage({
               </div>
 
               <div className="lg:col-span-5">
-                <div
-                  className="aspect-16/10 overflow-hidden rounded-2xl border border-white/10"
-                  style={{
-                    backgroundImage: `linear-gradient(135deg, ${project.gradient[0]}, ${project.gradient[1]})`,
-                  }}
-                >
-                  {project.image ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={project.image}
-                      alt={`${project.title} ekran görüntüsü`}
-                      className="h-full w-full object-cover"
-                    />
-                  ) : (
-                    <div className="flex h-full items-end p-6">
-                      <span className="text-2xl font-semibold text-white/85">
-                        {project.client}
-                      </span>
-                    </div>
-                  )}
+                <div className="aspect-16/10 overflow-hidden rounded-sm border border-white/10">
+                  <ProjectVisual project={project} />
                 </div>
               </div>
             </div>
@@ -137,14 +120,14 @@ export default async function ProjectDetailPage({
                 <Meta label="Yıl" value={project.year} />
 
                 <div className="mt-5 border-t border-white/10 pt-5">
-                  <h3 className="text-xs font-semibold tracking-wide text-ink-400 uppercase">
+                  <h3 className="text-xs font-semibold tracking-wide text-carbon-400 uppercase">
                     Kullanılan teknolojiler
                   </h3>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {project.stack.map((s) => (
                       <span
                         key={s}
-                        className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs text-ink-200"
+                        className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs text-carbon-200"
                       >
                         {s}
                       </span>
@@ -181,7 +164,7 @@ function Block({ title, text }: { title: string; text: string }) {
   return (
     <div className="mt-10 first:mt-0">
       <h2 className="text-xl font-semibold text-white">{title}</h2>
-      <p className="prose-tr mt-4 text-base leading-relaxed text-ink-200">
+      <p className="prose-tr mt-4 text-base leading-relaxed text-carbon-200">
         {text}
       </p>
     </div>
@@ -191,7 +174,7 @@ function Block({ title, text }: { title: string; text: string }) {
 function Meta({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-baseline justify-between gap-4 border-b border-white/5 py-2.5 last:border-0">
-      <span className="text-xs text-ink-500">{label}</span>
+      <span className="text-xs text-carbon-500">{label}</span>
       <span className="text-right text-sm font-medium text-white">{value}</span>
     </div>
   );

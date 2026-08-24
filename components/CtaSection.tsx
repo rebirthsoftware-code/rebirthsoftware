@@ -1,50 +1,70 @@
+import Link from "next/link";
 import { site, whatsappLink } from "@/lib/site";
 import { Icon } from "./Icon";
+import { Reveal, RevealLines, RotatingBadge } from "./motion";
 import { Button, Container } from "./ui";
 
 export function CtaSection({
-  title = "Projenizi konuşalım",
+  title = "Hadi başlayalım",
   description = "Ne yapmak istediğinizi anlatın; size uygun kapsamı, süreyi ve bütçeyi ücretsiz olarak çıkaralım. Anlaşma zorunluluğu yok.",
 }: {
   title?: string;
   description?: string;
 }) {
+  const [first, ...rest] = title.split(" ");
+
   return (
-    <section className="py-20 sm:py-24">
-      <Container>
-        <div className="card relative overflow-hidden p-8 text-center sm:p-14">
-          <div className="bg-aurora pointer-events-none absolute inset-0 opacity-70" />
-          <div className="relative">
-            <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-              {title}
-            </h2>
-            <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-ink-300">
-              {description}
-            </p>
-            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Button href="/teklif-al">
-                Ücretsiz Teklif Al
-                <Icon name="arrow" className="h-4 w-4" />
-              </Button>
-              <Button
-                href={whatsappLink("Merhaba, projem hakkında görüşebilir miyiz?")}
-                variant="outline"
-                external
-              >
-                <Icon name="whatsapp" className="h-4 w-4 text-accent-400" />
-                WhatsApp&apos;tan yaz
-              </Button>
-            </div>
-            <p className="mt-6 text-sm text-ink-400">
-              Ya da doğrudan arayın:{" "}
-              <a
-                href={site.phoneHref}
-                className="font-semibold text-white hover:text-brand-300"
-              >
-                {site.phone}
-              </a>
-            </p>
+    <section className="noise relative overflow-hidden border-t border-white/10 py-28 sm:py-40">
+      <Container className="relative">
+        <div className="flex flex-col items-start justify-between gap-14 lg:flex-row lg:items-center">
+          <div className="max-w-3xl">
+            <RevealLines
+              className="display text-carbon-50"
+              lines={[
+                <>
+                  {first}{" "}
+                  <span className="text-flame-500">{rest.join(" ")}</span>
+                </>,
+              ]}
+            />
+            <Reveal delay={220}>
+              <p className="mt-8 max-w-xl text-[17px] leading-relaxed text-carbon-300">
+                {description}
+              </p>
+              <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+                <Button href="/teklif-al">
+                  Ücretsiz teklif al
+                  <Icon
+                    name="arrowUpRight"
+                    className="h-4 w-4 transition-transform duration-500 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5"
+                  />
+                </Button>
+                <Button
+                  href={whatsappLink("Merhaba, projem hakkında görüşebilir miyiz?")}
+                  variant="outline"
+                  external
+                >
+                  <Icon name="whatsapp" className="h-4 w-4" />
+                  WhatsApp&apos;tan yaz
+                </Button>
+              </div>
+              <p className="mt-8 text-sm text-carbon-400">
+                Ya da doğrudan arayın:{" "}
+                <a
+                  href={site.phoneHref}
+                  className="link-underline font-semibold text-carbon-50"
+                >
+                  {site.phone}
+                </a>
+              </p>
+            </Reveal>
           </div>
+
+          <Reveal delay={340}>
+            <Link href="/teklif-al" className="group block">
+              <RotatingBadge text="TEKLİF ALIN · ÜCRETSİZ GÖRÜŞME · " />
+            </Link>
+          </Reveal>
         </div>
       </Container>
     </section>

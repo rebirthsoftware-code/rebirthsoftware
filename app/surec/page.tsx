@@ -8,16 +8,16 @@ import { processSteps } from "@/lib/process";
 export const metadata: Metadata = {
   title: "Nasıl Çalışıyoruz",
   description:
-    "Keşiften teslime kadar proje sürecimiz: analiz, tasarım, geliştirme, yayın ve destek adımları.",
+ "Keşiften teslime kadar proje sürecimiz: analiz, tasarım, geliştirme, yayın ve destek adımları.",
   alternates: { canonical: "/surec" },
 };
 
 const promises = [
-  "Teklifte yazan fiyat, teslimde de aynı fiyattır.",
-  "Tasarım onayınız olmadan kodlamaya geçmeyiz.",
-  "Her aşamada canlı bir test bağlantısından ilerlemeyi görürsünüz.",
-  "Alan adı, hosting ve kaynak kod sizin adınıza kaydedilir.",
-  "Teslim sonrası ilk ay tüm küçük düzeltmeler ücretsizdir.",
+ "Teklifte yazan fiyat, teslimde de aynı fiyattır.",
+ "Tasarım onayınız olmadan kodlamaya geçmeyiz.",
+ "Her aşamada canlı bir test bağlantısından ilerlemeyi görürsünüz.",
+ "Alan adı, hosting ve kaynak kod sizin adınıza kaydedilir.",
+ "Teslim sonrası ilk ay tüm küçük düzeltmeler ücretsizdir.",
 ];
 
 export default function ProcessPage() {
@@ -34,28 +34,28 @@ export default function ProcessPage() {
           <ol className="relative space-y-6 border-l border-white/10 pl-6 sm:pl-10">
             {processSteps.map((s) => (
               <li key={s.step} className="relative">
-                <span className="absolute top-6 -left-[1.85rem] flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-ink-950 text-brand-300 sm:-left-[3.1rem]">
+                <span className="absolute top-6 -left-[1.85rem] flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-carbon-950 text-flame-500 sm:-left-[3.1rem]">
                   <Icon name={s.icon} className="h-4 w-4" />
                 </span>
                 <div className="card p-6 sm:p-7">
                   <div className="flex flex-wrap items-center gap-3">
-                    <span className="text-xs font-semibold tracking-widest text-ink-500">
+                    <span className="text-xs font-semibold tracking-widest text-carbon-500">
                       ADIM {s.step}
                     </span>
-                    <span className="rounded-full bg-accent-500/12 px-2.5 py-1 text-xs font-medium text-accent-400">
+                    <span className="rounded-full bg-flame-500/12 px-2.5 py-1 text-xs font-medium text-flame-500">
                       {s.duration}
                     </span>
                   </div>
                   <h2 className="mt-3 text-xl font-semibold text-white">
                     {s.title}
                   </h2>
-                  <p className="mt-3 text-sm leading-relaxed text-ink-300">
+                  <p className="mt-3 text-sm leading-relaxed text-carbon-300">
                     {s.text}
                   </p>
-                  <p className="mt-4 flex items-start gap-2 rounded-xl bg-white/5 px-4 py-3 text-sm text-ink-200">
+                  <p className="mt-4 flex items-start gap-2 rounded-xl bg-white/5 px-4 py-3 text-sm text-carbon-200">
                     <Icon
                       name="check"
-                      className="mt-0.5 h-4 w-4 shrink-0 text-accent-400"
+                      className="mt-0.5 h-4 w-4 shrink-0 text-flame-500"
                     />
                     <span>
                       <strong className="font-medium text-white">

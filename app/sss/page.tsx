@@ -9,7 +9,7 @@ import { services } from "@/lib/services";
 export const metadata: Metadata = {
   title: "Sık Sorulan Sorular",
   description:
-    "Web sitesi fiyatları, teslim süresi, alan adı ve hosting, bakım ve ödeme koşulları hakkında merak edilenler.",
+ "Web sitesi fiyatları, teslim süresi, alan adı ve hosting, bakım ve ödeme koşulları hakkında merak edilenler.",
   alternates: { canonical: "/sss" },
 };
 
@@ -19,10 +19,10 @@ const all = [
 ] as { q: string; a: string }[];
 
 const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
+ "@context": "https://schema.org",
+ "@type": "FAQPage",
   mainEntity: all.map((f) => ({
-    "@type": "Question",
+ "@type": "Question",
     name: f.q,
     acceptedAnswer: { "@type": "Answer", text: f.a },
   })),

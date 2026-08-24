@@ -18,7 +18,7 @@ export default function OpengraphImage() {
           justifyContent: "center",
           padding: "80px",
           background:
-            "linear-gradient(135deg, #0a0d1a 0%, #131829 55%, #1b2450 100%)",
+ "linear-gradient(140deg, #0e0e0d 0%, #1a1a18 60%, #232320 100%)",
           color: "white",
           fontFamily: "sans-serif",
         }}
@@ -29,7 +29,7 @@ export default function OpengraphImage() {
             alignItems: "center",
             gap: 16,
             fontSize: 30,
-            color: "#6b93ff",
+            color: "#ff4b2b",
             fontWeight: 600,
           }}
         >
@@ -38,7 +38,7 @@ export default function OpengraphImage() {
               width: 14,
               height: 14,
               borderRadius: 999,
-              background: "#34e0d0",
+              background: "#ff4b2b",
             }}
           />
           Rebirth Software
@@ -52,13 +52,13 @@ export default function OpengraphImage() {
             maxWidth: 940,
           }}
         >
-          Kurumsal web siteleri ve kişiye özel yazılım
+          İşinizi anlatan dijital yüzünüzü kuruyoruz
         </div>
         <div
           style={{
             marginTop: 28,
             fontSize: 30,
-            color: "#b0b8d1",
+            color: "#918f87",
             maxWidth: 900,
           }}
         >

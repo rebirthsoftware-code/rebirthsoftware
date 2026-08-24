@@ -9,7 +9,7 @@ import { site } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Hakkımızda",
   description:
-    "Rebirth Software; kurumsal web siteleri ve kişiye özel web yazılımları geliştiren bir yazılım stüdyosudur.",
+ "Rebirth Software; kurumsal web siteleri ve kişiye özel web yazılımları geliştiren bir yazılım stüdyosudur.",
   alternates: { canonical: "/hakkimizda" },
 };
 
@@ -45,7 +45,7 @@ export default function AboutPage() {
         <Container>
           <div className="grid gap-12 lg:grid-cols-12">
             <div className="lg:col-span-7">
-              <div className="prose-tr space-y-5 text-base leading-relaxed text-ink-200">
+              <div className="prose-tr space-y-5 text-base leading-relaxed text-carbon-200">
                 <p>
                   Çoğu işletmenin dijital tecrübesi birbirine benziyor: ucuza
                   yapılmış, mobilde bozulan, güncellenemeyen ve bir süre sonra
@@ -82,7 +82,7 @@ export default function AboutPage() {
                     <h3 className="text-sm font-semibold text-white">
                       {v.title}
                     </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-ink-400">
+                    <p className="mt-2 text-sm leading-relaxed text-carbon-400">
                       {v.text}
                     </p>
                   </div>
@@ -106,14 +106,14 @@ export default function AboutPage() {
                 </ul>
 
                 <div className="mt-7 border-t border-white/10 pt-6">
-                  <h3 className="text-xs font-semibold tracking-wide text-ink-400 uppercase">
+                  <h3 className="text-xs font-semibold tracking-wide text-carbon-400 uppercase">
                     Kullandığımız teknolojiler
                   </h3>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {techStack.map((t) => (
                       <span
                         key={t.name}
-                        className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs text-ink-200"
+                        className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs text-carbon-200"
                       >
                         {t.name}
                       </span>
@@ -127,7 +127,7 @@ export default function AboutPage() {
                       <div className="text-2xl font-semibold text-white">
                         {s.value}
                       </div>
-                      <div className="text-xs text-ink-400">{s.label}</div>
+                      <div className="text-xs text-carbon-400">{s.label}</div>
                     </div>
                   ))}
                 </div>
@@ -144,13 +144,13 @@ export default function AboutPage() {
             <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {advantages.map((a) => (
                 <div key={a.title} className="card p-6">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-500/15 text-brand-300">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-flame-500/15 text-flame-500">
                     <Icon name={a.icon} className="h-5 w-5" />
                   </span>
                   <h3 className="mt-4 text-base font-semibold text-white">
                     {a.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-ink-400">
+                  <p className="mt-2 text-sm leading-relaxed text-carbon-400">
                     {a.text}
                   </p>
                 </div>

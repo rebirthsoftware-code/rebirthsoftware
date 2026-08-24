@@ -110,13 +110,15 @@ Tüm site bu tek dosyadan beslenir.
   stack: ["Next.js", "PostgreSQL"],
   url: "https://musterisitesi.com",         // opsiyonel
   image: "/projeler/musteri-adi.jpg",       // opsiyonel, public/projeler/ içine koyun
-  gradient: ["#0ea5e9", "#4338ca"],         // görsel yoksa kart arka planı
+  // gradient: ["#0ea5e9", "#4338ca"],      // isteğe bağlı; boş bırakın
   featured: true,                            // ana sayfada gösterilsin mi
 }
 ```
 
-Ekran görüntülerini `public/projeler/` klasörüne koyun. Görsel eklenmezse
-kart, `gradient` renkleriyle otomatik bir arka plan kullanır.
+Ekran görüntülerini `public/projeler/` klasörüne koyun (16:9 veya 4:3 önerilir).
+Görsel eklenmezse kart, müşteri adının baş harflerini gösteren nötr bir yer
+tutucu kullanır — `gradient` alanını yalnızca özellikle renkli bir arka plan
+istiyorsanız doldurun.
 
 ### Hizmet ekleme / çıkarma
 `lib/services.ts`. Buraya eklediğiniz her hizmet otomatik olarak
