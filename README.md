@@ -47,9 +47,18 @@ Repoda hazır bir GitHub Actions iş akışı var
 
 1. GitHub → repo → **Settings → Pages**
 2. **Source** = `GitHub Actions` seçin.
-3. `main` dalına yapılan her push'ta site otomatik derlenip yayınlanır.
+3. Varsayılan dala yapılan her push'ta site otomatik derlenip yayınlanır.
 
 Adres: `https://rebirthsoftware-code.github.io/rebirthsoftware/`
+
+> **Dikkat — varsayılan dal:** Depo boş oluşturulup ilk olarak
+> `claude/website-review-fztdup` dalı gönderildiği için GitHub varsayılan dalı
+> bu yaptı. GitHub Pages ortamı **yalnızca varsayılan daldan** yayına izin
+> verir; bu yüzden `main`'e yapılan push'ların yayın adımı sessizce
+> reddedilir. İş akışı şimdilik iki dalı da dinliyor.
+> Kalıcı çözüm: **Settings → General → Default branch** üzerinden varsayılan
+> dalı `main` yapın, sonra iş akışındaki `branches:` satırını sadece
+> `[main]` bırakın.
 
 İş akışının durumunu repo sayfasındaki **Actions** sekmesinden izleyebilirsiniz.
 İlk yayın 1-2 dakika sürer.
