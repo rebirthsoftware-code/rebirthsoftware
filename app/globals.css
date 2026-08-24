@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --color-ink-50: #f6f7fb;
+  --color-ink-100: #eceef6;
+  --color-ink-200: #d5d9e8;
+  --color-ink-300: #b0b8d1;
+  --color-ink-400: #7f8bb0;
+  --color-ink-500: #5c6890;
+  --color-ink-600: #454f70;
+  --color-ink-700: #333a53;
+  --color-ink-800: #1e2438;
+  --color-ink-900: #131829;
+  --color-ink-950: #0a0d1a;
+
+  --color-brand-300: #93b4ff;
+  --color-brand-400: #6b93ff;
+  --color-brand-500: #4470f4;
+  --color-brand-600: #2f52d8;
+  --color-brand-700: #2440ad;
+
+  --color-accent-400: #34e0d0;
+  --color-accent-500: #14c8b8;
+
+  --shadow-glow: 0 0 0 1px rgb(255 255 255 / 0.06),
+    0 24px 60px -24px rgb(68 112 244 / 0.55);
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
+body {
+  background-color: var(--color-ink-950);
+  color: var(--color-ink-100);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--color-brand-500);
+  color: #fff;
+}
+
+/* Sayfa arka planındaki yumuşak ışık lekeleri */
+.bg-aurora {
+  background-image:
+    radial-gradient(60rem 30rem at 15% -10%, rgb(68 112 244 / 0.28), transparent 60%),
+    radial-gradient(45rem 28rem at 95% 0%, rgb(20 200 184 / 0.16), transparent 60%),
+    radial-gradient(40rem 30rem at 50% 110%, rgb(68 112 244 / 0.12), transparent 60%);
+}
+
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(70% 60% at 50% 0%, #000 40%, transparent 100%);
+}
+
+.card {
+  border: 1px solid rgb(255 255 255 / 0.08);
+  background: linear-gradient(
+    180deg,
+    rgb(255 255 255 / 0.045),
+    rgb(255 255 255 / 0.015)
+  );
+  border-radius: 1rem;
+  backdrop-filter: blur(8px);
+  transition: border-color 0.25s ease, transform 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.card-hover:hover {
+  border-color: rgb(107 147 255 / 0.45);
+  transform: translateY(-3px);
+}
+
+.text-gradient {
+  background: linear-gradient(
+    100deg,
+    var(--color-ink-50) 10%,
+    var(--color-brand-300) 55%,
+    var(--color-accent-400) 95%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.prose-tr p {
+  line-height: 1.85;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.animate-rise {
+  animation: rise 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-rise {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
