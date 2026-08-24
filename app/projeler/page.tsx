@@ -27,7 +27,7 @@ export default function ProjectsPage() {
             {projectTypes.map((t) => (
               <span
                 key={t}
-                className="rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-xs text-carbon-300"
+                className="rounded-full border border-line bg-ink/[0.04] px-3.5 py-1.5 text-xs text-muted"
               >
                 {t}
               </span>

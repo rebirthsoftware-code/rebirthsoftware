@@ -18,24 +18,24 @@ export function ServiceRow({
   return (
     <Link
       href={`/hizmetler/${service.slug}`}
-      className="group row-hover block border-b border-white/10 py-8 sm:py-10"
+      className="group row-hover -mx-4 block border-b border-line px-4 py-8 hover:bg-white sm:py-10"
     >
       <div className="flex items-start gap-6 sm:gap-10">
-        <span className="overline mt-2 w-8 shrink-0 text-carbon-500 transition-colors duration-500 group-hover:text-flame-500">
+        <span className="overline mt-2 w-8 shrink-0 text-faint transition-colors duration-500 group-hover:text-flame">
           {String(index + 1).padStart(2, "0")}
         </span>
 
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3">
-            <h3 className="text-2xl font-bold tracking-tight text-carbon-50 transition-colors duration-500 group-hover:text-flame-500 sm:text-4xl">
+            <h3 className="text-2xl font-bold tracking-tight text-ink transition-colors duration-500 group-hover:text-flame sm:text-4xl">
               {service.title}
             </h3>
-            <span className="hidden shrink-0 text-sm text-carbon-400 lg:block">
+            <span className="hidden shrink-0 text-sm text-muted lg:block">
               {service.features.length} kalem dahil
             </span>
           </div>
 
-          <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-carbon-400 sm:text-base">
+          <p className="mt-3 max-w-2xl text-[15px] leading-relaxed text-muted sm:text-base">
             {service.short}
           </p>
 
@@ -44,8 +44,8 @@ export function ServiceRow({
             <div className="overflow-hidden">
               <ul className="flex flex-wrap gap-x-6 gap-y-2 pt-5">
                 {service.features.slice(0, 4).map((f) => (
-                  <li key={f} className="text-sm text-carbon-300">
-                    <span className="mr-2 text-flame-500">/</span>
+                  <li key={f} className="text-sm text-muted">
+                    <span className="mr-2 text-flame">/</span>
                     {f}
                   </li>
                 ))}
@@ -54,7 +54,7 @@ export function ServiceRow({
           </div>
         </div>
 
-        <span className="mt-1 flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/15 text-carbon-50 transition duration-500 group-hover:border-flame-500 group-hover:bg-flame-500">
+        <span className="mt-1 flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line text-ink transition duration-500 group-hover:border-flame group-hover:bg-flame">
           <Icon
             name="arrowUpRight"
             className="h-4 w-4 transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
@@ -80,30 +80,30 @@ export function ProjectRow({
       href={`/projeler/${project.slug}`}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
-      className="group relative block border-b border-white/10"
+      className="group relative block border-b border-line hover:bg-white"
     >
       <div className="row-hover flex items-center gap-6 py-7 sm:gap-10 sm:py-9">
-        <span className="overline w-8 shrink-0 text-carbon-500 transition-colors duration-500 group-hover:text-flame-500">
+        <span className="overline w-8 shrink-0 text-faint transition-colors duration-500 group-hover:text-flame">
           {String(index + 1).padStart(2, "0")}
         </span>
 
         <div className="min-w-0 flex-1">
-          <h3 className="truncate text-2xl font-bold tracking-tight text-carbon-50 transition-colors duration-500 group-hover:text-flame-500 sm:text-[2.5rem]">
+          <h3 className="truncate text-2xl font-bold tracking-tight text-ink transition-colors duration-500 group-hover:text-flame sm:text-[2.5rem]">
             {project.client}
           </h3>
-          <p className="mt-1.5 text-sm text-carbon-400 sm:hidden">
+          <p className="mt-1.5 text-sm text-muted sm:hidden">
             {project.type}
           </p>
         </div>
 
-        <span className="hidden shrink-0 text-sm text-carbon-400 md:block">
+        <span className="hidden shrink-0 text-sm text-muted md:block">
           {project.type}
         </span>
-        <span className="hidden w-16 shrink-0 text-right text-sm text-carbon-500 sm:block">
+        <span className="hidden w-16 shrink-0 text-right text-sm text-muted sm:block">
           {project.year}
         </span>
 
-        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/15 text-carbon-50 transition duration-500 group-hover:border-flame-500 group-hover:bg-flame-500">
+        <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line text-ink transition duration-500 group-hover:border-flame group-hover:bg-flame">
           <Icon
             name="arrowUpRight"
             className="h-4 w-4 transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
@@ -114,7 +114,7 @@ export function ProjectRow({
       {/* Hover önizlemesi — sadece geniş ekranda */}
       <div
         aria-hidden="true"
-        className={`pointer-events-none absolute top-1/2 right-32 z-10 hidden aspect-4/3 w-64 -translate-y-1/2 overflow-hidden rounded-sm border border-white/10 transition-all duration-500 lg:block ${
+        className={`pointer-events-none absolute top-1/2 right-32 z-10 hidden aspect-4/3 w-64 -translate-y-1/2 overflow-hidden rounded-sm border border-line transition-all duration-500 lg:block ${
           hover ? "scale-100 opacity-100" : "scale-95 opacity-0"
         }`}
       >

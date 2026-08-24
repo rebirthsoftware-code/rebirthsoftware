@@ -1,34 +1,40 @@
 @import "tailwindcss";
 
+/**
+ * Renk sistemi tek yerden yönetilir.
+ * Tonu değiştirmek isterseniz sadece aşağıdaki değişkenleri düzenleyin;
+ * bileşenler doğrudan renk değeri değil, anlamlı jeton kullanır.
+ */
 @theme {
   --font-sans: var(--font-epilogue), ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", Roboto, sans-serif;
 
-  /* Sıcak, nötr siyah tonları — mavi yok */
-  --color-carbon-950: #0e0e0d;
-  --color-carbon-900: #141413;
-  --color-carbon-850: #1a1a18;
-  --color-carbon-800: #232320;
-  --color-carbon-700: #333330;
-  --color-carbon-600: #4a4a45;
-  --color-carbon-500: #6b6b64;
-  --color-carbon-400: #918f87;
-  --color-carbon-300: #b5b2a9;
-  --color-carbon-200: #d6d3ca;
-  --color-carbon-100: #eceae4;
-  --color-carbon-50: #f7f5f0;
+  /* Zeminler — sıcak, kırık beyaz */
+  --color-paper: #fbfaf7;
+  --color-paper-2: #f3f1ec;
+  --color-paper-3: #eae7e0;
+
+  /* Yazı */
+  --color-ink: #14140f;
+  --color-ink-soft: #33332c;
+  --color-muted: #5c5c53;
+  --color-faint: #8c8b82;
+
+  /* Çizgiler */
+  --color-line: #14140f1f;
+  --color-line-strong: #14140f38;
 
   /* Tek vurgu rengi */
-  --color-flame-400: #ff6a4d;
-  --color-flame-500: #ff4b2b;
-  --color-flame-600: #e8340f;
+  --color-flame: #dd3311;
+  --color-flame-soft: #ff5a38;
+  --color-flame-tint: #dd331114;
 
-  --text-display: clamp(2.75rem, 7.5vw, 6.25rem);
+  --text-display: clamp(2.75rem, 7.5vw, 6.5rem);
   --text-headline: clamp(2rem, 4.5vw, 3.75rem);
 }
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 html {
@@ -37,14 +43,19 @@ html {
 }
 
 body {
-  background-color: var(--color-carbon-900);
-  color: var(--color-carbon-50);
+  background-color: var(--color-paper);
+  color: var(--color-ink);
   -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
-  background: var(--color-flame-500);
+  background: var(--color-flame);
   color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-flame);
+  outline-offset: 3px;
 }
 
 /* ---------- Tipografi ---------- */
@@ -52,14 +63,14 @@ body {
 .display {
   font-size: var(--text-display);
   line-height: 0.95;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.04em;
   font-weight: 700;
 }
 
 .headline {
   font-size: var(--text-headline);
   line-height: 1.02;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.032em;
   font-weight: 700;
 }
 
@@ -145,7 +156,7 @@ body {
 @keyframes pulse-ring {
   0% {
     transform: scale(0.9);
-    opacity: 0.55;
+    opacity: 0.5;
   }
   70% {
     transform: scale(1.35);
@@ -161,11 +172,20 @@ body {
   position: absolute;
   inset: 0;
   border-radius: 9999px;
-  border: 1px solid var(--color-flame-500);
+  border: 1px solid var(--color-flame);
   animation: pulse-ring 2.6s ease-out infinite;
 }
 
-/* ---------- Bağlantı ve buton davranışları ---------- */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+.blink {
+  animation: blink 2s ease-in-out infinite;
+}
+
+/* ---------- Bağlantı ve satır davranışları ---------- */
 
 .link-underline {
   position: relative;
@@ -189,24 +209,36 @@ body {
   transform-origin: left;
 }
 
-/* Üzerine gelince rengi dolan büyük satırlar */
 .row-hover {
-  transition: color 0.4s ease, padding-left 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: color 0.4s ease, padding-left 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.4s ease;
 }
 
 .row-hover:hover {
   padding-left: 1.25rem;
 }
 
-.rule {
-  border-top: 1px solid rgb(255 255 255 / 0.09);
+/* ---------- Yüzeyler ---------- */
+
+.card {
+  border: 1px solid var(--color-line);
+  background: #fff;
+  border-radius: 0.5rem;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease,
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Kutulu değil, çizgiyle ayrılmış yüzey */
-.surface {
-  background: var(--color-carbon-850);
+.card-hover:hover {
+  border-color: var(--color-line-strong);
+  box-shadow: 0 18px 40px -28px rgb(20 20 15 / 0.35);
+  transform: translateY(-2px);
 }
 
+.prose-tr p {
+  line-height: 1.8;
+}
+
+/* Kağıt dokusu — çok hafif */
 .noise {
   position: relative;
 }
@@ -216,8 +248,22 @@ body {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.035;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/></filter><rect width='140' height='140' filter='url(%23n)'/></svg>");
+  opacity: 0.5;
+  background-image: radial-gradient(
+    120% 80% at 80% -10%,
+    var(--color-flame-tint),
+    transparent 55%
+  );
+}
+
+/* İnce ölçü çizgileri — hero için */
+.hairlines {
+  background-image: linear-gradient(
+    to right,
+    var(--color-line) 1px,
+    transparent 1px
+  );
+  background-size: 25% 100%;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -232,25 +278,8 @@ body {
   }
   .spin-slow,
   .marquee-track,
-  .pulse-ring::after {
+  .pulse-ring::after,
+  .blink {
     animation: none !important;
   }
-}
-
-/* ---------- Yüzeyler ---------- */
-
-.card {
-  border: 1px solid rgb(255 255 255 / 0.1);
-  background: var(--color-carbon-850);
-  border-radius: 0.375rem;
-  transition: border-color 0.4s ease, background-color 0.4s ease;
-}
-
-.card-hover:hover {
-  border-color: rgb(255 255 255 / 0.28);
-  background: var(--color-carbon-800);
-}
-
-.prose-tr p {
-  line-height: 1.8;
 }

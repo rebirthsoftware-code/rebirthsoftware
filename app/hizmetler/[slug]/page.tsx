@@ -67,11 +67,11 @@ export default async function ServiceDetailPage({
         <Container>
           <div className="grid gap-12 lg:grid-cols-12">
             <div className="lg:col-span-7">
-              <p className="prose-tr text-base leading-relaxed text-carbon-200">
+              <p className="prose-tr text-base leading-relaxed text-ink-soft">
                 {service.description}
               </p>
 
-              <h2 className="mt-10 text-xl font-semibold text-white">
+              <h2 className="mt-10 text-xl font-semibold text-ink">
                 Neler dahil?
               </h2>
               <ul className="mt-5 grid gap-3 sm:grid-cols-2">
@@ -80,7 +80,7 @@ export default async function ServiceDetailPage({
                 ))}
               </ul>
 
-              <h2 className="mt-10 text-xl font-semibold text-white">
+              <h2 className="mt-10 text-xl font-semibold text-ink">
                 Teslim ettiklerimiz
               </h2>
               <ul className="mt-5 space-y-3">
@@ -91,7 +91,7 @@ export default async function ServiceDetailPage({
 
               {service.faq.length > 0 ? (
                 <>
-                  <h2 className="mt-12 text-xl font-semibold text-white">
+                  <h2 className="mt-12 text-xl font-semibold text-ink">
                     Sık sorulanlar
                   </h2>
                   <div className="mt-5">
@@ -103,10 +103,10 @@ export default async function ServiceDetailPage({
 
             <aside className="lg:col-span-5">
               <div className="card sticky top-24 p-6">
-                <h3 className="text-base font-semibold text-white">
+                <h3 className="text-base font-semibold text-ink">
                   Fiyat ve süre öğrenin
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-carbon-400">
+                <p className="mt-2 text-sm leading-relaxed text-muted">
                   15 dakikalık kısa bir görüşme, ihtiyacınızı netleştirmeye
                   yetiyor. Görüşme sonrası kalem kalem, sabit fiyatlı teklifi
                   yazılı olarak gönderiyoruz.
@@ -117,15 +117,15 @@ export default async function ServiceDetailPage({
                   </Button>
                   <a
                     href={site.phoneHref}
-                    className="flex items-center justify-center gap-2 rounded-full border border-white/15 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/5"
+                    className="flex items-center justify-center gap-2 rounded-full border border-line px-5 py-3 text-sm font-semibold text-ink transition hover:bg-ink/[0.04]"
                   >
-                    <Icon name="phone" className="h-4 w-4 text-flame-500" />
+                    <Icon name="phone" className="h-4 w-4 text-flame" />
                     {site.phone}
                   </a>
                 </div>
 
-                <div className="mt-7 border-t border-white/10 pt-5">
-                  <h4 className="text-xs font-semibold tracking-wide text-carbon-400 uppercase">
+                <div className="mt-7 border-t border-line pt-5">
+                  <h4 className="text-xs font-semibold tracking-wide text-muted uppercase">
                     Diğer hizmetler
                   </h4>
                   <ul className="mt-3 space-y-2">
@@ -133,7 +133,7 @@ export default async function ServiceDetailPage({
                       <li key={o.slug}>
                         <Link
                           href={`/hizmetler/${o.slug}`}
-                          className="flex items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-sm text-carbon-300 transition hover:bg-white/5 hover:text-white"
+                          className="flex items-center justify-between gap-3 rounded-lg px-3 py-2.5 text-sm text-muted transition hover:bg-ink/[0.04] hover:text-ink"
                         >
                           {o.title}
                           <Icon name="arrow" className="h-4 w-4 shrink-0" />

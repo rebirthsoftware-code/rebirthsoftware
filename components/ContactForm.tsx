@@ -121,13 +121,13 @@ export function ContactForm({
   if (status === "success") {
     return (
       <div className="card p-8 text-center">
-        <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-flame-500/15 text-flame-500">
+        <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-flame/15 text-flame">
           <Icon name="check" className="h-7 w-7" />
         </span>
-        <h3 className="mt-5 text-xl font-semibold text-white">
+        <h3 className="mt-5 text-xl font-semibold text-ink">
           {isStaticExport ? "WhatsApp'a yönlendirildiniz" : "Talebiniz bize ulaştı"}
         </h3>
-        <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-carbon-300">
+        <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-muted">
           {isStaticExport
             ? "Bilgileriniz hazır bir mesaja dönüştürüldü. WhatsApp penceresi açılmadıysa aşağıdaki butonu kullanabilirsiniz."
             : "En geç 1 iş günü içinde size dönüş yapacağız. Daha hızlı ilerlemek isterseniz WhatsApp'tan da yazabilirsiniz."}
@@ -136,15 +136,15 @@ export function ContactForm({
           href={whatsappLink("Merhaba, az önce teklif formunu doldurdum.")}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+          className="mt-6 inline-flex items-center gap-2 rounded-full border border-line bg-ink/[0.04] px-5 py-3 text-sm font-semibold text-ink transition hover:bg-ink/[0.04]"
         >
-          <Icon name="whatsapp" className="h-4 w-4 text-flame-500" />
+          <Icon name="whatsapp" className="h-4 w-4 text-flame" />
           WhatsApp&apos;tan yaz
         </a>
         <button
           type="button"
           onClick={() => setStatus("idle")}
-          className="mt-4 block w-full text-xs text-carbon-500 underline-offset-4 hover:underline"
+          className="mt-4 block w-full text-xs text-muted underline-offset-4 hover:underline"
         >
           Yeni bir talep gönder
         </button>
@@ -239,15 +239,15 @@ export function ContactForm({
         </label>
       </div>
 
-      <label className="mt-5 flex cursor-pointer items-start gap-3 text-xs leading-relaxed text-carbon-400">
+      <label className="mt-5 flex cursor-pointer items-start gap-3 text-xs leading-relaxed text-muted">
         <input
           type="checkbox"
           name="consent"
           required
-          className="mt-0.5 h-4 w-4 shrink-0 rounded border-white/20 bg-white/5 accent-flame-500"
+          className="mt-0.5 h-4 w-4 shrink-0 rounded border-line bg-ink/[0.04] accent-flame"
         />
         <span>
-          <a href="/kvkk" className="text-flame-500 underline-offset-2 hover:underline">
+          <a href="/kvkk" className="text-flame underline-offset-2 hover:underline">
             KVKK Aydınlatma Metni
           </a>
           &apos;ni okudum; bilgilerimin teklif süreci için işlenmesini kabul
@@ -268,14 +268,14 @@ export function ContactForm({
       <button
         type="submit"
         disabled={status === "loading"}
-        className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-flame-500 px-6 py-3.5 text-sm font-semibold text-white  transition hover:bg-flame-500 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+        className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-flame px-6 py-3.5 text-sm font-semibold text-white  transition hover:bg-flame disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
       >
         {status === "loading" ? "Gönderiliyor…" : "Teklif Talebi Gönder"}
         {status === "loading" ? null : (
           <Icon name="arrow" className="h-4 w-4" />
         )}
       </button>
-      <p className="mt-3 text-xs text-carbon-500">
+      <p className="mt-3 text-xs text-muted">
         {isStaticExport
           ? "Bu önizleme sürümünde form, doldurduğunuz bilgileri WhatsApp mesajına dönüştürür."
           : "Bilgileriniz üçüncü kişilerle paylaşılmaz. Genellikle 1 iş günü içinde dönüş yapıyoruz."}
@@ -285,7 +285,7 @@ export function ContactForm({
 }
 
 const inputCls =
- "w-full rounded-xl border border-white/10 bg-carbon-900/70 px-4 py-3 text-sm text-white placeholder:text-carbon-500 transition outline-none focus:border-flame-500/70 focus:ring-2 focus:ring-flame-500/25";
+ "w-full rounded-xl border border-line bg-white px-4 py-3 text-sm text-ink placeholder:text-faint transition outline-none focus:border-flame/70 focus:ring-2 focus:ring-flame/20";
 
 function Field({
   label,
@@ -298,7 +298,7 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="mb-2 block text-xs font-medium tracking-wide text-carbon-300 uppercase">
+      <span className="mb-2 block text-xs font-medium tracking-wide text-muted uppercase">
         {label}
       </span>
       {children}

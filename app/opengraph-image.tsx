@@ -18,8 +18,8 @@ export default function OpengraphImage() {
           justifyContent: "center",
           padding: "80px",
           background:
- "linear-gradient(140deg, #0e0e0d 0%, #1a1a18 60%, #232320 100%)",
-          color: "white",
+ "linear-gradient(140deg, #fbfaf7 0%, #f3f1ec 60%, #eae7e0 100%)",
+          color: "#14140f",
           fontFamily: "sans-serif",
         }}
       >
@@ -29,7 +29,7 @@ export default function OpengraphImage() {
             alignItems: "center",
             gap: 16,
             fontSize: 30,
-            color: "#ff4b2b",
+            color: "#dd3311",
             fontWeight: 600,
           }}
         >
@@ -38,7 +38,7 @@ export default function OpengraphImage() {
               width: 14,
               height: 14,
               borderRadius: 999,
-              background: "#ff4b2b",
+              background: "#dd3311",
             }}
           />
           Rebirth Software
@@ -58,7 +58,7 @@ export default function OpengraphImage() {
           style={{
             marginTop: 28,
             fontSize: 30,
-            color: "#918f87",
+            color: "#5c5c53",
             maxWidth: 900,
           }}
         >

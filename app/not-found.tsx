@@ -7,13 +7,13 @@ export default function NotFound() {
       <div className="" />
       <Container className="relative">
         <div className="flex min-h-[60vh] flex-col items-center justify-center py-24 text-center">
-          <span className="text-7xl font-semibold text-white/10 sm:text-8xl">
+          <span className="text-7xl font-semibold text-line-strong sm:text-8xl">
             404
           </span>
-          <h1 className="mt-4 text-2xl font-semibold text-white sm:text-3xl">
+          <h1 className="mt-4 text-2xl font-semibold text-ink sm:text-3xl">
             Aradığınız sayfayı bulamadık
           </h1>
-          <p className="mt-3 max-w-md text-sm leading-relaxed text-carbon-400">
+          <p className="mt-3 max-w-md text-sm leading-relaxed text-muted">
             Bağlantı taşınmış veya silinmiş olabilir. Ana sayfadan devam
             edebilir ya da doğrudan teklif formuna geçebilirsiniz.
           </p>

@@ -1,8 +1,8 @@
 import type { Project } from "@/lib/projects";
 
 /**
- * Proje görseli. Ekran görüntüsü varsa onu, yoksa markanın tek vurgu
- * rengine sadık kalan nötr bir yer tutucu gösterir.
+ * Proje görseli. Ekran görüntüsü varsa onu, yoksa markanın diline sadık
+ * kalan nötr bir yer tutucu gösterir.
  */
 export function ProjectVisual({
   project,
@@ -36,7 +36,7 @@ export function ProjectVisual({
 
   return (
     <div
-      className={`relative flex h-full w-full flex-col justify-between p-6 ${className}`}
+      className={`relative flex h-full w-full flex-col justify-between bg-paper-2 p-6 ${className}`}
       style={
         project.gradient
           ? {
@@ -48,18 +48,18 @@ export function ProjectVisual({
       {project.gradient ? null : (
         <span
           aria-hidden="true"
-          className="absolute inset-0 bg-carbon-800"
+          className="absolute inset-0"
           style={{
             backgroundImage:
-              "repeating-linear-gradient(135deg, rgb(255 255 255 / 0.035) 0 1px, transparent 1px 12px)",
+              "repeating-linear-gradient(135deg, rgb(20 20 15 / 0.045) 0 1px, transparent 1px 12px)",
           }}
         />
       )}
 
-      <span className="relative text-6xl font-bold tracking-tighter text-white/12 sm:text-7xl">
+      <span className="relative text-6xl font-bold tracking-tighter text-ink/10 sm:text-7xl">
         {initials}
       </span>
-      <span className="relative text-lg font-bold tracking-tight text-white/85 sm:text-xl">
+      <span className="relative text-lg font-bold tracking-tight text-ink/70 sm:text-xl">
         {project.client}
       </span>
     </div>

@@ -41,7 +41,7 @@ export default function FaqPage() {
         <Container>
           <div className="mx-auto max-w-3xl space-y-10">
             <div>
-              <h2 className="mb-4 text-lg font-semibold text-white">
+              <h2 className="mb-4 text-lg font-semibold text-ink">
                 Genel sorular
               </h2>
               <Faq items={generalFaq as unknown as { q: string; a: string }[]} />
@@ -51,7 +51,7 @@ export default function FaqPage() {
               .filter((s) => s.faq.length > 0)
               .map((s) => (
                 <div key={s.slug}>
-                  <h2 className="mb-4 text-lg font-semibold text-white">
+                  <h2 className="mb-4 text-lg font-semibold text-ink">
                     {s.title}
                   </h2>
                   <Faq items={s.faq} />

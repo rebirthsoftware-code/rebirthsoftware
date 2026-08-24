@@ -54,15 +54,15 @@ export function Header() {
       >
         <div
           className={`transition-colors duration-500 ${
-            solid && !open ? "border-b border-white/8 bg-carbon-900/90 backdrop-blur-xl" : ""
+            solid && !open ? "border-b border-line bg-paper/85 backdrop-blur-xl" : ""
           }`}
         >
           <Container>
             <div className="flex h-20 items-center justify-between">
               <Link href="/" className="group flex items-center gap-3" aria-label="Ana sayfa">
                 <Logo />
-                <span className="text-[17px] font-bold tracking-tight text-carbon-50">
-                  rebirth<span className="text-flame-500">.</span>
+                <span className="text-[17px] font-bold tracking-tight text-ink">
+                  rebirth<span className="text-flame">.</span>
                 </span>
               </Link>
 
@@ -73,8 +73,8 @@ export function Header() {
                     href={item.href}
                     className={`overline link-underline transition-colors ${
                       isActive(item.href)
-                        ? "text-carbon-50"
-                        : "text-carbon-200 hover:text-carbon-50"
+                        ? "text-ink"
+                        : "text-ink-soft hover:text-ink"
                     }`}
                   >
                     {item.label}
@@ -85,13 +85,13 @@ export function Header() {
               <div className="hidden items-center gap-5 lg:flex">
                 <a
                   href={site.phoneHref}
-                  className="text-[13px] font-medium tracking-tight text-carbon-200 link-underline transition hover:text-carbon-50"
+                  className="text-[13px] font-medium tracking-tight text-ink-soft link-underline transition hover:text-ink"
                 >
                   {site.phone}
                 </a>
                 <Link
                   href="/teklif-al"
-                  className="group inline-flex items-center gap-2 rounded-full bg-carbon-50 px-6 py-3 text-[13px] font-semibold text-carbon-900 transition duration-300 hover:bg-flame-500 hover:text-white"
+                  className="group inline-flex items-center gap-2 rounded-full bg-ink px-6 py-3 text-[13px] font-semibold text-paper transition duration-300 hover:bg-flame hover:text-white"
                 >
                   Teklif Al
                   <Icon
@@ -104,7 +104,7 @@ export function Header() {
               <button
                 type="button"
                 onClick={() => setOpen((v) => !v)}
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 text-carbon-50 transition hover:border-carbon-50 lg:hidden"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink transition hover:border-ink lg:hidden"
                 aria-label={open ? "Menüyü kapat" : "Menüyü aç"}
                 aria-expanded={open}
               >
@@ -117,7 +117,7 @@ export function Header() {
 
       {/* Tam ekran mobil menü */}
       <div
-        className={`fixed inset-0 z-40 bg-carbon-900 transition-opacity duration-500 lg:hidden ${
+        className={`fixed inset-0 z-40 bg-paper transition-opacity duration-500 lg:hidden ${
           open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
       >
@@ -127,7 +127,7 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className="row-hover border-b border-white/8 py-5 text-4xl font-bold tracking-tight text-carbon-50 hover:text-flame-500"
+                className="row-hover border-b border-line py-5 text-4xl font-bold tracking-tight text-ink hover:text-flame"
                 style={{
                   transitionDelay: open ? `${i * 60}ms` : "0ms",
                   opacity: open ? 1 : 0,
@@ -144,13 +144,13 @@ export function Header() {
           <div className="mt-10 flex flex-col gap-4">
             <Link
               href="/teklif-al"
-              className="rounded-full bg-flame-500 px-6 py-4 text-center text-sm font-semibold text-white"
+              className="rounded-full bg-flame px-6 py-4 text-center text-sm font-semibold text-white"
             >
               Ücretsiz Teklif Al
             </Link>
             <a
               href={site.phoneHref}
-              className="text-center text-sm text-carbon-300"
+              className="text-center text-sm text-muted"
             >
               {site.phone}
             </a>
@@ -168,9 +168,9 @@ export function Logo({ className = "h-9 w-9" }: { className?: string }) {
       <path
         d="M13 29V11h8c3.7 0 6.2 2.1 6.2 5.5 0 2.6-1.5 4.4-3.9 5.1L28 29h-4.6l-4-7.2H17V29h-4Zm4-10.6h3.4c1.8 0 2.9-1 2.9-2.5s-1.1-2.4-2.9-2.4H17v4.9Z"
         fill="currentColor"
-        className="text-carbon-50"
+        className="text-ink"
       />
-      <circle cx="31" cy="10" r="3.5" className="fill-flame-500" />
+      <circle cx="31" cy="10" r="3.5" className="fill-flame" />
     </svg>
   );
 }

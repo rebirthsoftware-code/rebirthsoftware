@@ -17,8 +17,8 @@ export function Container({
 
 export function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <span className="overline flex items-center gap-3 text-carbon-400">
-      <span className="h-px w-8 bg-flame-500" />
+    <span className="overline flex items-center gap-3 text-muted">
+      <span className="h-px w-8 bg-flame" />
       {children}
     </span>
   );
@@ -42,9 +42,9 @@ export function SectionHeading({
           <Eyebrow>{eyebrow}</Eyebrow>
         </div>
       ) : null}
-      <h2 className="headline mt-6 text-carbon-50">{title}</h2>
+      <h2 className="headline mt-6 text-ink">{title}</h2>
       {description ? (
-        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-carbon-300">
+        <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
           {description}
         </p>
       ) : null}
@@ -68,12 +68,12 @@ export function Button({
   external,
 }: ButtonProps) {
   const base =
- "group/btn inline-flex items-center justify-center gap-2.5 rounded-full px-7 py-4 text-sm font-semibold tracking-tight transition duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-flame-500";
+ "group/btn inline-flex items-center justify-center gap-2.5 rounded-full px-7 py-4 text-sm font-semibold tracking-tight transition duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-flame";
   const styles = {
-    primary: "bg-carbon-50 text-carbon-900 hover:bg-flame-500 hover:text-white",
+    primary: "bg-ink text-paper hover:bg-flame hover:text-white",
     outline:
- "border border-white/20 text-carbon-50 hover:border-carbon-50 hover:bg-carbon-50 hover:text-carbon-900",
-    ghost: "text-carbon-300 hover:text-carbon-50",
+ "border border-line-strong text-ink hover:border-ink hover:bg-ink hover:text-paper",
+    ghost: "text-muted hover:text-ink",
   }[variant];
 
   const cls = `${base} ${styles} ${className}`;
@@ -102,12 +102,12 @@ export function ArrowLink({
   return (
     <Link
       href={href}
-      className="group inline-flex items-center gap-2 text-sm font-semibold text-carbon-50"
+      className="group inline-flex items-center gap-2 text-sm font-semibold text-ink"
     >
       <span className="link-underline">{children}</span>
       <Icon
         name="arrow"
-        className="h-4 w-4 text-flame-500 transition-transform duration-500 group-hover:translate-x-1.5"
+        className="h-4 w-4 text-flame transition-transform duration-500 group-hover:translate-x-1.5"
       />
     </Link>
   );
@@ -115,8 +115,8 @@ export function ArrowLink({
 
 export function CheckItem({ children }: { children: React.ReactNode }) {
   return (
-    <li className="flex items-start gap-4 border-b border-white/8 pb-4 text-[15px] text-carbon-200 last:border-0">
-      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-flame-500" />
+    <li className="flex items-start gap-4 border-b border-line pb-4 text-[15px] text-ink-soft last:border-0">
+      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-flame" />
       <span className="leading-relaxed">{children}</span>
     </li>
   );

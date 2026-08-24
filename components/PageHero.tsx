@@ -13,7 +13,7 @@ export function PageHero({
   children?: React.ReactNode;
 }) {
   return (
-    <section className="noise relative overflow-hidden border-b border-white/10 pt-36 pb-16 sm:pt-44 sm:pb-24">
+    <section className="noise relative overflow-hidden border-b border-line pt-36 pb-16 sm:pt-44 sm:pb-24">
       <Container className="relative">
         {eyebrow ? (
           <Reveal>
@@ -22,7 +22,7 @@ export function PageHero({
         ) : null}
 
         <RevealLines
-          className="headline mt-7 max-w-4xl text-carbon-50"
+          className="headline mt-7 max-w-4xl text-ink"
           lines={[title]}
           delay={100}
         />
@@ -30,8 +30,8 @@ export function PageHero({
         {description ? (
           <Reveal delay={300}>
             <div className="mt-8 flex max-w-2xl gap-5">
-              <span className="mt-3 h-px w-12 shrink-0 bg-flame-500" />
-              <p className="text-[17px] leading-relaxed text-carbon-300">
+              <span className="mt-3 h-px w-12 shrink-0 bg-flame" />
+              <p className="text-[17px] leading-relaxed text-muted">
                 {description}
               </p>
             </div>

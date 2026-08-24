@@ -58,16 +58,16 @@ export default function ContactPage() {
             {channels.map((c) => {
               const inner = (
                 <>
-                  <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-flame-500/15 text-flame-500">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-flame/15 text-flame">
                     <Icon name={c.icon} className="h-5 w-5" />
                   </span>
-                  <div className="mt-4 text-xs tracking-wide text-carbon-500 uppercase">
+                  <div className="mt-4 text-xs tracking-wide text-muted uppercase">
                     {c.label}
                   </div>
-                  <div className="mt-1 text-sm font-semibold break-words text-white">
+                  <div className="mt-1 text-sm font-semibold break-words text-ink">
                     {c.value}
                   </div>
-                  <div className="mt-1.5 text-xs text-carbon-400">{c.note}</div>
+                  <div className="mt-1.5 text-xs text-muted">{c.note}</div>
                 </>
               );
               return c.href ? (
@@ -90,10 +90,10 @@ export default function ContactPage() {
 
           <div className="mt-12 grid gap-10 lg:grid-cols-12">
             <div className="lg:col-span-7">
-              <h2 className="text-xl font-semibold text-white">
+              <h2 className="text-xl font-semibold text-ink">
                 Mesaj bırakın
               </h2>
-              <p className="mt-2 text-sm text-carbon-400">
+              <p className="mt-2 text-sm text-muted">
                 Formu doldurun, size dönüş yapalım.
               </p>
               <div className="mt-6">
@@ -111,9 +111,9 @@ export default function ContactPage() {
                   <div>
                     <Icon
                       name="globe"
-                      className="mx-auto h-10 w-10 text-flame-500"
+                      className="mx-auto h-10 w-10 text-flame"
                     />
-                    <p className="mt-4 text-sm leading-relaxed text-carbon-200">
+                    <p className="mt-4 text-sm leading-relaxed text-ink-soft">
                       Projelerin tamamını uzaktan yürütüyoruz. Türkiye&apos;nin
                       her yerinden müşterilerimizle çevrim içi görüşme,
                       ekran paylaşımı ve düzenli ilerleme raporlarıyla
@@ -121,25 +121,25 @@ export default function ContactPage() {
                     </p>
                   </div>
                 </div>
-                <div className="border-t border-white/10 p-6">
-                  <h3 className="text-sm font-semibold text-white">
+                <div className="border-t border-line p-6">
+                  <h3 className="text-sm font-semibold text-ink">
                     Çalışma saatleri
                   </h3>
                   <dl className="mt-3 space-y-2 text-sm">
-                    <div className="flex justify-between text-carbon-300">
+                    <div className="flex justify-between text-muted">
                       <dt>Pazartesi - Cuma</dt>
                       <dd>09:00 - 18:00</dd>
                     </div>
-                    <div className="flex justify-between text-carbon-300">
+                    <div className="flex justify-between text-muted">
                       <dt>Cumartesi</dt>
                       <dd>10:00 - 14:00</dd>
                     </div>
-                    <div className="flex justify-between text-carbon-500">
+                    <div className="flex justify-between text-muted">
                       <dt>Pazar</dt>
                       <dd>Kapalı</dd>
                     </div>
                   </dl>
-                  <p className="mt-4 text-xs leading-relaxed text-carbon-500">
+                  <p className="mt-4 text-xs leading-relaxed text-muted">
                     Acil durumlar için mevcut müşterilerimize 7/24 destek hattı
                     sağlıyoruz.
                   </p>

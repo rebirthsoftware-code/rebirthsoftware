@@ -33,7 +33,7 @@ export default function QuotePage() {
 
             <aside className="lg:col-span-5">
               <div className="card p-6 sm:p-7">
-                <h2 className="text-base font-semibold text-white">
+                <h2 className="text-base font-semibold text-ink">
                   Teklif sürecinde ne oluyor?
                 </h2>
                 <ol className="mt-5 space-y-4">
@@ -43,8 +43,8 @@ export default function QuotePage() {
  "Kapsam, süre ve sabit fiyatı içeren teklifi yazılı gönderiyoruz.",
  "Uygun bulursanız sözleşmeyle başlıyoruz; bulmazsanız hiçbir yükümlülüğünüz olmuyor.",
                   ].map((t, i) => (
-                    <li key={t} className="flex gap-3 text-sm text-carbon-300">
-                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-flame-500/15 text-xs font-semibold text-flame-500">
+                    <li key={t} className="flex gap-3 text-sm text-muted">
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-flame/15 text-xs font-semibold text-flame">
                         {i + 1}
                       </span>
                       <span className="leading-relaxed">{t}</span>
@@ -54,38 +54,38 @@ export default function QuotePage() {
               </div>
 
               <div className="card mt-5 p-6 sm:p-7">
-                <h2 className="text-base font-semibold text-white">
+                <h2 className="text-base font-semibold text-ink">
                   Doğrudan iletişim
                 </h2>
                 <div className="mt-4 flex flex-col gap-2.5">
                   <a
                     href={site.phoneHref}
-                    className="flex items-center gap-3 rounded-xl border border-white/10 px-4 py-3 text-sm text-white transition hover:bg-white/5"
+                    className="flex items-center gap-3 rounded-xl border border-line px-4 py-3 text-sm text-ink transition hover:bg-ink/[0.04]"
                   >
-                    <Icon name="phone" className="h-4 w-4 text-flame-500" />
+                    <Icon name="phone" className="h-4 w-4 text-flame" />
                     {site.phone}
                   </a>
                   <a
                     href={whatsappLink("Merhaba, teklif almak istiyorum.")}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-3 rounded-xl border border-white/10 px-4 py-3 text-sm text-white transition hover:bg-white/5"
+                    className="flex items-center gap-3 rounded-xl border border-line px-4 py-3 text-sm text-ink transition hover:bg-ink/[0.04]"
                   >
-                    <Icon name="whatsapp" className="h-4 w-4 text-flame-500" />
+                    <Icon name="whatsapp" className="h-4 w-4 text-flame" />
                     WhatsApp&apos;tan yaz
                   </a>
                   <a
                     href={`mailto:${site.email}`}
-                    className="flex items-center gap-3 rounded-xl border border-white/10 px-4 py-3 text-sm text-white transition hover:bg-white/5"
+                    className="flex items-center gap-3 rounded-xl border border-line px-4 py-3 text-sm text-ink transition hover:bg-ink/[0.04]"
                   >
-                    <Icon name="mail" className="h-4 w-4 text-flame-500" />
+                    <Icon name="mail" className="h-4 w-4 text-flame" />
                     {site.email}
                   </a>
                 </div>
               </div>
 
               <div className="card mt-5 p-6 sm:p-7">
-                <h2 className="text-base font-semibold text-white">
+                <h2 className="text-base font-semibold text-ink">
                   Teklifi hızlandırmak için
                 </h2>
                 <ul className="mt-4 space-y-3">

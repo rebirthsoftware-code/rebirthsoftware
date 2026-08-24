@@ -135,7 +135,7 @@ export function RotatingBadge({
         {chars.map((c, i) => (
           <span
             key={i}
-            className="absolute top-1/2 left-1/2 origin-[0_0] text-[10px] font-semibold tracking-widest text-carbon-300 sm:text-[11px]"
+            className="absolute top-1/2 left-1/2 origin-[0_0] text-[10px] font-semibold tracking-widest text-muted sm:text-[11px]"
             style={{
               transform: `rotate(${i * step}deg) translate(0, -4.6rem)`,
             }}
@@ -144,13 +144,13 @@ export function RotatingBadge({
           </span>
         ))}
       </div>
-      <span className="absolute inset-8 flex items-center justify-center rounded-full border border-white/15 transition group-hover:border-flame-500 sm:inset-10">
+      <span className="absolute inset-8 flex items-center justify-center rounded-full border border-line transition group-hover:border-flame sm:inset-10">
         <svg
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
           strokeWidth="1.5"
-          className="h-6 w-6 text-carbon-50 transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1"
+          className="h-6 w-6 text-ink transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1"
         >
           <path d="M7 17 17 7M9 7h8v8" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
@@ -174,10 +174,10 @@ export function Marquee({
         {doubled.map((item, i) => (
           <span
             key={i}
-            className="flex shrink-0 items-center gap-8 pr-8 text-2xl font-semibold tracking-tight text-carbon-200 sm:text-4xl"
+            className="flex shrink-0 items-center gap-8 pr-8 text-2xl font-semibold tracking-tight text-ink-soft sm:text-4xl"
           >
             {item}
-            <span className="text-flame-500">✦</span>
+            <span className="text-flame">✦</span>
           </span>
         ))}
       </div>

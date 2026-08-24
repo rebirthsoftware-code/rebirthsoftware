@@ -45,7 +45,7 @@ export default function AboutPage() {
         <Container>
           <div className="grid gap-12 lg:grid-cols-12">
             <div className="lg:col-span-7">
-              <div className="prose-tr space-y-5 text-base leading-relaxed text-carbon-200">
+              <div className="prose-tr space-y-5 text-base leading-relaxed text-ink-soft">
                 <p>
                   Çoğu işletmenin dijital tecrübesi birbirine benziyor: ucuza
                   yapılmış, mobilde bozulan, güncellenemeyen ve bir süre sonra
@@ -73,16 +73,16 @@ export default function AboutPage() {
                 </p>
               </div>
 
-              <h2 className="mt-12 text-xl font-semibold text-white">
+              <h2 className="mt-12 text-xl font-semibold text-ink">
                 Çalışma ilkelerimiz
               </h2>
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
                 {values.map((v) => (
                   <div key={v.title} className="card p-5">
-                    <h3 className="text-sm font-semibold text-white">
+                    <h3 className="text-sm font-semibold text-ink">
                       {v.title}
                     </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-carbon-400">
+                    <p className="mt-2 text-sm leading-relaxed text-muted">
                       {v.text}
                     </p>
                   </div>
@@ -92,7 +92,7 @@ export default function AboutPage() {
 
             <aside className="lg:col-span-5">
               <div className="card p-6 sm:p-7">
-                <h2 className="text-base font-semibold text-white">
+                <h2 className="text-base font-semibold text-ink">
                   Kısaca {site.name}
                 </h2>
                 <ul className="mt-5 space-y-3">
@@ -105,15 +105,15 @@ export default function AboutPage() {
                   <CheckItem>Teslim sonrası bakım ve destek</CheckItem>
                 </ul>
 
-                <div className="mt-7 border-t border-white/10 pt-6">
-                  <h3 className="text-xs font-semibold tracking-wide text-carbon-400 uppercase">
+                <div className="mt-7 border-t border-line pt-6">
+                  <h3 className="text-xs font-semibold tracking-wide text-muted uppercase">
                     Kullandığımız teknolojiler
                   </h3>
                   <div className="mt-3 flex flex-wrap gap-2">
                     {techStack.map((t) => (
                       <span
                         key={t.name}
-                        className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs text-carbon-200"
+                        className="rounded-lg border border-line bg-ink/[0.04] px-2.5 py-1.5 text-xs text-ink-soft"
                       >
                         {t.name}
                       </span>
@@ -121,13 +121,13 @@ export default function AboutPage() {
                   </div>
                 </div>
 
-                <div className="mt-7 grid grid-cols-2 gap-3 border-t border-white/10 pt-6">
+                <div className="mt-7 grid grid-cols-2 gap-3 border-t border-line pt-6">
                   {site.stats.map((s) => (
                     <div key={s.label}>
-                      <div className="text-2xl font-semibold text-white">
+                      <div className="text-2xl font-semibold text-ink">
                         {s.value}
                       </div>
-                      <div className="text-xs text-carbon-400">{s.label}</div>
+                      <div className="text-xs text-muted">{s.label}</div>
                     </div>
                   ))}
                 </div>
@@ -144,13 +144,13 @@ export default function AboutPage() {
             <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {advantages.map((a) => (
                 <div key={a.title} className="card p-6">
-                  <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-flame-500/15 text-flame-500">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-flame/15 text-flame">
                     <Icon name={a.icon} className="h-5 w-5" />
                   </span>
-                  <h3 className="mt-4 text-base font-semibold text-white">
+                  <h3 className="mt-4 text-base font-semibold text-ink">
                     {a.title}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-carbon-400">
+                  <p className="mt-2 text-sm leading-relaxed text-muted">
                     {a.text}
                   </p>
                 </div>

@@ -14,21 +14,21 @@ export function CtaSection({
   const [first, ...rest] = title.split(" ");
 
   return (
-    <section className="noise relative overflow-hidden border-t border-white/10 py-28 sm:py-40">
+    <section className="noise relative overflow-hidden border-t border-line py-28 sm:py-40">
       <Container className="relative">
         <div className="flex flex-col items-start justify-between gap-14 lg:flex-row lg:items-center">
           <div className="max-w-3xl">
             <RevealLines
-              className="display text-carbon-50"
+              className="display text-ink"
               lines={[
                 <>
                   {first}{" "}
-                  <span className="text-flame-500">{rest.join(" ")}</span>
+                  <span className="text-flame">{rest.join(" ")}</span>
                 </>,
               ]}
             />
             <Reveal delay={220}>
-              <p className="mt-8 max-w-xl text-[17px] leading-relaxed text-carbon-300">
+              <p className="mt-8 max-w-xl text-[17px] leading-relaxed text-muted">
                 {description}
               </p>
               <div className="mt-10 flex flex-col gap-3 sm:flex-row">
@@ -48,11 +48,11 @@ export function CtaSection({
                   WhatsApp&apos;tan yaz
                 </Button>
               </div>
-              <p className="mt-8 text-sm text-carbon-400">
+              <p className="mt-8 text-sm text-muted">
                 Ya da doğrudan arayın:{" "}
                 <a
                   href={site.phoneHref}
-                  className="link-underline font-semibold text-carbon-50"
+                  className="link-underline font-semibold text-ink"
                 >
                   {site.phone}
                 </a>
