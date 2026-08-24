@@ -11,7 +11,7 @@ export type Project = {
   result: string[];
   stack: string[];
   url?: string;
-  /** Görsel: /public/projeler klasörüne ekle, örn "/projeler/ornek.jpg" */
+  /** Görsel: /public/projeler klasörüne ekle, örn "/projeler/ornek.webp" */
   image?: string;
   /** İsteğe bağlı: görsel yokken kart arka planına degrade uygular.
    *  Boş bırakılırsa nötr koyu bir yer tutucu kullanılır (önerilen). */
@@ -20,130 +20,82 @@ export type Project = {
 };
 
 /**
- * ⚠️ ÖRNEK VERİDİR.
- * Buradaki kayıtları kendi gerçek referanslarınla değiştir.
- * Her proje için ekran görüntüsünü /public/projeler/ içine koyup
- * `image` alanına yolunu yaz. Görsel yoksa degrade arka plan kullanılır.
+ * Gerçek referans projeler.
+ *
+ * NOT — `result` alanı: buradaki maddeler siteye bakılarak yazılmış,
+ * doğrulanabilir çıktılardır. Elinizde gerçek ölçüm varsa (ziyaretçi artışı,
+ * randevu sayısı, PageSpeed skoru) bunları o rakamlarla değiştirin —
+ * ölçülebilir sonuç, özellik listesinden çok daha ikna edicidir.
  */
 export const projects: Project[] = [
   {
-    slug: "atlas-muhendislik",
-    title: "Atlas Mühendislik Kurumsal Sitesi",
-    client: "Atlas Mühendislik",
-    sector: "Endüstriyel üretim",
-    year: "2025",
+    slug: "endamsince-1979",
+    title: "Endamsince 1979 Kurumsal Sitesi",
+    client: "Endamsince Erkek Kuaför",
+    sector: "Erkek kuaför & bakım",
+    year: "2026",
     type: "Kurumsal Web Sitesi",
-    summary:
-      "Ürün kataloğu ağır olan bir mühendislik firması için çok dilli kurumsal site.",
-    challenge:
-      "Firmanın 200'ün üzerinde ürünü tek bir PDF kataloğunda duruyordu; yurt dışından gelen talepler telefonla takip ediliyor, hangi ürünün ilgi gördüğü ölçülemiyordu.",
-    solution:
-      "Ürünleri kategorilere ayıran filtrelenebilir bir katalog yapısı kurduk. Her ürün sayfasına doğrudan teklif formu ekledik, formlar hem e-postaya hem panele düşecek şekilde kurgulandı. Site Türkçe ve İngilizce olarak yayına alındı.",
-    result: [
-      "Teklif formu üzerinden gelen talep sayısı ilk 3 ayda 4 katına çıktı",
-      "Mobil PageSpeed skoru 62'den 97'ye yükseldi",
-      "İngilizce sayfalar üzerinden ilk yurt dışı siparişi alındı",
-    ],
-    stack: ["Next.js", "TypeScript", "Tailwind CSS", "Vercel"],
+    url: "https://endamsince1979.com",
+    image: "/projeler/endamsince-1979.webp",
     featured: true,
+    summary:
+      "1979'dan beri Zonguldak'ta hizmet veren, üç farklı konseptte şubesi olan köklü bir erkek kuaförü için kurumsal tanıtım ve randevu sitesi.",
+    challenge:
+      "45 yıllık bir markanın dijitalde hiçbir karşılığı yoktu. Plus, Urban ve Junior olmak üzere üç ayrı konseptteki şube tek bir çatı altında anlatılamıyor; hizmet içerikleri, fiyatlar ve randevu talepleri tamamen telefon üzerinden yürütülüyordu.",
+    solution:
+      "Markanın kıdemini ve butik duruşunu öne çıkaran koyu, editoryal bir tasarım dili kurduk. Hizmet ve fiyat listesi, galeri, ürünler ve ekip bölümlerini tek akışta topladık; üç şube kendi kimliğiyle tanıtılırken ziyaretçi her bölümden tek adımda randevu talebine geçebiliyor. Site Next.js ile sıfırdan kodlandı ve telefona uygulama gibi eklenebilmesi için PWA olarak yapılandırıldı.",
+    result: [
+      "Üç şube, hizmet listesi ve güncel fiyatlarıyla tek adreste toplandı",
+      "Randevu talebi her bölümden tek tıkla ulaşılabilir hale geldi",
+      "Ekip, galeri ve ürünler bölümleriyle marka dijitalde ilk kez eksiksiz temsil ediliyor",
+    ],
+    stack: ["Next.js", "React", "PWA", "Randevu akışı"],
   },
   {
-    slug: "meridyen-hukuk",
-    title: "Meridyen Hukuk Bürosu",
-    client: "Meridyen Hukuk",
-    sector: "Hukuk",
-    year: "2025",
+    slug: "yusuferoglu-hair-art-vip",
+    title: "Yusuferoğlu Hair Art VIP",
+    client: "Yusuferoğlu Hair Art VIP",
+    sector: "Premium erkek kuaför",
+    year: "2026",
     type: "Kurumsal Web Sitesi",
-    summary:
-      "Güven veren, sade ve içerik odaklı bir hukuk bürosu web sitesi.",
-    challenge:
-      "Büronun dijitalde hiçbir görünürlüğü yoktu; potansiyel müvekkiller yalnızca tavsiye yoluyla ulaşıyordu.",
-    solution:
-      "Uzmanlık alanlarını anlatan sayfalar ve düzenli yayınlanabilen bir makale bölümü kurduk. Teknik SEO altyapısıyla şehir + uzmanlık alanı aramalarında görünürlük hedeflendi.",
-    result: [
-      "Yayından 5 ay sonra organik aramadan ayda 900+ ziyaretçi",
-      "Randevu formu üzerinden düzenli ilk görüşme talepleri",
-    ],
-    stack: ["Next.js", "MDX Blog", "Tailwind CSS"],
+    url: "https://yusuferogluhairartvip.com",
+    image: "/projeler/yusuferoglu-hair-art-vip.webp",
     featured: true,
-  },
-  {
-    slug: "servis-takip-paneli",
-    title: "Teknik Servis Takip Paneli",
-    client: "Beyaz eşya teknik servisi",
-    sector: "Servis & bakım",
-    year: "2024",
-    type: "Kişiye Özel Yazılım",
     summary:
-      "Servis kaydından teslimata kadar tüm süreci tek panelden yöneten özel yazılım.",
+      "Karabük'te premium segmentte çalışan bir erkek kuaförü için, VIP konumlandırmasını görsel dile taşıyan kurumsal site.",
     challenge:
-      "Servis kayıtları deftere ve WhatsApp mesajlarına dağılmıştı. Hangi cihazın hangi teknisyende olduğu, parça maliyetinin ne olduğu takip edilemiyordu.",
+      "İşletme premium bir hizmet veriyordu ancak dijitalde bunu anlatan bir yüzü yoktu. Fiyat aralığı ve hizmet kapsamı görünmediği için gelen talepler nitelik olarak dağınıktı.",
     solution:
-      "Cihaz kabulünden teslimata kadar her adımı durum akışına bağlayan bir panel geliştirdik. Teknisyen yetkileri ayrıldı, müşteriye otomatik SMS bilgilendirmesi ve aylık ciro/parça raporu eklendi.",
+      "Siyah–altın kontrastı üzerine kurulu, markanın VIP konumlandırmasını ilk saniyede aktaran bir tasarım hazırladık. Hizmetler fiyatlarıyla birlikte açıkça listelendi; galeri, ürünler ve ekip bölümleri eklendi. Randevu çağrısı sayfanın her noktasından erişilebilir konumda tutuldu.",
     result: [
-      "Kayıp servis kaydı sıfıra indi",
-      "Ortalama teslim süresi 6 günden 3,5 güne düştü",
-      "Aylık raporlama işi 2 günden 5 dakikaya indi",
+      "Hizmet kapsamı ve fiyatlar site üzerinden şeffaf şekilde görünüyor",
+      "Premium konumlandırma görsel dile taşındı; gelen talepler doğru segmentten geliyor",
+      "Galeri ve ekip bölümleriyle işletme, ziyaretçiye gelmeden önce güven veriyor",
     ],
-    stack: ["Next.js", "PostgreSQL", "Prisma", "Rol bazlı yetkilendirme"],
-    featured: true,
+    stack: ["Next.js", "React", "PWA", "Randevu akışı"],
   },
   {
-    slug: "nova-klinik-randevu",
-    title: "Nova Klinik Randevu Sistemi",
-    client: "Nova Klinik",
-    sector: "Sağlık",
-    year: "2024",
-    type: "Kişiye Özel Yazılım",
-    summary:
-      "Online randevu alma ve doktor takvimi yönetimi için web tabanlı sistem.",
-    challenge:
-      "Randevular telefonla alınıyor, yoğun saatlerde aramalar cevapsız kalıyordu. Doktor takvimleri çakışıyordu.",
-    solution:
-      "Hastanın uygun saatleri görüp kendi randevusunu oluşturabildiği bir sistem kurduk. Doktor bazlı takvim, izin günleri ve otomatik hatırlatma e-postası eklendi.",
-    result: [
-      "Randevuların %60'ı artık online alınıyor",
-      "Gelmeyen hasta oranı hatırlatmalarla belirgin şekilde azaldı",
-    ],
-    stack: ["Next.js", "PostgreSQL", "E-posta bildirimleri"],
-  },
-  {
-    slug: "kuzey-insaat",
-    title: "Kuzey İnşaat Proje Vitrini",
-    client: "Kuzey İnşaat",
-    sector: "İnşaat & gayrimenkul",
-    year: "2024",
+    slug: "pastalia-bostanli",
+    title: "Pastalia Bostanlı",
+    client: "Pastalia",
+    sector: "Restoran & yeme-içme",
+    year: "2026",
     type: "Kurumsal Web Sitesi",
+    url: "https://pastaliabostanli.com",
+    image: "/projeler/pastalia-bostanli.webp",
+    featured: true,
     summary:
-      "Tamamlanan ve devam eden projeleri görsel ağırlıklı sunan kurumsal site.",
+      "İzmir Bostanlı'daki İtalyan sokak lezzetleri mekânı için görsel ağırlıklı, menü odaklı tanıtım sitesi.",
     challenge:
-      "Firma projelerini yalnızca sosyal medyada paylaşıyordu; kurumsal bir vitrin ve satış öncesi bilgi kaynağı yoktu.",
+      "Mekânın menüsü yalnızca sosyal medyada ve masadaki basılı listede vardı. Gelmeden önce ne yediğini görmek isteyen ziyaretçi için tek kaynak yoktu; konum ve iletişim bilgileri de dağınıktı.",
     solution:
-      "Her proje için galeri, kat planı ve konum bilgisi içeren detay sayfaları oluşturduk. Ziyaretçinin ilgilendiği projeden doğrudan iletişime geçebildiği bir akış kurgulandı.",
+      "Yemek fotoğraflarını merkeze alan, açılışta mekânı tanıtan görsel bir akış kurduk. Menü kategorilere ayrılarak site üzerinden gezilebilir hale getirildi; işletmenin hikâyesi, konumu ve iletişim kanalları tek sayfada toplandı. Site Astro ile kodlandığı için görsel yoğunluğuna rağmen hızlı açılıyor.",
     result: [
-      "Satış ekibine gelen taleplerin kaynağı ilk kez ölçülebilir hale geldi",
-      "Proje sayfaları üzerinden düzenli iletişim formu girişi",
+      "Menünün tamamı, kategorileriyle birlikte site üzerinden görülebiliyor",
+      "Konum, telefon ve sosyal medya tek noktada toplandı",
+      "Görsel ağırlıklı bir sayfa olmasına rağmen statik üretimle hızlı açılıyor",
     ],
-    stack: ["Next.js", "Tailwind CSS", "Görsel optimizasyonu"],
-  },
-  {
-    slug: "form-tasarim-yenileme",
-    title: "Form Reklam Ajansı Arayüz Yenileme",
-    client: "Form Reklam",
-    sector: "Reklam & tanıtım",
-    year: "2023",
-    type: "Web Tasarım",
-    summary:
-      "Mevcut sitenin altyapısı korunarak baştan sona arayüz yenilemesi.",
-    challenge:
-      "Site içeriği yeterliydi ancak tasarım dili eskimişti ve mobilde okunmuyordu.",
-    solution:
-      "İçerik yapısını koruyup tipografi, renk ve bileşen sistemini yeniden kurduk. Mobil öncelikli bir düzene geçildi.",
-    result: [
-      "Mobil hemen çıkma oranı belirgin şekilde geriledi",
-      "Sayfada kalma süresi arttı",
-    ],
-    stack: ["UI/UX", "Tasarım sistemi", "Responsive düzen"],
+    stack: ["Astro", "Statik üretim", "Görsel optimizasyonu", "Google Maps"],
   },
 ];
 

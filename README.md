@@ -40,7 +40,14 @@ npm run test       # Playwright testleri (derleme yapılmış olmalı)
 | Mobil menü | Açılıyor mu, Esc kapatıyor mu, odak düğmeye dönüyor mu |
 | Teklif formu | Hatalı gönderimde alan bazlı doğrulama çalışıyor mu |
 | Bağlantılar | Ana sayfadaki iç bağlantılardan kırık olan var mı |
+| Proje görselleri | Görseller yükleniyor mu (alt dizinli yayında da) |
 | SEO | sitemap.xml, robots.txt ve feed.xml yayında mı |
+
+Testler alt dizinde yayınlanan sürüm için de çalıştırılabilir:
+
+```bash
+BASE_URL=http://localhost:4300 BASE_PATH=/rebirthsoftware npm run test
+```
 
 GitHub'da her push'ta `.github/workflows/ci.yml` bu kontrollerin tamamını
 çalıştırır; test başarısız olursa rapor Actions çıktısına yüklenir.
@@ -151,7 +158,9 @@ Tüm site bu tek dosyadan beslenir.
 }
 ```
 
-Ekran görüntülerini `public/projeler/` klasörüne koyun (16:9 veya 4:3 önerilir).
+Ekran görüntülerini `public/projeler/` klasörüne koyun (1600×1000, WebP önerilir).
+Görsel yolunu her zaman `/projeler/...` şeklinde yazın; `lib/asset.ts` alt dizinli
+yayında (GitHub Pages) önekini otomatik ekler.
 Görsel eklenmezse kart, müşteri adının baş harflerini gösteren nötr bir yer
 tutucu kullanır — `gradient` alanını yalnızca özellikle renkli bir arka plan
 istiyorsanız doldurun.

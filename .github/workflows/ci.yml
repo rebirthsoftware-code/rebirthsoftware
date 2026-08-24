@@ -54,7 +54,21 @@ jobs:
             playwright-report/
           retention-days: 7
 
-      - name: Statik dışa aktarım da derleniyor mu?
+      # GitHub Pages sürümü alt dizinde yayınlanır. Düz <img src="/..."> gibi
+      # yollar basePath almadığı için bu sürüm ayrıca test edilir.
+      - name: Statik dışa aktarımı derle ve alt dizinde test et
         run: |
-          rm -rf app/api
-          STATIC_EXPORT=true NEXT_PUBLIC_STATIC_EXPORT=true npm run build
+          rm -rf app/api .next out
+          STATIC_EXPORT=true \
+          NEXT_PUBLIC_STATIC_EXPORT=true \
+          NEXT_PUBLIC_BASE_PATH=/${{ github.event.repository.name }} \
+          npm run build
+
+          mkdir -p /tmp/pages/${{ github.event.repository.name }}
+          cp -r out/* /tmp/pages/${{ github.event.repository.name }}/
+          (cd /tmp/pages && python3 -m http.server 4300 &) 
+          sleep 3
+
+          BASE_URL=http://localhost:4300 \
+          BASE_PATH=/${{ github.event.repository.name }} \
+          npm run test

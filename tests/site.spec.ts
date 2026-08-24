@@ -1,13 +1,20 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
+/**
+ * Alt dizinde yayınlanan sürümü (GitHub Pages) de test edebilmek için
+ * rotalar BASE_PATH ile öneklenir. Boşsa kök dizinde çalışır.
+ */
+const BASE_PATH = process.env.BASE_PATH ?? "";
+const yol = (p: string) => `${BASE_PATH}${p}`;
+
 /** Sitedeki tüm statik rotalar */
 const ROUTES = [
   "/",
   "/hizmetler",
   "/hizmetler/kurumsal-web-sitesi",
   "/projeler",
-  "/projeler/atlas-muhendislik",
+  "/projeler/endamsince-1979",
   "/blog",
   "/blog/site-hizi-neden-onemli",
   "/surec",
@@ -28,7 +35,7 @@ test.describe("sayfalar", () => {
         if (m.type() === "error") errors.push(m.text());
       });
 
-      const res = await page.goto(route, { waitUntil: "networkidle" });
+      const res = await page.goto(yol(route), { waitUntil: "networkidle" });
       expect(res?.status(), `${route} durum kodu`).toBe(200);
 
       // Her sayfada tek bir h1 ve dolu bir başlık olmalı
@@ -41,7 +48,7 @@ test.describe("sayfalar", () => {
 });
 
 test("erişilebilirlik: ana sayfada ciddi ihlal yok", async ({ page }) => {
-  await page.goto("/", { waitUntil: "networkidle" });
+  await page.goto(yol("/"), { waitUntil: "networkidle" });
   const results = await new AxeBuilder({ page })
     .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
     .analyze();
@@ -56,7 +63,7 @@ test("erişilebilirlik: ana sayfada ciddi ihlal yok", async ({ page }) => {
 });
 
 test("erişilebilirlik: teklif formunda ciddi ihlal yok", async ({ page }) => {
-  await page.goto("/teklif-al", { waitUntil: "networkidle" });
+  await page.goto(yol("/teklif-al"), { waitUntil: "networkidle" });
   const results = await new AxeBuilder({ page })
     .withTags(["wcag2a", "wcag2aa"])
     .analyze();
@@ -70,7 +77,7 @@ test("mobil menü: açılıyor, Esc kapatıyor, odak düğmeye dönüyor", async
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/hizmetler", { waitUntil: "networkidle" });
+  await page.goto(yol("/hizmetler"), { waitUntil: "networkidle" });
 
   const toggle = page.locator('button[aria-controls="mobil-menu"]');
   await toggle.click();
@@ -90,8 +97,10 @@ test("mobil menü: açılıyor, Esc kapatıyor, odak düğmeye dönüyor", async
 test("teklif formu: boş gönderimde alan bazlı hata gösteriyor", async ({
   page,
 }) => {
-  await page.goto("/teklif-al", { waitUntil: "networkidle" });
-  const res = await page.request.post("/api/teklif", {
+  // Statik dışa aktarımda sunucu rotası yoktur; bu test yalnızca tam sürümde anlamlı.
+  test.skip(!!BASE_PATH, "statik sürümde /api yok");
+  await page.goto(yol("/teklif-al"), { waitUntil: "networkidle" });
+  const res = await page.request.post(yol("/api/teklif"), {
     data: { name: "a", email: "bozuk", message: "kısa", consent: false },
   });
   expect(res.status()).toBe(422);
@@ -105,7 +114,7 @@ test("teklif formu: boş gönderimde alan bazlı hata gösteriyor", async ({
 });
 
 test("iç bağlantıların hiçbiri kırık değil", async ({ page, request }) => {
-  await page.goto("/", { waitUntil: "networkidle" });
+  await page.goto(yol("/"), { waitUntil: "networkidle" });
   const hrefs = await page.$$eval("a[href^='/']", (as) =>
     Array.from(new Set(as.map((a) => a.getAttribute("href")!)))
   );
@@ -118,9 +127,27 @@ test("iç bağlantıların hiçbiri kırık değil", async ({ page, request }) =
   expect(kirik).toEqual([]);
 });
 
+test("proje görselleri yükleniyor (basePath dahil)", async ({ page }) => {
+  await page.goto(yol("/projeler"), { waitUntil: "networkidle" });
+  const imgs = page.locator("img");
+  const adet = await imgs.count();
+  expect(adet, "projeler sayfasında görsel bulunmalı").toBeGreaterThan(0);
+
+  const bozuk: string[] = [];
+  for (let i = 0; i < adet; i++) {
+    const el = imgs.nth(i);
+    const src = await el.getAttribute("src");
+    const yuklendi = await el.evaluate(
+      (n: HTMLImageElement) => n.complete && n.naturalWidth > 0
+    );
+    if (!yuklendi) bozuk.push(src ?? "(src yok)");
+  }
+  expect(bozuk, "yüklenemeyen görseller").toEqual([]);
+});
+
 test("SEO: sitemap, robots ve RSS yayında", async ({ request }) => {
   for (const path of ["/sitemap.xml", "/robots.txt", "/feed.xml"]) {
-    const res = await request.get(path);
+    const res = await request.get(yol(path));
     expect(res.status(), path).toBe(200);
     expect((await res.text()).length, path).toBeGreaterThan(50);
   }

@@ -1,4 +1,5 @@
 import type { Project } from "@/lib/projects";
+import { asset } from "@/lib/asset";
 import { ProjectMockup } from "./ProjectMockup";
 
 /**
@@ -18,7 +19,7 @@ export function ProjectVisual({
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img
-        src={project.image}
+        src={asset(project.image)}
         alt={`${project.title} ekran görüntüsü`}
         loading="lazy"
         className={`h-full w-full object-cover ${

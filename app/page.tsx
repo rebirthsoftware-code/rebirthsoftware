@@ -242,7 +242,7 @@ export default function HomePage() {
           </Reveal>
 
           <div className="mt-20 border-t border-line">
-            {projects.slice(1, 6).map((p, i) => (
+            {projects.slice(1).map((p, i) => (
               <Reveal key={p.slug} delay={i * 60}>
                 <ProjectRow project={p} index={i + 1} />
               </Reveal>
