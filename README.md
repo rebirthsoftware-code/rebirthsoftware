@@ -4,6 +4,7 @@ Kurumsal web sitesi ve kişiye özel yazılım hizmetleri için hazırlanmış,
 Vercel üzerinde çalışan kurumsal tanıtım sitesi.
 
 **Teknolojiler:** Next.js 16 (App Router) · TypeScript · Tailwind CSS 4 · Vercel
+**Kalite:** ESLint · TypeScript kontrolü · Playwright (sayfa, erişilebilirlik, form, bağlantı testleri)
 
 ---
 
@@ -15,11 +16,34 @@ cp .env.example .env.local   # değerleri kendinize göre düzenleyin
 npm run dev                  # http://localhost:3000
 ```
 
-Yayına almadan önce derlemeyi kontrol edin:
+Yayına almadan önce her şeyi tek komutla kontrol edin:
 
 ```bash
-npm run build
+npm run check     # lint + tip kontrolü + derleme + testler
 ```
+
+Tek tek çalıştırmak isterseniz:
+
+```bash
+npm run lint       # ESLint
+npm run typecheck  # tsc --noEmit
+npm run build      # üretim derlemesi
+npm run test       # Playwright testleri (derleme yapılmış olmalı)
+```
+
+### Testler ne kontrol ediyor?
+
+| Test | Kapsam |
+|------|--------|
+| Sayfa testleri | 14 rota 200 dönüyor mu, tek `<h1>` var mı, konsol hatası var mı |
+| Erişilebilirlik | axe ile ana sayfa ve teklif formunda ciddi WCAG ihlali var mı |
+| Mobil menü | Açılıyor mu, Esc kapatıyor mu, odak düğmeye dönüyor mu |
+| Teklif formu | Hatalı gönderimde alan bazlı doğrulama çalışıyor mu |
+| Bağlantılar | Ana sayfadaki iç bağlantılardan kırık olan var mı |
+| SEO | sitemap.xml, robots.txt ve feed.xml yayında mı |
+
+GitHub'da her push'ta `.github/workflows/ci.yml` bu kontrollerin tamamını
+çalıştırır; test başarısız olursa rapor Actions çıktısına yüklenir.
 
 ---
 
@@ -138,8 +162,28 @@ ana sayfada, hizmetler sayfasında, alt menüde, teklif formundaki seçim
 listesinde ve site haritasında görünür.
 
 ### Süreç, avantajlar ve SSS
-`lib/process.ts` — çalışma adımları, "neden biz" maddeleri, teknoloji listesi
-ve genel sık sorulan sorular.
+`lib/process.ts` — çalışma adımları, "neden biz" maddeleri, teknoloji listesi,
+sektörler ve genel sık sorulan sorular.
+
+### Blog yazısı ekleme
+`lib/posts.ts` içindeki diziye yeni bir nesne ekleyin; liste sayfası, detay
+sayfası, ana sayfadaki blog bölümü, site haritası ve RSS otomatik güncellenir.
+
+```ts
+{
+  slug: "yazi-adresi",
+  title: "Yazı başlığı",
+  excerpt: "Listede ve paylaşımda görünen tek cümlelik özet.",
+  date: "2026-09-01",          // YYYY-MM-DD
+  readingMinutes: 5,
+  category: "SEO",              // Web Tasarım | SEO | Yazılım | İşletme
+  body: [
+    { p: "Giriş paragrafı." },
+    { h: "Alt başlık", p: "Paragraf." },
+    { h: "Liste başlığı", list: ["Madde 1", "Madde 2"] },
+  ],
+}
+```
 
 ---
 
@@ -169,18 +213,23 @@ bulunur.
 /projeler/[slug]        Proje detay (sorun → çözüm → sonuç)
 /surec                  Nasıl çalışıyoruz
 /hakkimizda             Hakkımızda
+/blog                   Blog listesi
+/blog/[slug]            Yazı detayı
 /sss                    Sık sorulan sorular
 /teklif-al              Teklif formu  ← ana dönüşüm sayfası
 /iletisim               İletişim + form
 /kvkk, /gizlilik        Yasal metinler
 /sitemap.xml, /robots.txt   Otomatik üretilir
+/feed.xml               RSS akışı (yazılardan otomatik)
 ```
 
 ## 7. SEO için kurulanlar
 
 - Her sayfada özel `title` / `description` ve canonical adres
 - Open Graph görseli otomatik üretilir (`app/opengraph-image.tsx`)
-- `schema.org` yapılandırılmış veri: ProfessionalService, Service, FAQPage
+- `schema.org` yapılandırılmış veri: ProfessionalService, Service, FAQPage,
+  BlogPosting ve detay sayfalarında BreadcrumbList
+- RSS akışı ve blog modülü (düzenli içerik = organik trafik)
 - Otomatik `sitemap.xml` ve `robots.txt`
 - Tamamı statik üretilen (SSG) hızlı sayfalar
 

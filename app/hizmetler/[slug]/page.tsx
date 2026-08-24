@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { PageHero } from "@/components/PageHero";
 import { CtaSection } from "@/components/CtaSection";
 import { Faq } from "@/components/Faq";
@@ -51,6 +52,15 @@ export default async function ServiceDetailPage({
 
   return (
     <>
+      <Container className="pt-28 sm:pt-32">
+        <Breadcrumbs
+          items={[
+            { href: "/hizmetler", label: "Hizmetler" },
+            { href: `/hizmetler/${service.slug}`, label: service.title },
+          ]}
+        />
+      </Container>
+
       <PageHero eyebrow="Hizmet" title={service.title} description={service.short}>
         <div className="flex flex-col gap-3 sm:flex-row">
           <Button href={`/teklif-al?hizmet=${service.slug}`}>

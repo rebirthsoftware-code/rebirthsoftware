@@ -1,0 +1,20 @@
+import coreWebVitals from "eslint-config-next/core-web-vitals";
+import typescript from "eslint-config-next/typescript";
+
+/** @type {import("eslint").Linter.Config[]} */
+const config = [
+  { ignores: [".next/**", "out/**", "node_modules/**", "next-env.d.ts"] },
+  ...coreWebVitals,
+  ...typescript,
+  {
+    rules: {
+      // Kullanılmayan değişkenler hata; başında _ olanlar bilinçli sayılır.
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
+      ],
+    },
+  },
+];
+
+export default config;

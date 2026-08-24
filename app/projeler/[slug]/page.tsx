@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { CtaSection } from "@/components/CtaSection";
 import { Icon } from "@/components/Icon";
 import { ProjectCard } from "@/components/ProjectCard";
@@ -45,13 +45,12 @@ export default async function ProjectDetailPage({
         <div className="" />
         <Container className="relative">
           <div className="py-14 sm:py-16">
-            <Link
-              href="/projeler"
-              className="inline-flex items-center gap-1.5 text-sm text-muted transition hover:text-ink"
-            >
-              <Icon name="arrow" className="h-4 w-4 rotate-180" />
-              Tüm projeler
-            </Link>
+            <Breadcrumbs
+              items={[
+                { href: "/projeler", label: "Projeler" },
+                { href: `/projeler/${project.slug}`, label: project.title },
+              ]}
+            />
 
             <div className="mt-6 grid items-start gap-10 lg:grid-cols-12">
               <div className="lg:col-span-7">

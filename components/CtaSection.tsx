@@ -19,6 +19,7 @@ export function CtaSection({
         <div className="flex flex-col items-start justify-between gap-14 lg:flex-row lg:items-center">
           <div className="max-w-3xl">
             <RevealLines
+              as="h2"
               className="display-lg text-ink"
               lines={[
                 <>

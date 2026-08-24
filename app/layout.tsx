@@ -5,6 +5,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFab } from "@/components/WhatsAppFab";
 import { ScrollProgress } from "@/components/ScrollProgress";
+import { CookieNotice } from "@/components/CookieNotice";
 import { site } from "@/lib/site";
 
 const epilogue = Epilogue({
@@ -31,7 +32,10 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: site.name }],
   creator: site.name,
-  alternates: { canonical: "/" },
+  alternates: {
+    canonical: "/",
+    types: { "application/rss+xml": "/feed.xml" },
+  },
   openGraph: {
     type: "website",
     locale: "tr_TR",
@@ -100,6 +104,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <WhatsAppFab />
+        <CookieNotice />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

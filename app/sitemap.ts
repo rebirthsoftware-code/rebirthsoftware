@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { services } from "@/lib/services";
 import { projects } from "@/lib/projects";
+import { posts } from "@/lib/posts";
 import { site } from "@/lib/site";
 
 export const dynamic = "force-static";
@@ -14,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/projeler", priority: 0.9 },
     { path: "/surec", priority: 0.7 },
     { path: "/hakkimizda", priority: 0.7 },
+    { path: "/blog", priority: 0.8 },
     { path: "/sss", priority: 0.6 },
     { path: "/teklif-al", priority: 0.9 },
     { path: "/iletisim", priority: 0.8 },
@@ -38,5 +40,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...staticRoutes, ...serviceRoutes, ...projectRoutes];
+  const postRoutes = posts.map((post) => ({
+    url: `${site.url}/blog/${post.slug}`,
+    lastModified: new Date(`${post.date}T00:00:00Z`),
+    changeFrequency: "yearly" as const,
+    priority: 0.6,
+  }));
+
+  return [...staticRoutes, ...serviceRoutes, ...projectRoutes, ...postRoutes];
 }

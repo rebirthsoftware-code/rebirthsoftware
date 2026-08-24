@@ -58,14 +58,20 @@ export function RevealLines({
   lines,
   className = "",
   delay = 0,
+  as: Tag = "div",
 }: {
   lines: React.ReactNode[];
   className?: string;
   delay?: number;
+  /** Başlık olarak kullanılacaksa h1/h2 verin; belge yapısı için önemli. */
+  as?: "h1" | "h2" | "h3" | "div" | "p";
 }) {
   const { ref, visible } = useInView<HTMLDivElement>();
   return (
-    <div ref={ref} className={`${visible ? "is-visible" : ""} ${className}`}>
+    <Tag
+      ref={ref as never}
+      className={`${visible ? "is-visible" : ""} ${className}`}
+    >
       {lines.map((line, i) => (
         <span
           key={i}
@@ -75,7 +81,7 @@ export function RevealLines({
           <span>{line}</span>
         </span>
       ))}
-    </div>
+    </Tag>
   );
 }
 
@@ -88,24 +94,23 @@ export function Counter({
   duration?: number;
 }) {
   const { ref, visible } = useInView<HTMLSpanElement>();
-  const [shown, setShown] = useState("0");
+  // Sunucuda ve JS çalışmadığında doğru değer görünsün diye başlangıç
+  // durumu son değerdir; animasyon ilk karede sıfırdan başlar.
+  const [shown, setShown] = useState(value);
 
   useEffect(() => {
     if (!visible) return;
     const match = value.match(/^(\D*)(\d+)(.*)$/);
-    if (!match) {
-      setShown(value);
-      return;
-    }
+    if (!match) return;
+
     const [, prefix, digits, suffix] = match;
     const target = Number(digits);
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setShown(value);
-      return;
-    }
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
     let raf = 0;
-    const start = performance.now();
+    let start = 0;
     const tick = (now: number) => {
+      if (!start) start = now;
       const p = Math.min(1, (now - start) / duration);
       const eased = 1 - Math.pow(1 - p, 3);
       setShown(`${prefix}${Math.round(target * eased)}${suffix}`);
@@ -209,15 +214,13 @@ export function ScrollText({
   className?: string;
 }) {
   const ref = useRef<HTMLParagraphElement>(null);
-  const [p, setP] = useState(0);
+  // JS çalışmazsa metin tam okunur kalsın diye başlangıç değeri 1.
+  const [p, setP] = useState(1);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setP(1);
-      return;
-    }
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     let raf = 0;
     const update = () => {
       const r = el.getBoundingClientRect();
@@ -230,7 +233,7 @@ export function ScrollText({
     const onScroll = () => {
       if (!raf) raf = requestAnimationFrame(update);
     };
-    update();
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
     return () => {

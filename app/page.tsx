@@ -19,6 +19,7 @@ import { projects } from "@/lib/projects";
 import { ProjectVisual } from "@/components/ProjectVisual";
 import { advantages, generalFaq, processSteps, sectors } from "@/lib/process";
 import { site, whatsappLink } from "@/lib/site";
+import { formatDate, sortedPosts } from "@/lib/posts";
 
 const faqJsonLd = {
  "@context": "https://schema.org",
@@ -55,6 +56,7 @@ export default function HomePage() {
               </Reveal>
 
               <RevealLines
+                as="h1"
                 className="display mt-6 text-ink"
                 delay={120}
                 lines={[
@@ -370,6 +372,54 @@ export default function HomePage() {
                 </Reveal>
               ))}
             </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* ---------------- BLOG ---------------- */}
+      <section className="py-24 sm:py-32">
+        <Container>
+          <Reveal>
+            <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
+              <div>
+                <Eyebrow>Blog</Eyebrow>
+                <h2 className="headline mt-6 text-ink">Yazdıklarımız</h2>
+              </div>
+              <ArrowLink href="/blog">Tüm yazılar</ArrowLink>
+            </div>
+          </Reveal>
+
+          <div className="mt-14 grid gap-px overflow-hidden rounded-lg bg-line md:grid-cols-3">
+            {sortedPosts.slice(0, 3).map((post, i) => (
+              <Reveal key={post.slug} delay={i * 90} className="bg-paper">
+                <Link
+                  href={`/blog/${post.slug}`}
+                  className="group flex h-full flex-col p-8 transition-colors duration-500 hover:bg-white"
+                >
+                  <div className="flex items-center gap-3 text-xs text-muted">
+                    <span className="rounded-full border border-line px-2.5 py-1">
+                      {post.category}
+                    </span>
+                    <time dateTime={post.date}>{formatDate(post.date)}</time>
+                  </div>
+
+                  <h3 className="mt-5 text-xl font-bold tracking-tight text-ink transition-colors duration-500 group-hover:text-flame">
+                    {post.title}
+                  </h3>
+                  <p className="mt-3 flex-1 text-[15px] leading-relaxed text-muted">
+                    {post.excerpt}
+                  </p>
+
+                  <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-ink">
+                    <span className="link-underline">{post.readingMinutes} dk okuma</span>
+                    <Icon
+                      name="arrowUpRight"
+                      className="h-3.5 w-3.5 text-flame transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    />
+                  </span>
+                </Link>
+              </Reveal>
+            ))}
           </div>
         </Container>
       </section>

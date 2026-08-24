@@ -14,6 +14,7 @@ const nav: NavItem[] = [
   { href: "/hizmetler", label: "Hizmetler", hint: "Ne yapıyoruz, neler dahil" },
   { href: "/projeler", label: "Projeler", hint: "Tamamladığımız işler" },
   { href: "/surec", label: "Süreç", hint: "Keşiften yayına dört adım" },
+  { href: "/blog", label: "Blog", hint: "İşinize yarayacak notlar" },
   { href: "/iletisim", label: "İletişim", hint: "Bize ulaşın" },
 ];
 
@@ -37,7 +38,13 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => setOpen(false), [pathname]);
+  // Sayfa değişince menüyü kapat. Effect yerine render sırasında düzeltme
+  // yapılıyor; React'in önerdiği "prop değişince state'i ayarla" kalıbı.
+  const [lastPath, setLastPath] = useState(pathname);
+  if (pathname !== lastPath) {
+    setLastPath(pathname);
+    if (open) setOpen(false);
+  }
 
   useEffect(() => {
     if (!open) {

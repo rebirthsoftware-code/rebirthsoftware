@@ -3,6 +3,7 @@ import { site, whatsappLink } from "@/lib/site";
 import { services } from "@/lib/services";
 import { Logo } from "./Header";
 import { Container } from "./ui";
+import { Wordmark } from "./Wordmark";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -64,6 +65,7 @@ export function Footer() {
                 { href: "/hakkimizda", label: "Biz" },
                 { href: "/surec", label: "Süreç" },
                 { href: "/projeler", label: "Projeler" },
+                { href: "/blog", label: "Blog" },
                 { href: "/sss", label: "SSS" },
                 { href: "/teklif-al", label: "Teklif Al" },
                 { href: "/iletisim", label: "İletişim" },
@@ -117,10 +119,8 @@ export function Footer() {
         </div>
 
         {/* Dev kelime işareti — sayfayı görsel olarak kapatır */}
-        <div className="mt-20 overflow-hidden" aria-hidden="true">
-          <span className="block text-center text-[clamp(3.5rem,15vw,13rem)] leading-[0.8] font-bold tracking-tighter text-ink/[0.07] select-none">
-            rebirth<span className="text-flame/25">.</span>
-          </span>
+        <div className="mt-20">
+          <Wordmark />
         </div>
 
         <div className="mt-14 flex flex-col gap-3 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">

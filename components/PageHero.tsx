@@ -22,6 +22,7 @@ export function PageHero({
         ) : null}
 
         <RevealLines
+          as="h1"
           className="headline mt-7 max-w-4xl text-ink"
           lines={[title]}
           delay={100}

@@ -1,0 +1,60 @@
+# Her push ve pull request'te kaliteyi kontrol eder.
+# Yayın iş akışı (github-pages.yml) bundan bağımsızdır.
+
+name: Kalite kontrol
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  kontrol:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Bağımlılıkları kur
+        run: npm ci
+
+      - name: Kod denetimi (ESLint)
+        run: npm run lint
+
+      - name: Tip denetimi
+        run: npm run typecheck
+
+      - name: Derleme
+        run: npm run build
+
+      - name: Tarayıcıyı kur
+        run: npx playwright install --with-deps chromium
+
+      - name: Testler (sayfalar, erişilebilirlik, form, bağlantılar)
+        run: npm run test
+
+      - name: Başarısız test çıktıları
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-raporu
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 7
+
+      - name: Statik dışa aktarım da derleniyor mu?
+        run: |
+          rm -rf app/api
+          STATIC_EXPORT=true NEXT_PUBLIC_STATIC_EXPORT=true npm run build

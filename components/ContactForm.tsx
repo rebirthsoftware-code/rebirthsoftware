@@ -247,7 +247,10 @@ export function ContactForm({
           className="mt-0.5 h-4 w-4 shrink-0 rounded border-line bg-ink/[0.04] accent-flame"
         />
         <span>
-          <a href="/kvkk" className="text-flame underline-offset-2 hover:underline">
+          <a
+            href="/kvkk"
+            className="text-flame underline underline-offset-2 hover:no-underline"
+          >
             KVKK Aydınlatma Metni
           </a>
           &apos;ni okudum; bilgilerimin teklif süreci için işlenmesini kabul

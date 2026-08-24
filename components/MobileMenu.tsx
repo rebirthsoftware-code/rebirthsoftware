@@ -5,6 +5,7 @@ import { useEffect, useRef } from "react";
 import { site, whatsappLink } from "@/lib/site";
 import { Icon } from "./Icon";
 import { Container } from "./ui";
+import { Wordmark } from "./Wordmark";
 
 export type NavItem = { href: string; label: string; hint: string };
 
@@ -206,17 +207,15 @@ export function MobileMenu({
         </div>
 
         {/* Kelime işareti */}
-        <div className="mt-auto overflow-hidden pt-12" aria-hidden="true">
-          <span
-            className="block text-[26vw] leading-[0.75] font-bold tracking-tighter text-ink/[0.06] select-none"
-            style={{
-              transform: open ? "none" : "translateY(30%)",
-              opacity: open ? 1 : 0,
-              transition: `transform 1s cubic-bezier(.16,1,.3,1) ${open ? 700 : 0}ms, opacity .8s ease ${open ? 700 : 0}ms`,
-            }}
-          >
-            rebirth<span className="text-flame/25">.</span>
-          </span>
+        <div
+          className="mt-auto pt-12"
+          style={{
+            transform: open ? "none" : "translateY(30%)",
+            opacity: open ? 1 : 0,
+            transition: `transform 1s cubic-bezier(.16,1,.3,1) ${open ? 700 : 0}ms, opacity .8s ease ${open ? 700 : 0}ms`,
+          }}
+        >
+          <Wordmark />
         </div>
       </Container>
     </div>
