@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { PageHero } from "@/components/PageHero";
 import { ContactForm } from "@/components/ContactForm";
 import { Icon } from "@/components/Icon";
@@ -96,7 +97,11 @@ export default function ContactPage() {
                 Formu doldurun, size dönüş yapalım.
               </p>
               <div className="mt-6">
-                <ContactForm />
+                <Suspense
+                  fallback={<div className="card h-[640px] animate-pulse" />}
+                >
+                  <ContactForm />
+                </Suspense>
               </div>
             </div>
 

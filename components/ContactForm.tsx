@@ -1,7 +1,8 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { services } from "@/lib/services";
+import { getService, services } from "@/lib/services";
 import { whatsappLink } from "@/lib/site";
 import { Icon } from "./Icon";
 
@@ -15,9 +16,28 @@ const budgets = [
 
 type Status = "idle" | "loading" | "success" | "error";
 
-export function ContactForm({ defaultService }: { defaultService?: string }) {
+/**
+ * Statik dışa aktarımda (GitHub Pages) sunucu tarafı çalışmadığı için
+ * /api/teklif yoktur. Bu modda form, doldurulan bilgileri hazır bir
+ * WhatsApp mesajına çevirip yönlendirir.
+ */
+const isStaticExport = process.env.NEXT_PUBLIC_STATIC_EXPORT === "true";
+
+export function ContactForm({
+  defaultService,
+  useQueryService,
+}: {
+  defaultService?: string;
+  /** URL'deki ?hizmet=slug parametresini seçili getirir */
+  useQueryService?: boolean;
+}) {
+  const searchParams = useSearchParams();
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const querySlug = useQueryService ? searchParams.get("hizmet") : null;
+  const selectedService =
+    defaultService ?? (querySlug ? getService(querySlug)?.title : undefined);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -34,6 +54,45 @@ export function ContactForm({ defaultService }: { defaultService?: string }) {
       consent: fd.get("consent") === "on",
       website: String(fd.get("website") ?? ""),
     };
+
+    // Statik ortam: sunucu yok, WhatsApp'a yönlendir.
+    if (isStaticExport) {
+      const localErrors: Record<string, string> = {};
+      if (payload.name.trim().length < 2)
+        localErrors.name = "Lütfen adınızı yazın.";
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(payload.email.trim()))
+        localErrors.email = "Geçerli bir e-posta adresi girin.";
+      if (payload.message.trim().length < 10)
+        localErrors.message =
+          "Projenizi birkaç cümleyle anlatın (en az 10 karakter).";
+      if (!payload.consent)
+        localErrors.consent = "Devam etmek için onay vermelisiniz.";
+
+      if (Object.keys(localErrors).length > 0) {
+        setErrors(localErrors);
+        setStatus("error");
+        return;
+      }
+
+      const text = [
+        "Merhaba, teklif talebim:",
+        `Ad Soyad: ${payload.name}`,
+        payload.company ? `Firma: ${payload.company}` : null,
+        `E-posta: ${payload.email}`,
+        payload.phone ? `Telefon: ${payload.phone}` : null,
+        payload.service ? `Hizmet: ${payload.service}` : null,
+        payload.budget ? `Bütçe: ${payload.budget}` : null,
+        "",
+        payload.message,
+      ]
+        .filter(Boolean)
+        .join("\n");
+
+      window.open(whatsappLink(text), "_blank", "noopener,noreferrer");
+      form.reset();
+      setStatus("success");
+      return;
+    }
 
     setStatus("loading");
     setErrors({});
@@ -66,11 +125,12 @@ export function ContactForm({ defaultService }: { defaultService?: string }) {
           <Icon name="check" className="h-7 w-7" />
         </span>
         <h3 className="mt-5 text-xl font-semibold text-white">
-          Talebiniz bize ulaştı
+          {isStaticExport ? "WhatsApp'a yönlendirildiniz" : "Talebiniz bize ulaştı"}
         </h3>
         <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-ink-300">
-          En geç 1 iş günü içinde size dönüş yapacağız. Daha hızlı ilerlemek
-          isterseniz WhatsApp&apos;tan da yazabilirsiniz.
+          {isStaticExport
+            ? "Bilgileriniz hazır bir mesaja dönüştürüldü. WhatsApp penceresi açılmadıysa aşağıdaki butonu kullanabilirsiniz."
+            : "En geç 1 iş günü içinde size dönüş yapacağız. Daha hızlı ilerlemek isterseniz WhatsApp'tan da yazabilirsiniz."}
         </p>
         <a
           href={whatsappLink("Merhaba, az önce teklif formunu doldurdum.")}
@@ -134,7 +194,8 @@ export function ContactForm({ defaultService }: { defaultService?: string }) {
         <Field label="İlgilendiğiniz hizmet">
           <select
             name="service"
-            defaultValue={defaultService ?? ""}
+            key={selectedService ?? "none"}
+            defaultValue={selectedService ?? ""}
             className={inputCls}
           >
             <option value="">Seçiniz</option>
@@ -215,8 +276,9 @@ export function ContactForm({ defaultService }: { defaultService?: string }) {
         )}
       </button>
       <p className="mt-3 text-xs text-ink-500">
-        Bilgileriniz üçüncü kişilerle paylaşılmaz. Genellikle 1 iş günü içinde
-        dönüş yapıyoruz.
+        {isStaticExport
+          ? "Bu önizleme sürümünde form, doldurduğunuz bilgileri WhatsApp mesajına dönüştürür."
+          : "Bilgileriniz üçüncü kişilerle paylaşılmaz. Genellikle 1 iş günü içinde dönüş yapıyoruz."}
       </p>
     </form>
   );

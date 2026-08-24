@@ -40,6 +40,36 @@ npm run build
 
 ---
 
+## 2b. GitHub Pages ile hızlı önizleme (Vercel'e geçmeden)
+
+Repoda hazır bir GitHub Actions iş akışı var
+(`.github/workflows/github-pages.yml`). Kurulumu tek seferlik:
+
+1. GitHub → repo → **Settings → Pages**
+2. **Source** = `GitHub Actions` seçin.
+3. `main` dalına yapılan her push'ta site otomatik derlenip yayınlanır.
+
+Adres: `https://rebirthsoftware-code.github.io/rebirthsoftware/`
+
+İş akışının durumunu repo sayfasındaki **Actions** sekmesinden izleyebilirsiniz.
+İlk yayın 1-2 dakika sürer.
+
+> **GitHub Pages'in sınırı:** yalnızca statik dosya sunar, sunucu kodu
+> çalıştıramaz. Bu yüzden derleme sırasında `app/api` klasörü çıkarılır ve
+> **teklif formu e-posta göndermez** — bunun yerine doldurulan bilgileri hazır
+> bir WhatsApp mesajına çevirip yönlendirir. Vercel'de form tam haliyle çalışır.
+> Yani GitHub Pages'i tasarımı ve akışı görmek için, Vercel'i asıl yayın için
+> kullanın.
+
+Aynı statik sürümü kendi bilgisayarınızda da üretebilirsiniz:
+
+```bash
+rm -rf app/api        # sadece deneme için, geri almayı unutmayın
+npm run build:static  # çıktı: out/
+```
+
+---
+
 ## 3. Yayına almadan önce mutlaka yapılacaklar
 
 | # | Yapılacak | Dosya |

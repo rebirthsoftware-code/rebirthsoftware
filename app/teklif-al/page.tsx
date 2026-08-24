@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { PageHero } from "@/components/PageHero";
 import { ContactForm } from "@/components/ContactForm";
 import { Icon } from "@/components/Icon";
 import { CheckItem, Container } from "@/components/ui";
-import { getService } from "@/lib/services";
 import { site, whatsappLink } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -13,14 +13,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/teklif-al" },
 };
 
-export default async function QuotePage({
-  searchParams,
-}: {
-  searchParams: Promise<{ hizmet?: string }>;
-}) {
-  const { hizmet } = await searchParams;
-  const service = hizmet ? getService(hizmet) : undefined;
-
+export default function QuotePage() {
   return (
     <>
       <PageHero
@@ -33,7 +26,9 @@ export default async function QuotePage({
         <Container>
           <div className="grid gap-10 lg:grid-cols-12">
             <div className="lg:col-span-7">
-              <ContactForm defaultService={service?.title} />
+              <Suspense fallback={<div className="card h-[640px] animate-pulse" />}>
+                <ContactForm useQueryService />
+              </Suspense>
             </div>
 
             <aside className="lg:col-span-5">
