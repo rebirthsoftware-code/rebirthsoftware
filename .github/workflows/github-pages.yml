@@ -56,10 +56,9 @@ jobs:
 
       - name: Pages'i yapılandır
         uses: actions/configure-pages@v5
-        with:
-          # Repoda Pages kapalıysa otomatik açmayı dener.
-          # Yetki yetmezse: Settings → Pages → Source = GitHub Actions
-          enablement: true
+        # ÖNEMLİ: Bu adımın çalışması için repoda Pages'in bir kez
+        # elle açılması gerekir:  Settings → Pages → Source = GitHub Actions
+        # (Actions'a verilen token yeni bir Pages sitesi oluşturamıyor.)
 
       - uses: actions/upload-pages-artifact@v3
         with:
