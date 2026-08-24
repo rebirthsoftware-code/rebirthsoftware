@@ -17,7 +17,7 @@ export function Container({
 
 export function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <span className="overline flex items-center gap-3 text-muted">
+    <span className="label flex items-center gap-3 text-muted">
       <span className="h-px w-8 bg-flame" />
       {children}
     </span>

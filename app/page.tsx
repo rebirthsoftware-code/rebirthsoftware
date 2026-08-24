@@ -4,7 +4,15 @@ import { Faq } from "@/components/Faq";
 import { CtaSection } from "@/components/CtaSection";
 import { ProjectRow, ServiceRow } from "@/components/rows";
 import { HeroMockup } from "@/components/HeroMockup";
-import { Counter, Marquee, Reveal, RevealLines } from "@/components/motion";
+import {
+  Counter,
+  Magnetic,
+  Marquee,
+  Parallax,
+  Reveal,
+  RevealLines,
+  ScrollText,
+} from "@/components/motion";
 import { ArrowLink, Button, Container, Eyebrow } from "@/components/ui";
 import { services } from "@/lib/services";
 import { projects } from "@/lib/projects";
@@ -72,13 +80,15 @@ export default function HomePage() {
                 </div>
 
                 <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
-                  <Button href="/teklif-al">
-                    Ücretsiz teklif al
-                    <Icon
-                      name="arrowUpRight"
-                      className="h-4 w-4 transition-transform duration-500 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5"
-                    />
-                  </Button>
+                  <Magnetic>
+                    <Button href="/teklif-al">
+                      Ücretsiz teklif al
+                      <Icon
+                        name="arrowUpRight"
+                        className="h-4 w-4 transition-transform duration-500 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5"
+                      />
+                    </Button>
+                  </Magnetic>
                   <Button href="/projeler" variant="outline">
                     Projeleri gör
                   </Button>
@@ -88,16 +98,16 @@ export default function HomePage() {
 
             {/* Sağ sütun — arayüz maketi */}
             <Reveal delay={320} className="lg:col-span-5">
-              <div className="flex justify-center lg:justify-end">
+              <Parallax speed={0.05} className="flex justify-center lg:justify-end">
                 <HeroMockup />
-              </div>
+              </Parallax>
             </Reveal>
           </div>
 
           <Reveal delay={900}>
             <div className="mt-20 flex items-center gap-3 text-muted">
               <Icon name="arrowDown" className="h-4 w-4 animate-bounce" />
-              <span className="overline">Kaydırın</span>
+              <span className="label">Kaydırın</span>
             </div>
           </Reveal>
         </Container>
@@ -124,17 +134,11 @@ export default function HomePage() {
               <Eyebrow>Biz</Eyebrow>
             </Reveal>
             <div className="lg:col-span-9">
-              <Reveal delay={80}>
-                <p className="text-2xl leading-[1.35] font-medium tracking-tight text-ink sm:text-[2.1rem]">
-                  Çoğu işletmenin sitesi ucuza yapılmış, mobilde bozulan ve
-                  kimsenin dokunmaya cesaret edemediği bir yük.{" "}
-                  <span className="text-muted">
-                    Biz her projeye işi anlamakla başlıyor, sayfa yapısını ve
-                    ziyaretçinin izleyeceği yolu sizin işinize göre kurguluyoruz
-                    — sonra bunu sıfırdan kodluyoruz.
-                  </span>
-                </p>
-              </Reveal>
+              <ScrollText
+                className="text-2xl leading-[1.35] font-medium tracking-tight sm:text-[2.1rem]"
+                text="Çoğu işletmenin sitesi ucuza yapılmış, mobilde bozulan ve kimsenin dokunmaya cesaret edemediği bir yük. Biz her projeye işi anlamakla başlıyor, sayfa yapısını ve ziyaretçinin izleyeceği yolu sizin işinize göre kurguluyoruz — sonra bunu sıfırdan kodluyoruz."
+              />
+
               <Reveal delay={200}>
                 <div className="mt-10">
                   <ArrowLink href="/hakkimizda">Çalışma yaklaşımımız</ArrowLink>
@@ -272,7 +276,7 @@ export default function HomePage() {
         <div className="mt-20 border-y border-line py-5">
           <Container className="mb-4">
             <Reveal>
-              <span className="overline text-faint">
+              <span className="label text-faint">
                 Hizmet verdiğimiz sektörler
               </span>
             </Reveal>
@@ -295,7 +299,7 @@ export default function HomePage() {
             {advantages.map((a, i) => (
               <Reveal key={a.title} delay={(i % 3) * 90}>
                 <div className="group border-t border-line pt-6">
-                  <span className="overline text-faint">
+                  <span className="label text-faint">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <h3 className="mt-4 text-xl font-bold tracking-tight text-ink">

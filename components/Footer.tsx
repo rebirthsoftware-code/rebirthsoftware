@@ -33,7 +33,7 @@ export function Footer() {
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="overline link-underline text-muted transition hover:text-ink"
+                  className="label link-underline text-muted transition hover:text-ink"
                 >
                   {label}
                 </a>
@@ -42,7 +42,7 @@ export function Footer() {
           </div>
 
           <div className="lg:col-span-3">
-            <h3 className="overline text-faint">Hizmetler</h3>
+            <h3 className="label text-faint">Hizmetler</h3>
             <ul className="mt-6 space-y-3">
               {services.map((s) => (
                 <li key={s.slug}>
@@ -58,7 +58,7 @@ export function Footer() {
           </div>
 
           <div className="lg:col-span-2">
-            <h3 className="overline text-faint">Kurumsal</h3>
+            <h3 className="label text-faint">Kurumsal</h3>
             <ul className="mt-6 space-y-3">
               {[
                 { href: "/hakkimizda", label: "Biz" },
@@ -83,7 +83,7 @@ export function Footer() {
           </div>
 
           <div className="lg:col-span-3">
-            <h3 className="overline text-faint">İletişim</h3>
+            <h3 className="label text-faint">İletişim</h3>
             <ul className="mt-6 space-y-4 text-[15px]">
               <li>
                 <a

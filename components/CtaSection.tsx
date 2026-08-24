@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { site, whatsappLink } from "@/lib/site";
 import { Icon } from "./Icon";
-import { Reveal, RevealLines, RotatingBadge } from "./motion";
+import { Magnetic, Reveal, RevealLines, RotatingBadge } from "./motion";
 import { Button, Container } from "./ui";
 
 export function CtaSection({
@@ -32,6 +32,7 @@ export function CtaSection({
                 {description}
               </p>
               <div className="mt-10 flex flex-col gap-3 sm:flex-row">
+                <Magnetic>
                 <Button href="/teklif-al">
                   Ücretsiz teklif al
                   <Icon
@@ -39,6 +40,7 @@ export function CtaSection({
                     className="h-4 w-4 transition-transform duration-500 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5"
                   />
                 </Button>
+                </Magnetic>
                 <Button
                   href={whatsappLink("Merhaba, projem hakkında görüşebilir miyiz?")}
                   variant="outline"

@@ -2,17 +2,19 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { site } from "@/lib/site";
 import { Icon } from "./Icon";
+import { MenuToggle } from "./MenuToggle";
+import { MobileMenu, type NavItem } from "./MobileMenu";
 import { Container } from "./ui";
 
-const nav = [
-  { href: "/hakkimizda", label: "Biz" },
-  { href: "/hizmetler", label: "Hizmetler" },
-  { href: "/projeler", label: "Projeler" },
-  { href: "/surec", label: "Süreç" },
-  { href: "/iletisim", label: "İletişim" },
+const nav: NavItem[] = [
+  { href: "/hakkimizda", label: "Biz", hint: "Nasıl çalışan bir ekibiz" },
+  { href: "/hizmetler", label: "Hizmetler", hint: "Ne yapıyoruz, neler dahil" },
+  { href: "/projeler", label: "Projeler", hint: "Tamamladığımız işler" },
+  { href: "/surec", label: "Süreç", hint: "Keşiften yayına dört adım" },
+  { href: "/iletisim", label: "İletişim", hint: "Bize ulaşın" },
 ];
 
 export function Header() {
@@ -20,6 +22,7 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [solid, setSolid] = useState(false);
+  const toggleRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     let last = window.scrollY;
@@ -37,9 +40,16 @@ export function Header() {
   useEffect(() => setOpen(false), [pathname]);
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    if (!open) {
+      document.body.style.overflow = "";
+      return;
+    }
+    // Menü açıkken arka planın kaymasını engelle
+    const y = window.scrollY;
+    document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "";
+      window.scrollTo(0, y);
     };
   }, [open]);
 
@@ -48,7 +58,7 @@ export function Header() {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 transition-transform duration-500 ${
+        className={`fixed inset-x-0 top-0 z-70 transition-transform duration-500 ${
           hidden && !open ? "-translate-y-full" : "translate-y-0"
         }`}
       >
@@ -59,7 +69,12 @@ export function Header() {
         >
           <Container>
             <div className="flex h-20 items-center justify-between">
-              <Link href="/" className="group flex items-center gap-3" aria-label="Ana sayfa">
+              <Link
+                href="/"
+                className="group flex items-center gap-3"
+                aria-label="Ana sayfa"
+                onClick={() => setOpen(false)}
+              >
                 <Logo />
                 <span className="text-[17px] font-bold tracking-tight text-ink">
                   rebirth<span className="text-flame">.</span>
@@ -71,10 +86,10 @@ export function Header() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`overline link-underline transition-colors ${
+                    className={`label link-underline transition-colors ${
                       isActive(item.href)
-                        ? "text-ink"
-                        : "text-ink-soft hover:text-ink"
+                        ? "text-flame"
+                        : "text-ink-soft hover:text-flame"
                     }`}
                   >
                     {item.label}
@@ -85,7 +100,7 @@ export function Header() {
               <div className="hidden items-center gap-5 lg:flex">
                 <a
                   href={site.phoneHref}
-                  className="text-[13px] font-medium tracking-tight text-ink-soft link-underline transition hover:text-ink"
+                  className="link-underline text-[13px] font-medium tracking-tight text-ink-soft transition hover:text-ink"
                 >
                   {site.phone}
                 </a>
@@ -95,68 +110,29 @@ export function Header() {
                 >
                   Teklif Al
                   <Icon
-                    name="arrow"
-                    className="h-3.5 w-3.5 transition-transform duration-500 group-hover:translate-x-1"
+                    name="arrowUpRight"
+                    className="h-3.5 w-3.5 transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                   />
                 </Link>
               </div>
 
-              <button
-                type="button"
+              <MenuToggle
+                open={open}
                 onClick={() => setOpen((v) => !v)}
-                className="flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink transition hover:border-ink lg:hidden"
-                aria-label={open ? "Menüyü kapat" : "Menüyü aç"}
-                aria-expanded={open}
-              >
-                <Icon name={open ? "close" : "menu"} className="h-5 w-5" />
-              </button>
+                buttonRef={toggleRef}
+              />
             </div>
           </Container>
         </div>
       </header>
 
-      {/* Tam ekran mobil menü */}
-      <div
-        className={`fixed inset-0 z-40 bg-paper transition-opacity duration-500 lg:hidden ${
-          open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
-        }`}
-      >
-        <Container className="flex h-full flex-col justify-center pt-20 pb-10">
-          <nav className="flex flex-col">
-            {nav.map((item, i) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="row-hover border-b border-line py-5 text-4xl font-bold tracking-tight text-ink hover:text-flame"
-                style={{
-                  transitionDelay: open ? `${i * 60}ms` : "0ms",
-                  opacity: open ? 1 : 0,
-                  transform: open ? "none" : "translateY(20px)",
-                  transitionProperty: "opacity, transform, color, padding-left",
-                  transitionDuration: "600ms",
-                }}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="mt-10 flex flex-col gap-4">
-            <Link
-              href="/teklif-al"
-              className="rounded-full bg-flame px-6 py-4 text-center text-sm font-semibold text-white"
-            >
-              Ücretsiz Teklif Al
-            </Link>
-            <a
-              href={site.phoneHref}
-              className="text-center text-sm text-muted"
-            >
-              {site.phone}
-            </a>
-          </div>
-        </Container>
-      </div>
+      <MobileMenu
+        open={open}
+        onClose={() => setOpen(false)}
+        items={nav}
+        activeHref={pathname}
+        returnFocusTo={toggleRef}
+      />
     </>
   );
 }
@@ -164,7 +140,14 @@ export function Header() {
 export function Logo({ className = "h-9 w-9" }: { className?: string }) {
   return (
     <svg viewBox="0 0 40 40" className={className} aria-hidden="true">
-      <circle cx="20" cy="20" r="19" fill="none" stroke="currentColor" strokeOpacity="0.18" />
+      <circle
+        cx="20"
+        cy="20"
+        r="19"
+        fill="none"
+        stroke="currentColor"
+        strokeOpacity="0.18"
+      />
       <path
         d="M13 29V11h8c3.7 0 6.2 2.1 6.2 5.5 0 2.6-1.5 4.4-3.9 5.1L28 29h-4.6l-4-7.2H17V29h-4Zm4-10.6h3.4c1.8 0 2.9-1 2.9-2.5s-1.1-2.4-2.9-2.4H17v4.9Z"
         fill="currentColor"

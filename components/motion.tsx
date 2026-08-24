@@ -196,3 +196,159 @@ export function Marquee({
     </div>
   );
 }
+
+/**
+ * Kelime kelime koyulaşan paragraf.
+ * Sayfa kaydıkça metin soluk griden tam renge geçer.
+ */
+export function ScrollText({
+  text,
+  className = "",
+}: {
+  text: string;
+  className?: string;
+}) {
+  const ref = useRef<HTMLParagraphElement>(null);
+  const [p, setP] = useState(0);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      setP(1);
+      return;
+    }
+    let raf = 0;
+    const update = () => {
+      const r = el.getBoundingClientRect();
+      const start = window.innerHeight * 0.85;
+      const end = window.innerHeight * 0.25;
+      const raw = (start - r.top) / (start - end);
+      setP(Math.max(0, Math.min(1, raw)));
+      raf = 0;
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  const words = text.split(" ");
+
+  return (
+    <p ref={ref} className={className}>
+      {words.map((w, i) => {
+        // Her kelimenin kendi eşiği var; ilerleme geçtikçe koyulaşır.
+        const t = i / words.length;
+        const on = Math.max(0, Math.min(1, (p - t * 0.85) / 0.15));
+        return (
+          <span
+            key={i}
+            style={{
+              color: `color-mix(in srgb, var(--color-ink) ${Math.round(on * 100)}%, var(--color-faint))`,
+              transition: "color .25s linear",
+            }}
+          >
+            {w}
+            {i < words.length - 1 ? " " : ""}
+          </span>
+        );
+      })}
+    </p>
+  );
+}
+
+/** İmlece hafifçe yaklaşan sarmalayıcı (birincil eylemler için) */
+export function Magnetic({
+  children,
+  strength = 0.28,
+  className = "",
+}: {
+  children: React.ReactNode;
+  strength?: number;
+  className?: string;
+}) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [d, setD] = useState({ x: 0, y: 0 });
+
+  const onMove = (e: React.MouseEvent) => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia("(pointer: coarse)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const r = el.getBoundingClientRect();
+    setD({
+      x: (e.clientX - (r.left + r.width / 2)) * strength,
+      y: (e.clientY - (r.top + r.height / 2)) * strength,
+    });
+  };
+
+  return (
+    <span
+      ref={ref}
+      onMouseMove={onMove}
+      onMouseLeave={() => setD({ x: 0, y: 0 })}
+      className={`inline-block ${className}`}
+      style={{
+        transform: `translate3d(${d.x}px, ${d.y}px, 0)`,
+        transition: "transform .45s cubic-bezier(.16,1,.3,1)",
+      }}
+    >
+      {children}
+    </span>
+  );
+}
+
+/** Sayfa kaydıkça yavaş hareket eden katman */
+export function Parallax({
+  children,
+  speed = 0.06,
+  className = "",
+}: {
+  children: React.ReactNode;
+  speed?: number;
+  className?: string;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [y, setY] = useState(0);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let raf = 0;
+    const update = () => {
+      const el = ref.current;
+      if (el) {
+        const r = el.getBoundingClientRect();
+        const mid = r.top + r.height / 2 - window.innerHeight / 2;
+        setY(-mid * speed);
+      }
+      raf = 0;
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, [speed]);
+
+  return (
+    <div
+      ref={ref}
+      className={className}
+      style={{ transform: `translate3d(0, ${y}px, 0)` }}
+    >
+      {children}
+    </div>
+  );
+}

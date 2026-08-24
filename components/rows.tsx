@@ -21,7 +21,7 @@ export function ServiceRow({
       className="group row-hover -mx-4 block border-b border-line px-4 py-8 hover:bg-white sm:py-10"
     >
       <div className="flex items-start gap-6 sm:gap-10">
-        <span className="overline mt-2 w-8 shrink-0 text-faint transition-colors duration-500 group-hover:text-flame">
+        <span className="label mt-2 w-8 shrink-0 text-faint transition-colors duration-500 group-hover:text-flame">
           {String(index + 1).padStart(2, "0")}
         </span>
 
@@ -94,7 +94,7 @@ export function ProjectRow({
       className="group relative block border-b border-line hover:bg-white"
     >
       <div className="row-hover flex items-center gap-6 py-7 sm:gap-10 sm:py-9">
-        <span className="overline w-8 shrink-0 text-faint transition-colors duration-500 group-hover:text-flame">
+        <span className="label w-8 shrink-0 text-faint transition-colors duration-500 group-hover:text-flame">
           {String(index + 1).padStart(2, "0")}
         </span>
 
