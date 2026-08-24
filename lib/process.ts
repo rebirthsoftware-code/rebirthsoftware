@@ -105,3 +105,16 @@ export const generalFaq = [
     a: "Hayır. Odağımız kurumsal web siteleri ve kişiye özel web yazılımları. İyi bildiğimiz işi yapmayı, her işi yapıyor görünmeye tercih ediyoruz.",
   },
 ] as const;
+
+export const sectors = [
+  "Mühendislik",
+  "Hukuk",
+  "Sağlık",
+  "İnşaat & Gayrimenkul",
+  "Teknik servis",
+  "Eğitim",
+  "Danışmanlık",
+  "Üretim",
+  "Turizm",
+  "Muhasebe",
+] as const;

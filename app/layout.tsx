@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFab } from "@/components/WhatsAppFab";
+import { ScrollProgress } from "@/components/ScrollProgress";
 import { site } from "@/lib/site";
 
 const epilogue = Epilogue({
@@ -92,6 +93,7 @@ export default function RootLayout({
         >
           İçeriğe geç
         </a>
+        <ScrollProgress />
         <Header />
         <main id="icerik">
           {children}

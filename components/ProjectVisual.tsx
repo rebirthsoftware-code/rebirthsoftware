@@ -1,4 +1,5 @@
 import type { Project } from "@/lib/projects";
+import { ProjectMockup } from "./ProjectMockup";
 
 /**
  * Proje görseli. Ekran görüntüsü varsa onu, yoksa markanın diline sadık
@@ -27,41 +28,20 @@ export function ProjectVisual({
     );
   }
 
-  const initials = project.client
-    .split(" ")
-    .slice(0, 2)
-    .map((w) => w[0])
-    .join("")
-    .toLocaleUpperCase("tr-TR");
+  if (project.gradient) {
+    return (
+      <div
+        className={`h-full w-full ${className}`}
+        style={{
+          backgroundImage: `linear-gradient(135deg, ${project.gradient[0]}, ${project.gradient[1]})`,
+        }}
+      />
+    );
+  }
 
   return (
-    <div
-      className={`relative flex h-full w-full flex-col justify-between bg-paper-2 p-6 ${className}`}
-      style={
-        project.gradient
-          ? {
-              backgroundImage: `linear-gradient(135deg, ${project.gradient[0]}, ${project.gradient[1]})`,
-            }
-          : undefined
-      }
-    >
-      {project.gradient ? null : (
-        <span
-          aria-hidden="true"
-          className="absolute inset-0"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(135deg, rgb(20 20 15 / 0.045) 0 1px, transparent 1px 12px)",
-          }}
-        />
-      )}
-
-      <span className="relative text-6xl font-bold tracking-tighter text-ink/10 sm:text-7xl">
-        {initials}
-      </span>
-      <span className="relative text-lg font-bold tracking-tight text-ink/70 sm:text-xl">
-        {project.client}
-      </span>
+    <div className={`h-full w-full ${className}`}>
+      <ProjectMockup project={project} />
     </div>
   );
 }

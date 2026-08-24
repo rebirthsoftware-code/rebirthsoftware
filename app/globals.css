@@ -29,7 +29,8 @@
   --color-flame-soft: #ff5a38;
   --color-flame-tint: #dd331114;
 
-  --text-display: clamp(2.75rem, 7.5vw, 6.5rem);
+  --text-display: clamp(2.5rem, 5.2vw, 4.6rem);
+  --text-display-lg: clamp(2.75rem, 7.5vw, 6.5rem);
   --text-headline: clamp(2rem, 4.5vw, 3.75rem);
 }
 
@@ -62,6 +63,15 @@ body {
 
 .display {
   font-size: var(--text-display);
+  text-wrap: balance;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  font-weight: 700;
+}
+
+/* Tek sütuna yayılan, daha iri başlık (CTA gibi bölümler) */
+.display-lg {
+  font-size: var(--text-display-lg);
   line-height: 0.95;
   letter-spacing: -0.04em;
   font-weight: 700;
@@ -151,6 +161,11 @@ body {
 
 .marquee-track:hover {
   animation-play-state: paused;
+}
+
+.marquee-reverse {
+  animation-direction: reverse;
+  animation-duration: 46s;
 }
 
 @keyframes pulse-ring {

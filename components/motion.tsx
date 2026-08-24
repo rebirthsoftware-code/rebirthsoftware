@@ -121,36 +121,39 @@ export function Counter({
 /** Dönen dairesel yazı + ok — sitenin imza hareketi */
 export function RotatingBadge({
   text = "PROJENİZİ KONUŞALIM · TEKLİF ALIN · ",
-  className = "",
+  className = "relative h-40 w-40 sm:h-48 sm:w-48",
+  radius = "-4.6rem",
 }: {
   text?: string;
   className?: string;
+  /** Harflerin merkezden uzaklığı; küçük rozetlerde daraltın */
+  radius?: string;
 }) {
   const chars = text.split("");
   const step = 360 / chars.length;
 
   return (
-    <div className={`relative h-40 w-40 sm:h-48 sm:w-48 ${className}`}>
+    <div className={`relative ${className}`}>
       <div className="spin-slow absolute inset-0">
         {chars.map((c, i) => (
           <span
             key={i}
             className="absolute top-1/2 left-1/2 origin-[0_0] text-[10px] font-semibold tracking-widest text-muted sm:text-[11px]"
             style={{
-              transform: `rotate(${i * step}deg) translate(0, -4.6rem)`,
+              transform: `rotate(${i * step}deg) translate(0, ${radius})`,
             }}
           >
             {c}
           </span>
         ))}
       </div>
-      <span className="absolute inset-8 flex items-center justify-center rounded-full border border-line transition group-hover:border-flame sm:inset-10">
+      <span className="absolute inset-[22%] flex items-center justify-center rounded-full border border-line transition group-hover:border-flame">
         <svg
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
           strokeWidth="1.5"
-          className="h-6 w-6 text-ink transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1"
+          className="h-1/3 w-1/3 text-ink transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1"
         >
           <path d="M7 17 17 7M9 7h8v8" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
@@ -163,21 +166,30 @@ export function RotatingBadge({
 export function Marquee({
   items,
   className = "",
+  reverse = false,
+  size = "lg",
 }: {
   items: string[];
   className?: string;
+  reverse?: boolean;
+  size?: "lg" | "sm";
 }) {
   const doubled = [...items, ...items];
+  const text =
+    size === "lg"
+      ? "text-2xl font-semibold tracking-tight text-ink-soft sm:text-4xl"
+      : "text-sm font-medium tracking-tight text-muted sm:text-base";
+
   return (
     <div className={`overflow-hidden ${className}`}>
-      <div className="marquee-track">
+      <div className={`marquee-track ${reverse ? "marquee-reverse" : ""}`}>
         {doubled.map((item, i) => (
           <span
             key={i}
-            className="flex shrink-0 items-center gap-8 pr-8 text-2xl font-semibold tracking-tight text-ink-soft sm:text-4xl"
+            className={`flex shrink-0 items-center gap-6 pr-6 sm:gap-8 sm:pr-8 ${text}`}
           >
             {item}
-            <span className="text-flame">✦</span>
+            <span className="text-flame">{size === "lg" ? "✦" : "·"}</span>
           </span>
         ))}
       </div>

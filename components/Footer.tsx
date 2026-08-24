@@ -116,7 +116,14 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col gap-3 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">
+        {/* Dev kelime işareti — sayfayı görsel olarak kapatır */}
+        <div className="mt-20 overflow-hidden" aria-hidden="true">
+          <span className="block text-center text-[clamp(3.5rem,15vw,13rem)] leading-[0.8] font-bold tracking-tighter text-ink/[0.07] select-none">
+            rebirth<span className="text-flame/25">.</span>
+          </span>
+        </div>
+
+        <div className="mt-14 flex flex-col gap-3 border-t border-line pt-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs text-muted">
             © {year} {site.name}. Tüm hakları saklıdır.
           </p>

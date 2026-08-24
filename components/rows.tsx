@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import type { Project } from "@/lib/projects";
 import type { Service } from "@/lib/services";
 import { Icon } from "./Icon";
@@ -74,12 +74,23 @@ export function ProjectRow({
   index: number;
 }) {
   const [hover, setHover] = useState(false);
+  const [pos, setPos] = useState({ x: 0, y: 0 });
+  const ref = useRef<HTMLAnchorElement>(null);
+
+  // Önizleme imleci takip eder; yumuşak gecikme için CSS transition kullanılır.
+  const onMove = (e: React.MouseEvent) => {
+    const r = ref.current?.getBoundingClientRect();
+    if (!r) return;
+    setPos({ x: e.clientX - r.left, y: e.clientY - r.top });
+  };
 
   return (
     <Link
+      ref={ref}
       href={`/projeler/${project.slug}`}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
+      onMouseMove={onMove}
       className="group relative block border-b border-line hover:bg-white"
     >
       <div className="row-hover flex items-center gap-6 py-7 sm:gap-10 sm:py-9">
@@ -114,9 +125,14 @@ export function ProjectRow({
       {/* Hover önizlemesi — sadece geniş ekranda */}
       <div
         aria-hidden="true"
-        className={`pointer-events-none absolute top-1/2 right-32 z-10 hidden aspect-4/3 w-64 -translate-y-1/2 overflow-hidden rounded-sm border border-line transition-all duration-500 lg:block ${
-          hover ? "scale-100 opacity-100" : "scale-95 opacity-0"
+        className={`pointer-events-none absolute top-0 left-0 z-20 hidden aspect-4/3 w-72 overflow-hidden rounded-md border border-line bg-white shadow-[0_30px_60px_-35px_rgba(20,20,15,0.5)] lg:block ${
+          hover ? "opacity-100" : "opacity-0"
         }`}
+        style={{
+          transform: `translate3d(${pos.x - 144}px, ${pos.y - 108}px, 0) scale(${hover ? 1 : 0.94}) rotate(${hover ? -1.5 : 0}deg)`,
+          transition:
+            "transform .45s cubic-bezier(.16,1,.3,1), opacity .35s ease",
+        }}
       >
         <ProjectVisual project={project} />
       </div>
