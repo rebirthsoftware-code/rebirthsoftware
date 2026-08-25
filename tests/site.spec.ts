@@ -179,8 +179,12 @@ test("ana sayfa vitrini: başta hizalı, oklarla kayıyor, sürükleme tıklamı
   await page.waitForTimeout(900);
   expect(await vitrin.evaluate((el) => el.scrollLeft)).toBeGreaterThan(0);
 
-  // Uçta oklar pasifleşiyor mu
-  await expect(ileri).toBeDisabled();
+  // Uca kadar ilerle — proje sayısından bağımsız olsun diye döngü ile.
+  for (let i = 0; i < 12 && (await ileri.isEnabled()); i++) {
+    await ileri.click();
+    await page.waitForTimeout(700);
+  }
+  await expect(ileri, "uçta sonraki düğmesi pasifleşmeli").toBeDisabled();
   await expect(page.locator('button[aria-label="Önceki projeler"]')).toBeEnabled();
 
   // Sürükleme kartı açmamalı

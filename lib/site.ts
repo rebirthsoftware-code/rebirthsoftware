@@ -29,7 +29,7 @@ export const site = {
   },
 
   stats: [
-    { value: "3", label: "Yayındaki referans" }, // TODO: gerçek proje sayınızla güncelleyin
+    { value: "7", label: "Yayındaki referans" }, // TODO: gerçek proje sayınızla güncelleyin
     { value: "6+", label: "Yıllık deneyim" },
     { value: "%98", label: "Ortalama PageSpeed skoru" },
     { value: "7/24", label: "Destek erişimi" },

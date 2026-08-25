@@ -29,6 +29,96 @@ export type Project = {
  */
 export const projects: Project[] = [
   {
+    slug: "tugce-ayag-esin-hukuk",
+    title: "Av. Tuğçe Ayağ Esin Hukuk Bürosu",
+    client: "Av. Tuğçe Ayağ Esin",
+    sector: "Hukuk & arabuluculuk",
+    year: "2026",
+    type: "Kurumsal Web Sitesi",
+    url: "https://www.tugceayagesin.com",
+    image: "/projeler/tugce-ayag-esin.webp",
+    featured: true,
+    summary:
+      "Karabük'te ceza, aile, ticaret ve gayrimenkul hukuku alanlarında çalışan bir hukuk bürosu için güven veren kurumsal site.",
+    challenge:
+      "Büroya ulaşan potansiyel müvekkiller yalnızca tavsiye yoluyla geliyordu. Uzmanlık alanlarının kapsamı dijitalde görünmediği için gelen talepler büronun çalışmadığı konuları da kapsıyor, ön eleme telefonda yapılıyordu.",
+    solution:
+      "Mesleğin ciddiyetine uygun, koyu zemin üzerine altın vurgulu bir görsel dil kurduk. On üçün üzerindeki uzmanlık alanı ayrı ayrı anlatıldı; hukuki konuları sade dille açıklayan bir makaleler bölümü eklendi. Randevu ve WhatsApp çağrıları sayfanın her noktasından erişilebilir tutuldu.",
+    result: [
+      "Uzmanlık alanları site üzerinden açıkça görülüyor; gelen talepler doğru konularda yoğunlaşıyor",
+      "Makaleler bölümü, arama motorlarından gelen ziyaretçiler için giriş noktası oluşturuyor",
+      "Randevu talebi ve WhatsApp her bölümden tek adımda ulaşılabilir",
+    ],
+    stack: ["Statik site", "Scroll animasyonları (AOS)", "Randevu formu", "WhatsApp"],
+  },
+  {
+    slug: "alicilar-sigorta",
+    title: "Alıcılar Sigorta",
+    client: "Alıcılar Sigorta",
+    sector: "Sigorta acenteliği",
+    year: "2026",
+    type: "Kurumsal Web Sitesi",
+    url: "https://alicilarsigorta.com",
+    image: "/projeler/alicilar-sigorta.webp",
+    featured: true,
+    summary:
+      "Karabük merkezli SEGEM lisanslı sigorta acentesi için ürünleri anlatan ve teklif talebi toplayan kurumsal site.",
+    challenge:
+      "Acente trafik, kasko, sağlık, konut ve DASK gibi birbirinden farklı ürünler sunuyordu; ancak müşteri hangi ürünün neyi kapsadığını ancak telefonda öğrenebiliyordu. Teklif talepleri de tek tek telefonla alınıyordu.",
+    solution:
+      "Her sigorta ürünü için kapsamı anlatan ayrı bir kart ve detay yapısı kurduk. Ziyaretçi ürünü seçip doğrudan teklif formuna geçebiliyor. Sektör haberleri bölümü ve SEGEM lisansı gibi güven unsurları öne çıkarıldı.",
+    result: [
+      "Yedi sigorta ürünü kapsamlarıyla birlikte site üzerinden inceleniyor",
+      "Teklif talepleri form üzerinden, ürün bilgisiyle birlikte geliyor",
+      "Lisans ve kurumsal bilgiler görünür olduğu için ilk temasta güven sorusu azalıyor",
+    ],
+    stack: ["Next.js", "React", "Ürün kataloğu", "Teklif formu"],
+  },
+  {
+    slug: "alicilar-beton",
+    title: "Alıcılar Beton",
+    client: "Alıcılar Grup",
+    sector: "İnşaat & endüstri",
+    year: "2026",
+    type: "Kurumsal Web Sitesi",
+    url: "https://www.alicilarbeton.com",
+    image: "/projeler/alicilar-beton.webp",
+    summary:
+      "Hazır betondan madenciliğe, hafriyattan ağır tonajlı lojistiğe uzanan bir sanayi grubu için kurumsal tanıtım sitesi.",
+    challenge:
+      "Grup, 1930'lara uzanan geçmişine ve birbirinden farklı yedi faaliyet alanına rağmen dijitalde tek parça bir kimlikle temsil edilmiyordu. Kurumsal müşteriler ve ihale muhatapları için referans niteliğinde bir kaynak yoktu.",
+    solution:
+      "Sanayinin ağırlığını yansıtan koyu lacivert–kırmızı bir kimlik kurduk. Faaliyet alanları tek tek anlatıldı; galeri ve duyurular bölümleri eklendi. Kaydırmaya bağlı animasyonlar ve yumuşak kaydırma ile sayfa, kurumsal ölçeğe yakışan bir akışta ilerliyor.",
+    result: [
+      "Yedi faaliyet alanı tek çatı altında, kurumsal bir dille anlatılıyor",
+      "Teklif çağrısı ve iki iletişim hattı ilk ekranda görünüyor",
+      "Galeri ve duyurular, ihale ve kurumsal görüşmelerde referans olarak kullanılabiliyor",
+    ],
+    stack: ["GSAP + ScrollTrigger", "Lenis yumuşak kaydırma", "Galeri", "Duyurular"],
+  },
+  {
+    slug: "tat-pastanesi",
+    title: "Tat Pastanesi",
+    client: "Tat Pastanesi",
+    sector: "Pastane & dondurma",
+    year: "2026",
+    type: "Kurumsal Web Sitesi",
+    url: "http://www.tatpastanesi.com",
+    image: "/projeler/tat-pastanesi.webp",
+    summary:
+      "Ankara'da 2001'den beri üç şubesiyle hizmet veren pastane ve dondurmacı için ürün odaklı tanıtım sitesi.",
+    challenge:
+      "İşletmenin ürünleri yalnızca vitrinde ve sosyal medyada görünüyordu. Batıkent, Bağlıca ve Çakırlar şubelerinin bilgileri dağınıktı; yeni müşteri gelmeden önce ne bulacağını bilmiyordu.",
+    solution:
+      "Ürün fotoğraflarını merkeze alan, videolu bir açılışla başlayan bir akış kurduk. Dondurma, yaş pasta ve geleneksel tatlılar ayrı ayrı tanıtıldı; işletmenin hikâyesi, şube bilgileri ve Google değerlendirmeleri tek sayfada toplandı.",
+    result: [
+      "Ürün grupları görselleriyle birlikte site üzerinden inceleniyor",
+      "Üç şubenin bilgileri tek adreste toplandı",
+      "Google yorumları siteye taşındığı için ilk izlenim müşteri deneyimiyle destekleniyor",
+    ],
+    stack: ["Next.js", "React", "Video hero", "Şube bilgileri"],
+  },
+  {
     slug: "endamsince-1979",
     title: "Endamsince 1979 Kurumsal Sitesi",
     client: "Endamsince Erkek Kuaför",
