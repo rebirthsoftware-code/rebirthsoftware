@@ -15,9 +15,21 @@ export function Container({
   );
 }
 
-export function Eyebrow({ children }: { children: React.ReactNode }) {
+export function Eyebrow({
+  children,
+  index,
+}: {
+  children: React.ReactNode;
+  /** Bölüm sırası — "01" gibi editoryal numara gösterir */
+  index?: number;
+}) {
   return (
     <span className="label flex items-center gap-3 text-muted">
+      {index !== undefined ? (
+        <span className="text-faint tabular-nums">
+          {String(index).padStart(2, "0")}
+        </span>
+      ) : null}
       <span className="h-px w-8 bg-flame" />
       {children}
     </span>

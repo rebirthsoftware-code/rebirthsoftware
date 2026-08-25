@@ -2,7 +2,8 @@ import Link from "next/link";
 import { Icon } from "@/components/Icon";
 import { Faq } from "@/components/Faq";
 import { CtaSection } from "@/components/CtaSection";
-import { ProjectRow, ServiceRow } from "@/components/rows";
+import { ServiceRow } from "@/components/rows";
+import { Carousel, CarouselItem } from "@/components/Carousel";
 import { HeroMockup } from "@/components/HeroMockup";
 import {
   Counter,
@@ -133,7 +134,7 @@ export default function HomePage() {
         <Container>
           <div className="grid gap-12 lg:grid-cols-12">
             <Reveal className="lg:col-span-3">
-              <Eyebrow>Biz</Eyebrow>
+              <Eyebrow index={1}>Biz</Eyebrow>
             </Reveal>
             <div className="lg:col-span-9">
               <ScrollText
@@ -157,7 +158,7 @@ export default function HomePage() {
           <Reveal>
             <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
               <div>
-                <Eyebrow>Hizmetler</Eyebrow>
+                <Eyebrow index={2}>Hizmetler</Eyebrow>
                 <h2 className="headline mt-6 max-w-xl text-ink">
                   Ne yapıyoruz?
                 </h2>
@@ -185,70 +186,68 @@ export default function HomePage() {
           <Reveal>
             <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
               <div>
-                <Eyebrow>Seçilmiş işler</Eyebrow>
+                <Eyebrow index={3}>Seçilmiş işler</Eyebrow>
                 <h2 className="headline mt-6 text-ink">Projeler</h2>
               </div>
               <ArrowLink href="/projeler">Tüm projeler</ArrowLink>
             </div>
           </Reveal>
-
-          {/* Öne çıkan proje — büyük görsel */}
-          <Reveal delay={80}>
-            <Link
-              href={`/projeler/${projects[0].slug}`}
-              className="group mt-16 grid gap-8 lg:grid-cols-12 lg:items-center"
-            >
-              <div className="overflow-hidden rounded-lg border border-line bg-white shadow-[0_30px_70px_-45px_rgba(20,20,15,0.45)] transition duration-700 group-hover:shadow-[0_40px_80px_-45px_rgba(20,20,15,0.55)] lg:col-span-7">
-                <div className="aspect-16/10 transition duration-700 group-hover:scale-[1.02]">
-                  <ProjectVisual project={projects[0]} />
-                </div>
-              </div>
-
-              <div className="lg:col-span-5 lg:pl-6">
-                <div className="flex flex-wrap items-center gap-2.5 text-xs text-muted">
-                  <span className="rounded-full bg-flame-tint px-3 py-1 font-medium text-flame">
-                    Öne çıkan
-                  </span>
-                  <span>{projects[0].type}</span>
-                  <span className="h-1 w-1 rounded-full bg-line-strong" />
-                  <span>{projects[0].year}</span>
-                </div>
-
-                <h3 className="mt-5 text-3xl font-bold tracking-tight text-ink transition-colors duration-500 group-hover:text-flame sm:text-4xl">
-                  {projects[0].title}
-                </h3>
-                <p className="mt-4 text-[15px] leading-relaxed text-muted">
-                  {projects[0].summary}
-                </p>
-
-                <ul className="mt-6 space-y-2.5 border-t border-line pt-5">
-                  {projects[0].result.slice(0, 2).map((r) => (
-                    <li key={r} className="flex gap-3 text-sm text-ink-soft">
-                      <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-flame" />
-                      {r}
-                    </li>
-                  ))}
-                </ul>
-
-                <span className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-ink">
-                  <span className="link-underline">Projeyi incele</span>
-                  <Icon
-                    name="arrowUpRight"
-                    className="h-4 w-4 text-flame transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1"
-                  />
-                </span>
-              </div>
-            </Link>
-          </Reveal>
-
-          <div className="mt-20 border-t border-line">
-            {projects.slice(1).map((p, i) => (
-              <Reveal key={p.slug} delay={i * 60}>
-                <ProjectRow project={p} index={i + 1} />
-              </Reveal>
-            ))}
-          </div>
         </Container>
+
+        {/* Kaydırmalı vitrin — kenarlara kadar uzanır, kartlar hizaya oturur */}
+        <Reveal delay={120}>
+          <Carousel
+            label="Projeler"
+            className="mt-14"
+            // scroll-pl, padding ile aynı olmalı: aksi hâlde snap sol boşluğu yok
+            // sayıp ilk kartı ekran kenarına yaslıyor.
+            trackClassName="px-6 scroll-pl-6 sm:px-10 sm:scroll-pl-10 lg:px-[max(2.5rem,calc((100vw-1360px)/2+2.5rem))] lg:scroll-pl-[max(2.5rem,calc((100vw-1360px)/2+2.5rem))]"
+            controlsClassName="mx-auto max-w-[1360px] px-6 sm:px-10"
+          >
+            {projects.map((project) => (
+              <CarouselItem key={project.slug}>
+                <Link
+                  href={`/projeler/${project.slug}`}
+                  className="group block"
+                  draggable={false}
+                >
+                  <div className="overflow-hidden rounded-lg border border-line bg-white shadow-[0_20px_50px_-40px_rgba(20,20,15,0.5)] transition duration-500 group-hover:shadow-[0_28px_60px_-38px_rgba(20,20,15,0.55)]">
+                    <div className="aspect-16/10">
+                      <ProjectVisual project={project} zoomOnHover />
+                    </div>
+                  </div>
+
+                  <div className="mt-6 flex items-start justify-between gap-5">
+                    <div className="min-w-0">
+                      {/* Sektör dar ekranda gizlenir; ayracıyla birlikte
+                          kaldırıldığı için satır sonunda boşta nokta kalmaz. */}
+                      <div className="flex flex-wrap items-center gap-2.5 text-xs text-muted">
+                        <span>{project.type}</span>
+                        <span className="hidden h-1 w-1 rounded-full bg-line-strong sm:block" />
+                        <span className="hidden sm:inline">{project.sector}</span>
+                        <span className="h-1 w-1 rounded-full bg-line-strong" />
+                        <span>{project.year}</span>
+                      </div>
+                      <h3 className="mt-2.5 text-2xl font-bold tracking-tight text-ink transition-colors duration-500 group-hover:text-flame">
+                        {project.client}
+                      </h3>
+                      <p className="mt-2 text-[15px] leading-relaxed text-muted">
+                        {project.summary}
+                      </p>
+                    </div>
+
+                    <span className="mt-1 flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-line text-ink transition duration-500 group-hover:border-flame group-hover:bg-flame group-hover:text-white">
+                      <Icon
+                        name="arrowUpRight"
+                        className="h-4 w-4 transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                      />
+                    </span>
+                  </div>
+                </Link>
+              </CarouselItem>
+            ))}
+          </Carousel>
+        </Reveal>
       </section>
 
       {/* ---------------- RAKAMLAR ---------------- */}
@@ -291,7 +290,7 @@ export default function HomePage() {
       <section className="py-24 sm:py-32">
         <Container>
           <Reveal>
-            <Eyebrow>Farkımız</Eyebrow>
+            <Eyebrow index={4}>Farkımız</Eyebrow>
             <h2 className="headline mt-6 max-w-2xl text-ink">
               Bizimle çalışırken ne değişir?
             </h2>
@@ -323,7 +322,7 @@ export default function HomePage() {
           <Reveal>
             <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
               <div>
-                <Eyebrow>Süreç</Eyebrow>
+                <Eyebrow index={5}>Süreç</Eyebrow>
                 <h2 className="headline mt-6 text-ink">
                   Dört adımda
                   <br />
@@ -382,7 +381,7 @@ export default function HomePage() {
           <Reveal>
             <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
               <div>
-                <Eyebrow>Blog</Eyebrow>
+                <Eyebrow index={6}>Blog</Eyebrow>
                 <h2 className="headline mt-6 text-ink">Yazdıklarımız</h2>
               </div>
               <ArrowLink href="/blog">Tüm yazılar</ArrowLink>
@@ -429,7 +428,7 @@ export default function HomePage() {
         <Container>
           <div className="grid gap-14 lg:grid-cols-12">
             <Reveal className="lg:col-span-4">
-              <Eyebrow>SSS</Eyebrow>
+              <Eyebrow index={7}>SSS</Eyebrow>
               <h2 className="headline mt-6 text-ink">
                 Sık sorulan
                 <br />

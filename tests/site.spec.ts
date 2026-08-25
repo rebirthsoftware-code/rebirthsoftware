@@ -145,6 +145,56 @@ test("proje görselleri yükleniyor (basePath dahil)", async ({ page }) => {
   expect(bozuk, "yüklenemeyen görseller").toEqual([]);
 });
 
+test("ana sayfa vitrini: başta hizalı, oklarla kayıyor, sürükleme tıklamıyor", async ({
+  page,
+}) => {
+  await page.goto(yol("/"), { waitUntil: "networkidle" });
+  const vitrin = page.locator('[role="region"][aria-label="Projeler"]');
+  await vitrin.scrollIntoViewIfNeeded();
+  await page.waitForTimeout(400);
+
+  // Açılışta ilk kart kenara yaslanmamalı (scroll-padding kontrolü)
+  const baslangic = await vitrin.evaluate((el) => ({
+    scrollLeft: el.scrollLeft,
+    padLeft: parseFloat(getComputedStyle(el).paddingLeft),
+    kartSol: el
+      .querySelector("[data-kart]")!
+      .getBoundingClientRect().left,
+    kapsayiciSol: el.getBoundingClientRect().left,
+  }));
+  expect(baslangic.scrollLeft, "açılışta kaydırma sıfır olmalı").toBe(0);
+  expect(
+    Math.round(baslangic.kartSol - baslangic.kapsayiciSol),
+    "ilk kart sol boşluk kadar içeride olmalı"
+  ).toBe(Math.round(baslangic.padLeft));
+
+  // Gerçekten kaydırılacak içerik var mı
+  const tasma = await vitrin.evaluate((el) => el.scrollWidth - el.clientWidth);
+  expect(tasma, "vitrinde kaydırılacak pay olmalı").toBeGreaterThan(50);
+
+  // Sonraki düğmesi kaydırıyor mu
+  const ileri = page.locator('button[aria-label="Sonraki projeler"]');
+  await expect(ileri).toBeEnabled();
+  await ileri.click();
+  await page.waitForTimeout(900);
+  expect(await vitrin.evaluate((el) => el.scrollLeft)).toBeGreaterThan(0);
+
+  // Uçta oklar pasifleşiyor mu
+  await expect(ileri).toBeDisabled();
+  await expect(page.locator('button[aria-label="Önceki projeler"]')).toBeEnabled();
+
+  // Sürükleme kartı açmamalı
+  const kutu = await vitrin.boundingBox();
+  await page.mouse.move(kutu!.x + kutu!.width * 0.5, kutu!.y + kutu!.height * 0.4);
+  await page.mouse.down();
+  await page.mouse.move(kutu!.x + kutu!.width * 0.2, kutu!.y + kutu!.height * 0.4, { steps: 12 });
+  await page.mouse.up();
+  await page.waitForTimeout(600);
+  expect(new URL(page.url()).pathname, "sürükleyince sayfa değişmemeli").toBe(
+    yol("/") === "/" ? "/" : `${BASE_PATH}/`
+  );
+});
+
 test("SEO: sitemap, robots ve RSS yayında", async ({ request }) => {
   for (const path of ["/sitemap.xml", "/robots.txt", "/feed.xml"]) {
     const res = await request.get(yol(path));
