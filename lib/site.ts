@@ -14,9 +14,9 @@ export const site = {
   founded: 2019,
 
   // --- İLETİŞİM: kendi bilgilerinle değiştir ---
-  phone: "+90 555 000 00 00",
-  phoneHref: "tel:+905550000000",
-  whatsapp: "905550000000", // ülke kodu + numara, boşluksuz
+  phone: "0538 212 03 17",
+  phoneHref: "tel:+905382120317",
+  whatsapp: "905382120317", // ülke kodu + numara, boşluksuz
   email: "info@rebirthsoftware.com",
   city: "İstanbul",
   country: "Türkiye",

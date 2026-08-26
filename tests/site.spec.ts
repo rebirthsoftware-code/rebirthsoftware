@@ -199,6 +199,30 @@ test("ana sayfa vitrini: başta hizalı, oklarla kayıyor, sürükleme tıklamı
   );
 });
 
+test("iletişim bilgilerinde yer tutucu kalmamalı", async ({ page }) => {
+  // Yer tutucu numara/adres yayına çıkarsa gelen arama kaybedilir.
+  const yerTutucular = [
+    "555 000 00 00",
+    "905550000000",
+    "+905550000000",
+    "0000 000",
+  ];
+
+  for (const rota of ["/", "/iletisim", "/teklif-al"]) {
+    await page.goto(yol(rota), { waitUntil: "networkidle" });
+    const html = await page.content();
+    const bulunan = yerTutucular.filter((y) => html.includes(y));
+    expect(bulunan, `${rota} sayfasında yer tutucu iletişim bilgisi`).toEqual([]);
+  }
+
+  // Telefon bağlantısı gerçek bir numaraya gitmeli
+  const telHref = await page
+    .locator('a[href^="tel:"]')
+    .first()
+    .getAttribute("href");
+  expect(telHref).toMatch(/^tel:\+90\d{10}$/);
+});
+
 test("SEO: sitemap, robots ve RSS yayında", async ({ request }) => {
   for (const path of ["/sitemap.xml", "/robots.txt", "/feed.xml"]) {
     const res = await request.get(yol(path));
