@@ -14,7 +14,7 @@ export const services: Service[] = [
     slug: "kurumsal-web-sitesi",
     title: "Kurumsal Web Sitesi",
     short:
-      "Şirketinizi doğru anlatan, hızlı açılan ve Google'da bulunan kurumsal siteler.",
+      "Şirketinizi doğru anlatan, hızlı açılan ve Google'da bulunan kurumsal siteler — 2 günde yayında.",
     description:
       "Hazır tema kurulumu yapmıyoruz. Kurumunuzun sektörünü, hedef kitlesini ve rakiplerini inceleyip; içerik yapısını, sayfa akışını ve tasarımı size özel kurguluyoruz. Sonuç: mobilde kusursuz çalışan, saniyeler içinde açılan ve arama motorlarında rakiplerinizin önüne geçen bir kurumsal site.",
     icon: "building",
@@ -35,7 +35,7 @@ export const services: Service[] = [
     faq: [
       {
         q: "Kurumsal web sitesi ne kadar sürede teslim edilir?",
-        a: "İçerikleriniz hazırsa tipik bir kurumsal site 2-4 hafta içinde yayına alınır. Kapsam büyüdükçe süre proje planında netleştirilir.",
+        a: "İçerikleriniz hazırsa 2 gün. İlk gün tasarım ve geliştirme, ikinci gün son düzenlemeler ve yayın. İçerik eksikse süre, eksiklerin tamamlanmasını beklediğimiz kadar uzar.",
       },
       {
         q: "İçerikleri ve görselleri siz mi hazırlıyorsunuz?",

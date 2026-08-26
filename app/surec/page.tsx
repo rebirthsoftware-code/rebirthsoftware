@@ -18,6 +18,7 @@ const promises = [
  "Her aşamada canlı bir test bağlantısından ilerlemeyi görürsünüz.",
  "Alan adı, hosting ve kaynak kod sizin adınıza kaydedilir.",
  "Teslim sonrası ilk ay tüm küçük düzeltmeler ücretsizdir.",
+  "İçerikleriniz hazırsa kurumsal siteyi 2 günde yayına alıyoruz.",
 ];
 
 export default function ProcessPage() {
@@ -26,7 +27,7 @@ export default function ProcessPage() {
       <PageHero
         eyebrow="Süreç"
         title="Projeniz adım adım nasıl ilerliyor?"
-        description="Web projesi yaptırmanın en can sıkıcı yanı belirsizliktir. Bu yüzden süreci dört net adıma böldük; her adımın ne kadar süreceğini ve sonunda elinize ne geçeceğini baştan biliyorsunuz."
+        description="Web projesi yaptırmanın en can sıkıcı yanı belirsizliktir. Bu yüzden süreci dört net adıma böldük ve iki güne sığdırdık; her adımın ne zaman biteceğini ve sonunda elinize ne geçeceğini baştan biliyorsunuz."
       />
 
       <section className="py-16 sm:py-20">

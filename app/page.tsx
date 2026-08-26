@@ -82,7 +82,21 @@ export default function HomePage() {
                   </p>
                 </div>
 
-                <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+                {/* Teslim süresi artık ayırt edici bir vaat; ilk ekranda görünüyor */}
+                <ul className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2.5 text-sm text-muted">
+                  {[
+                    "2 günde teslim",
+                    "Sabit fiyat",
+                    "Kaynak kod sizin",
+                  ].map((madde) => (
+                    <li key={madde} className="flex items-center gap-2">
+                      <Icon name="check" className="h-4 w-4 text-flame" />
+                      {madde}
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
                   <Magnetic>
                     <Button href="/teklif-al">
                       Ücretsiz teklif al
@@ -324,9 +338,9 @@ export default function HomePage() {
               <div>
                 <Eyebrow index={5}>Süreç</Eyebrow>
                 <h2 className="headline mt-6 text-ink">
-                  Dört adımda
+                  Dört adımda,
                   <br />
-                  yayına
+                  iki günde yayına
                 </h2>
               </div>
               <ArrowLink href="/surec">Süreci detaylı incele</ArrowLink>
