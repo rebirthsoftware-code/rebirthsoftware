@@ -42,6 +42,7 @@ npm run test       # Playwright testleri (derleme yapılmış olmalı)
 | Bağlantılar | Ana sayfadaki iç bağlantılardan kırık olan var mı |
 | Proje görselleri | Görseller yükleniyor mu (alt dizinli yayında da) |
 | SEO | sitemap.xml, robots.txt ve feed.xml yayında mı |
+| Satış sistemi | Ürün ekle → barkod okut → satış → stok düşer → iade; erişilebilirlik |
 
 Testler alt dizinde yayınlanan sürüm için de çalıştırılabilir:
 
@@ -212,6 +213,63 @@ bulunur.
 
 ---
 
+## 5b. Barkodlu satış ve stok sistemi (`/satis`)
+
+POS'tan bağımsız, kendi başına çalışan bir satış modülüdür. Menüde ve site
+haritasında görünmez; adresi doğrudan açarak kullanılır:
+`https://alan-adiniz.com/satis`
+
+**Ne yapar?**
+
+- **Satış:** barkod okut → sepet → ödeme yöntemi (nakit / kart / havale) →
+  satışı tamamla. Stok otomatik düşer, fiş numarası üretilir, fiş yazdırılabilir.
+- **Stok:** ürün ekle / düzenle / sil, hızlı stok girişi (okut → +N), kritik
+  stok uyarısı, barkodu olmayan ürün için mağaza içi EAN-13 üretme.
+- **Raporlar:** günlük ciro, ödeme dağılımı, en çok satanlar, satış geçmişi,
+  iade (stok geri yüklenir).
+- **Yedekleme:** JSON indir / yükle.
+
+**Barkod nasıl okunur?**
+
+| Yöntem | Not |
+|--------|-----|
+| USB / Bluetooth okuyucu | Klavye gibi çalışır; alan odaklıyken okutmak yeterli |
+| Kamera | Tarayıcı `BarcodeDetector` destekliyorsa (Chrome, Edge, Android, Safari 17+) |
+| Elle | Barkodu yazıp Enter |
+
+EAN-8 / EAN-13 / UPC-A barkodlarda kontrol hanesi doğrulanır; diğer formatlar
+serbesttir.
+
+**Veri nerede tutuluyor?** Yalnızca o tarayıcının `localStorage` alanında
+(`rebirth.satis.v1` anahtarı). Sunucu ve veritabanı yoktur; bu yüzden modül
+Vercel'de de GitHub Pages'in statik sürümünde de aynı şekilde çalışır. Bunun
+iki sonucu var:
+
+1. Tarayıcı verisi silinirse kayıtlar gider → **Stok → Yedekleme** ile düzenli
+   yedek alın.
+2. Veri cihazlar arasında paylaşılmaz. Birden fazla kasa / cihaz gerekiyorsa
+   bir sonraki adım, aynı iş kurallarını (`lib/satis.ts`) bir veritabanına
+   bağlamaktır; arayüz bileşenleri bu değişiklikten etkilenmez.
+
+**Dosyalar**
+
+```
+app/satis/page.tsx              Sayfa (noindex)
+components/satis/SatisSistemi   Sekmeler, bildirimler, veri bağlantısı
+components/satis/SatisEkrani    Barkod okuma, sepet, ödeme, fiş
+components/satis/StokEkrani     Ürün listesi, stok girişi, yedekleme
+components/satis/RaporEkrani    Günlük özet, geçmiş, iade
+components/satis/BarkodGiris    Klavye + kamera okuyucu
+components/satis/UrunFormu      Ürün ekleme / düzenleme formu
+lib/satis.ts                    Tipler ve saf iş kuralları (stok, satış, iade, raporlar)
+lib/satis-depo.ts               localStorage deposu (useSyncExternalStore)
+```
+
+Para birimi kuruş cinsinden tam sayı olarak saklanır (12,50 ₺ → 1250); böylece
+ondalık yuvarlama hatası oluşmaz.
+
+---
+
 ## 6. Sayfa yapısı
 
 ```
@@ -228,6 +286,7 @@ bulunur.
 /teklif-al              Teklif formu  ← ana dönüşüm sayfası
 /iletisim               İletişim + form
 /kvkk, /gizlilik        Yasal metinler
+/satis                  Barkodlu satış ve stok sistemi (iç kullanım, arama motorlarına kapalı)
 /sitemap.xml, /robots.txt   Otomatik üretilir
 /feed.xml               RSS akışı (yazılardan otomatik)
 ```

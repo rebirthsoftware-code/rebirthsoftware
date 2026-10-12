@@ -24,6 +24,7 @@ const ROUTES = [
   "/iletisim",
   "/kvkk",
   "/gizlilik",
+  "/satis",
 ];
 
 test.describe("sayfalar", () => {
@@ -229,4 +230,99 @@ test("SEO: sitemap, robots ve RSS yayında", async ({ request }) => {
     expect(res.status(), path).toBe(200);
     expect((await res.text()).length, path).toBeGreaterThan(50);
   }
+});
+
+test.describe("barkodlu satış sistemi", () => {
+  test("erişilebilirlik: satış sayfasında ciddi ihlal yok", async ({ page }) => {
+    await page.goto(yol("/satis"), { waitUntil: "networkidle" });
+    const results = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa"])
+      .analyze();
+    const ciddi = results.violations.filter(
+      (v) => v.impact === "serious" || v.impact === "critical"
+    );
+    expect(ciddi.map((v) => `${v.id}: ${v.help}`)).toEqual([]);
+  });
+
+  test("ürün ekle → barkod okut → satışı tamamla → stok düşer, rapor işlenir", async ({
+    page,
+  }) => {
+    await page.goto(yol("/satis"), { waitUntil: "networkidle" });
+
+    // Boş başlangıç: sepet boş, ürün yok
+    await expect(page.getByText("Sepet boş", { exact: false })).toBeVisible();
+
+    // Stok sekmesinde ürün tanımla (geçerli EAN-13)
+    await page.getByRole("tab", { name: "Stok" }).click();
+    await page.getByRole("button", { name: "+ Yeni ürün" }).click();
+    await page.locator("#stok-urun-barkod").fill("8690504012344");
+    await page.locator("#stok-urun-ad").fill("Test Kahve");
+    await page.locator("#stok-urun-fiyat").fill("85,50");
+    await page.locator("#stok-urun-stok").fill("3");
+    await page.locator("#stok-urun-kritik").fill("1");
+    await page.getByRole("button", { name: "Kaydet", exact: true }).click();
+    await expect(page.locator('[data-urun="8690504012344"] [data-stok]')).toHaveText("3");
+
+    // Geçersiz kontrol hanesi reddedilmeli
+    await page.getByRole("button", { name: "+ Yeni ürün" }).click();
+    await page.locator("#stok-urun-barkod").fill("8690504012345");
+    await page.locator("#stok-urun-ad").fill("Bozuk");
+    await page.locator("#stok-urun-fiyat").fill("1");
+    await page.getByRole("button", { name: "Kaydet", exact: true }).click();
+    await expect(page.getByText("kontrol hanesi tutmuyor")).toBeVisible();
+    await page.getByRole("button", { name: "Vazgeç" }).click();
+
+    // Satış: barkodu iki kez okut (okuyucu Enter gönderir)
+    await page.getByRole("tab", { name: "Satış" }).click();
+    const barkod = page.locator("#barkod-giris");
+    await barkod.fill("8690504012344");
+    await barkod.press("Enter");
+    await barkod.fill("8690504012344");
+    await barkod.press("Enter");
+    await expect(page.locator('[data-sepet-satir="8690504012344"] [data-adet]')).toHaveText("2");
+    await expect(page.locator("[data-toplam]")).toHaveText("₺171,00");
+
+    // Stoğu aşan ekleme engellenir
+    await barkod.fill("8690504012344");
+    await barkod.press("Enter");
+    await barkod.fill("8690504012344");
+    await barkod.press("Enter");
+    await expect(page.locator('[data-bildirim="hata"]')).toContainText("yalnızca 3 adet");
+    await expect(page.locator('[data-sepet-satir="8690504012344"] [data-adet]')).toHaveText("3");
+
+    // Bilinmeyen barkod hızlı ürün formunu açar
+    await barkod.fill("4006381333931");
+    await barkod.press("Enter");
+    await expect(page.locator("#hizli-urun-barkod")).toHaveValue("4006381333931");
+    await page.getByRole("button", { name: "Vazgeç" }).click();
+
+    // Kart ile tamamla
+    await page.locator("#panel-satis").getByText("Kart", { exact: true }).click();
+    await expect(page.getByLabel("Kart", { exact: true })).toBeChecked();
+    await page.getByRole("button", { name: "Satışı tamamla" }).click();
+    await expect(page.locator("[data-son-fis]")).toContainText("₺256,50");
+    await expect(page.getByText("Sepet boş", { exact: false })).toBeVisible();
+
+    // Stok düştü
+    await page.getByRole("tab", { name: "Stok" }).click();
+    await expect(page.locator('[data-urun="8690504012344"] [data-stok]')).toHaveText("0");
+
+    // Rapor işlendi
+    await page.getByRole("tab", { name: "Raporlar" }).click();
+    await expect(page.locator('[data-rapor="Bugünkü ciro"]')).toHaveText("₺256,50");
+    await expect(page.locator("[data-satis-listesi] li")).toHaveCount(1);
+
+    // Sayfa yenilenince veri kalıcı
+    await page.reload({ waitUntil: "networkidle" });
+    await page.getByRole("tab", { name: "Raporlar" }).click();
+    await expect(page.locator("[data-satis-listesi] li")).toHaveCount(1);
+
+    // İade: stok geri gelir
+    page.once("dialog", (d) => d.accept());
+    await page.locator("[data-satis-listesi] li button").first().click();
+    await page.getByRole("button", { name: "İade et" }).click();
+    await expect(page.locator('[data-rapor="Bugünkü ciro"]')).toHaveText("₺0,00");
+    await page.getByRole("tab", { name: "Stok" }).click();
+    await expect(page.locator('[data-urun="8690504012344"] [data-stok]')).toHaveText("3");
+  });
 });
