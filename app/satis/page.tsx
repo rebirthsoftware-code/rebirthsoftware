@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { SatisSistemi } from "@/components/satis/SatisSistemi";
 import { Container } from "@/components/ui";
+import { ISLETME } from "@/lib/satis";
 
 export const metadata: Metadata = {
-  title: "Barkodlu Satış ve Stok Sistemi",
+  title: { absolute: `${ISLETME.ad} | ${ISLETME.altBaslik}` },
   description:
     "Barkod okutarak satış yapın, stokları takip edin, günlük ciroyu görün. Tarayıcıda çalışır, kurulum gerektirmez.",
   // İç kullanım aracı: arama motorlarında listelenmesin.
@@ -14,34 +15,33 @@ export const metadata: Metadata = {
 /**
  * Barkodlu, stoklu satış sistemi.
  *
- * POS'tan ayrı, kendi başına çalışan bir sayfa. Tüm mantık istemci
- * tarafında; veriler tarayıcının localStorage alanında tutulur. Bu sayede
- * hem Vercel'de hem GitHub Pages'in statik sürümünde aynı şekilde çalışır.
+ * POS'tan ve kurumsal siteden ayrı, kendi başına çalışan bir sayfa: site
+ * başlığı ve alt bilgisi burada yoktur (bkz. components/SiteChrome.tsx).
+ * Tüm mantık istemci tarafında; veriler tarayıcının localStorage alanında
+ * tutulur. Vercel'de de GitHub Pages'in statik sürümünde de aynı çalışır.
  */
 export default function SatisPage() {
   return (
-    <section className="pt-28 pb-16 sm:pt-32 sm:pb-24">
-      <Container>
-        <div className="flex flex-wrap items-end justify-between gap-4 border-b border-line pb-6">
-          <div>
-            <span className="label flex items-center gap-3 text-muted">
-              <span className="h-px w-8 bg-flame" />
-              Satış sistemi
-            </span>
-            <h1 className="mt-4 text-3xl font-bold tracking-tight text-ink sm:text-4xl">
-              Barkodlu satış ve stok takibi
+    <>
+      <header className="border-b border-line bg-white">
+        <Container>
+          <div className="flex h-16 items-center justify-between">
+            <h1 className="flex items-baseline gap-3">
+              <span className="text-xl font-bold tracking-tight text-ink">{ISLETME.ad}</span>
+              <span className="label text-muted">{ISLETME.altBaslik}</span>
             </h1>
+            <span className="hidden text-xs text-faint sm:inline">
+              Veriler bu tarayıcıda saklanır · Stok sekmesinden yedek alın
+            </span>
           </div>
-          <p className="max-w-md text-sm leading-relaxed text-muted">
-            USB/Bluetooth barkod okuyucu, kamera veya klavyeyle çalışır. Veriler bu
-            tarayıcıda saklanır; Stok sekmesinden yedek alabilirsiniz.
-          </p>
-        </div>
+        </Container>
+      </header>
 
-        <div className="mt-6">
+      <section className="py-6 sm:py-8">
+        <Container>
           <SatisSistemi />
-        </div>
-      </Container>
-    </section>
+        </Container>
+      </section>
+    </>
   );
 }

@@ -5,6 +5,7 @@ import {
   formatTl,
   kritikUrunler,
   ornekUrunler,
+  stokAyarla,
   stokDegeri,
   stokGirisi,
   type Urun,
@@ -26,6 +27,8 @@ export function StokEkrani({ veri, kaydet, bildir }: EkranProps) {
   const [arama, setArama] = useState("");
   const [sadeceKritik, setSadeceKritik] = useState(false);
   const [girisAdet, setGirisAdet] = useState("1");
+  /** Satır içi stok düzeltme: hangi ürün, girilen değer */
+  const [duzelt, setDuzelt] = useState<{ id: string; deger: string } | null>(null);
   const dosyaRef = useRef<HTMLInputElement>(null);
 
   const mevcutBarkodlar = new Set(veri.urunler.map((u) => u.barkod));
@@ -42,6 +45,19 @@ export function StokEkrani({ veri, kaydet, bildir }: EkranProps) {
         (u.kategori ?? "").toLocaleLowerCase("tr").includes(q)
     )
     .sort((a, b) => a.ad.localeCompare(b.ad, "tr"));
+
+  function duzeltmeKaydet() {
+    if (!duzelt) return;
+    const n = Number(duzelt.deger);
+    if (!Number.isInteger(n) || n < 0) {
+      bildir("Stok 0 veya pozitif tam sayı olmalı.", "hata");
+      return;
+    }
+    const urun = veri.urunler.find((u) => u.id === duzelt.id);
+    kaydet(stokAyarla(veri, duzelt.id, n));
+    setDuzelt(null);
+    if (urun) bildir(`"${urun.ad}" stoğu ${urun.stok} → ${n} olarak düzeltildi.`, "ok");
+  }
 
   /** Stok girişi: barkod okutulunca mevcut ürüne adet ekler, yoksa yeni ürün formu açar. */
   function girisOkundu(barkod: string) {
@@ -184,7 +200,12 @@ export function StokEkrani({ veri, kaydet, bildir }: EkranProps) {
       {/* Liste */}
       <div className="card overflow-hidden">
         <div className="flex flex-wrap items-center gap-3 border-b border-line px-5 py-3">
-          <h3 className="text-sm font-semibold text-ink">Ürünler</h3>
+          <h3 className="text-sm font-semibold text-ink">
+            Ürünler{" "}
+            <span className="ml-1 text-xs font-normal text-muted">
+              stok sayısına tıklayıp sayım sonucunu girebilirsiniz
+            </span>
+          </h3>
           <input
             value={arama}
             onChange={(e) => setArama(e.target.value)}
@@ -252,18 +273,60 @@ export function StokEkrani({ veri, kaydet, bildir }: EkranProps) {
                       <td className="px-3 py-3 font-mono text-xs text-muted">{u.barkod}</td>
                       <td className="px-3 py-3 text-right tabular-nums text-ink">{formatTl(u.fiyat)}</td>
                       <td className="px-3 py-3 text-right">
-                        <span
-                          data-stok
-                          className={`inline-block min-w-10 rounded-md px-2 py-0.5 text-center text-xs font-semibold tabular-nums ${
-                            u.stok === 0
-                              ? "bg-rose-100 text-rose-700"
-                              : kritikMi
-                                ? "bg-amber-100 text-amber-800"
-                                : "bg-ink/[0.06] text-ink"
-                          }`}
-                        >
-                          {u.stok}
-                        </span>
+                        {duzelt?.id === u.id ? (
+                          <form
+                            onSubmit={(e) => {
+                              e.preventDefault();
+                              duzeltmeKaydet();
+                            }}
+                            className="inline-flex items-center gap-1"
+                          >
+                            <input
+                              type="number"
+                              min={0}
+                              step={1}
+                              value={duzelt.deger}
+                              onChange={(e) => setDuzelt({ id: u.id, deger: e.target.value })}
+                              onKeyDown={(e) => {
+                                if (e.key === "Escape") setDuzelt(null);
+                              }}
+                              aria-label={`${u.ad} yeni stok adedi`}
+                              data-stok-duzelt
+                              autoFocus
+                              className="w-20 rounded-md border border-flame/70 px-2 py-1 text-right text-sm tabular-nums outline-none focus:ring-2 focus:ring-flame/20"
+                            />
+                            <button
+                              type="submit"
+                              className="rounded-md bg-ink px-2 py-1 text-xs font-semibold text-paper transition hover:bg-flame"
+                            >
+                              Kaydet
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setDuzelt(null)}
+                              aria-label="Düzeltmeyi iptal et"
+                              className="rounded-md border border-line px-2 py-1 text-xs text-muted transition hover:border-ink"
+                            >
+                              ✕
+                            </button>
+                          </form>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={() => setDuzelt({ id: u.id, deger: String(u.stok) })}
+                            title="Stoğu düzelt (sayım sonucu gir)"
+                            aria-label={`${u.ad} stoğunu düzelt, şu an ${u.stok}`}
+                            className={`inline-block min-w-10 rounded-md px-2 py-0.5 text-center text-xs font-semibold tabular-nums transition hover:ring-2 hover:ring-flame/40 ${
+                              u.stok === 0
+                                ? "bg-rose-100 text-rose-700"
+                                : kritikMi
+                                  ? "bg-amber-100 text-amber-800"
+                                  : "bg-ink/[0.06] text-ink"
+                            }`}
+                          >
+                            <span data-stok>{u.stok}</span>
+                          </button>
+                        )}
                       </td>
                       <td className="px-3 py-3 text-right whitespace-nowrap">
                         <button
@@ -273,6 +336,13 @@ export function StokEkrani({ veri, kaydet, bildir }: EkranProps) {
                           className="rounded-md border border-line px-2 py-1 text-xs text-ink transition hover:border-ink"
                         >
                           +1
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setDuzelt({ id: u.id, deger: String(u.stok) })}
+                          className="ml-1 rounded-md border border-line px-2 py-1 text-xs text-ink transition hover:border-ink"
+                        >
+                          Stok düzelt
                         </button>
                         <button
                           type="button"

@@ -61,6 +61,12 @@ export type SatisVerisi = {
 
 export const BOS_VERI: SatisVerisi = { surum: 1, urunler: [], satislar: [] };
 
+/** Sayfa başlığında ve fişte görünen işletme bilgisi. Buradan değiştirin. */
+export const ISLETME = {
+  ad: "İnci Motors",
+  altBaslik: "Satış ve Stok",
+} as const;
+
 export const ODEME_ETIKETI: Record<OdemeYontemi, string> = {
   nakit: "Nakit",
   kart: "Kart",
@@ -321,6 +327,15 @@ export function stokGirisi(veri: SatisVerisi, id: string, adet: number): SatisVe
     urunler: veri.urunler.map((u) =>
       u.id === id ? { ...u, stok: Math.max(0, u.stok + adet) } : u
     ),
+  };
+}
+
+/** Stok düzeltme: sayım sonrası stoğu doğrudan verilen değere eşitler. */
+export function stokAyarla(veri: SatisVerisi, id: string, yeniStok: number): SatisVerisi {
+  const s = Math.max(0, Math.floor(yeniStok));
+  return {
+    ...veri,
+    urunler: veri.urunler.map((u) => (u.id === id ? { ...u, stok: s } : u)),
   };
 }
 

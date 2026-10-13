@@ -249,6 +249,11 @@ test.describe("barkodlu satış sistemi", () => {
   }) => {
     await page.goto(yol("/satis"), { waitUntil: "networkidle" });
 
+    // Bağımsız sayfa: işletme adı var, site başlığı/alt bilgisi yok
+    await expect(page.locator("h1")).toContainText("İnci Motors");
+    await expect(page.locator("footer")).toHaveCount(0);
+    await expect(page.locator('button[aria-controls="mobil-menu"]')).toHaveCount(0);
+
     // Boş başlangıç: sepet boş, ürün yok
     await expect(page.getByText("Sepet boş", { exact: false })).toBeVisible();
 
@@ -305,6 +310,17 @@ test.describe("barkodlu satış sistemi", () => {
 
     // Stok düştü
     await page.getByRole("tab", { name: "Stok" }).click();
+    await expect(page.locator('[data-urun="8690504012344"] [data-stok]')).toHaveText("0");
+
+    // Stok düzeltme: sayım sonucu 7 girilir
+    await page.locator('[data-urun="8690504012344"]').getByRole("button", { name: "Stok düzelt" }).click();
+    const duzelt = page.locator("[data-stok-duzelt]");
+    await duzelt.fill("7");
+    await duzelt.press("Enter");
+    await expect(page.locator('[data-urun="8690504012344"] [data-stok]')).toHaveText("7");
+    await page.locator('[data-urun="8690504012344"]').getByRole("button", { name: "Stok düzelt" }).click();
+    await page.locator("[data-stok-duzelt]").fill("0");
+    await page.locator("[data-stok-duzelt]").press("Enter");
     await expect(page.locator('[data-urun="8690504012344"] [data-stok]')).toHaveText("0");
 
     // Rapor işlendi

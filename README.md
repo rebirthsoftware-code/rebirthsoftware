@@ -215,16 +215,21 @@ bulunur.
 
 ## 5b. Barkodlu satış ve stok sistemi (`/satis`)
 
-POS'tan bağımsız, kendi başına çalışan bir satış modülüdür. Menüde ve site
-haritasında görünmez; adresi doğrudan açarak kullanılır:
-`https://alan-adiniz.com/satis`
+POS'tan bağımsız, kendi başına çalışan bir satış modülüdür. Kurumsal sitenin
+başlığı ve alt bilgisi bu sayfada yoktur; sayfanın tepesinde yalnızca işletme
+adı (**İnci Motors**) görünür. Menüde ve site haritasında yer almaz; adresi
+doğrudan açarak kullanılır: `https://alan-adiniz.com/satis`
+
+İşletme adını değiştirmek için `lib/satis.ts` içindeki `ISLETME` sabitini
+düzenleyin; sayfa başlığı ve fiş otomatik güncellenir.
 
 **Ne yapar?**
 
 - **Satış:** barkod okut → sepet → ödeme yöntemi (nakit / kart / havale) →
   satışı tamamla. Stok otomatik düşer, fiş numarası üretilir, fiş yazdırılabilir.
-- **Stok:** ürün ekle / düzenle / sil, hızlı stok girişi (okut → +N), kritik
-  stok uyarısı, barkodu olmayan ürün için mağaza içi EAN-13 üretme.
+- **Stok:** ürün ekle / düzenle / sil, hızlı stok girişi (okut → +N), stok
+  düzeltme (sayım sonucunu doğrudan gir), kritik stok uyarısı, barkodu olmayan
+  ürün için mağaza içi EAN-13 üretme.
 - **Raporlar:** günlük ciro, ödeme dağılımı, en çok satanlar, satış geçmişi,
   iade (stok geri yüklenir).
 - **Yedekleme:** JSON indir / yükle.
@@ -254,7 +259,8 @@ iki sonucu var:
 **Dosyalar**
 
 ```
-app/satis/page.tsx              Sayfa (noindex)
+app/satis/page.tsx              Sayfa (noindex, İnci Motors başlığı)
+components/SiteChrome.tsx       Site başlık/alt bilgisini /satis dışındaki sayfalara uygular
 components/satis/SatisSistemi   Sekmeler, bildirimler, veri bağlantısı
 components/satis/SatisEkrani    Barkod okuma, sepet, ödeme, fiş
 components/satis/StokEkrani     Ürün listesi, stok girişi, yedekleme

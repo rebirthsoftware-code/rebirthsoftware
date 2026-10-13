@@ -3,6 +3,7 @@
 import { useState } from "react";
 import {
   formatTl,
+  ISLETME,
   ODEME_ETIKETI,
   type OdemeYontemi,
   parseTl,
@@ -358,9 +359,9 @@ function Fis({ satis }: { satis: Satis }) {
           )}</td></tr>`
       )
       .join("");
-    const html = `<!doctype html><html lang="tr"><head><meta charset="utf-8"><title>Fiş ${satis.fisNo}</title>
+    const html = `<!doctype html><html lang="tr"><head><meta charset="utf-8"><title>${ISLETME.ad} — Fiş ${satis.fisNo}</title>
 <style>body{font:13px/1.4 ui-monospace,monospace;max-width:320px;margin:16px auto;padding:0 8px}table{width:100%;border-collapse:collapse}td{padding:3px 0}hr{border:0;border-top:1px dashed #000;margin:8px 0}.r{text-align:right}</style></head>
-<body><strong>SATIŞ FİŞİ</strong><br>No: ${satis.fisNo}<br>${tarih}<hr><table>${satirlar}</table><hr>
+<body><strong>${ISLETME.ad}</strong><br>SATIŞ FİŞİ<br>No: ${satis.fisNo}<br>${tarih}<hr><table>${satirlar}</table><hr>
 <table><tr><td>Ara toplam</td><td class="r">${formatTl(satis.araToplam)}</td></tr>
 ${satis.indirim ? `<tr><td>İndirim</td><td class="r">−${formatTl(satis.indirim)}</td></tr>` : ""}
 <tr><td><strong>TOPLAM</strong></td><td class="r"><strong>${formatTl(satis.toplam)}</strong></td></tr>
