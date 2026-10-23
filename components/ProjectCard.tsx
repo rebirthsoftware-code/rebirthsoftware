@@ -7,7 +7,11 @@ export function ProjectCard({ project }: { project: Project }) {
   return (
     <Link href={`/projeler/${project.slug}`} className="group block">
       <div className="relative aspect-4/3 w-full overflow-hidden rounded-sm border border-line">
-        <ProjectVisual project={project} zoomOnHover />
+        <ProjectVisual
+          project={project}
+          zoomOnHover
+          sizes="(min-width: 1024px) 27rem, (min-width: 768px) 46vw, 92vw"
+        />
         <span className="absolute inset-0 bg-flame/0 transition duration-500 group-hover:bg-flame/10" />
       </div>
 

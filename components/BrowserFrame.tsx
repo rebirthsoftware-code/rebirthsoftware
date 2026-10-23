@@ -36,7 +36,7 @@ export function BrowserFrame({
         </span>
       </div>
 
-      <div className="min-h-0 flex-1 overflow-hidden rounded-[min(0.8cqi,0.3rem)] bg-white shadow-[0_1cqi_3cqi_-2cqi_rgba(20,20,15,0.35)]">
+      <div className="min-h-0 flex-1 overflow-hidden rounded-[min(0.8cqi,0.3rem)] bg-white shadow-[0_1cqi_3cqi_-2cqi_rgba(14,35,59,0.35)]">
         {children}
       </div>
     </div>

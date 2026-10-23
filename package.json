@@ -10,7 +10,8 @@
     "build:static": "STATIC_EXPORT=true NEXT_PUBLIC_STATIC_EXPORT=true next build",
     "typecheck": "tsc --noEmit",
     "check": "npm run lint && npm run typecheck && npm run build && npm run test",
-    "test": "playwright test"
+    "test": "playwright test",
+    "gorsel": "node scripts/gorsel-uret.mjs"
   },
   "dependencies": {
     "next": "^16.3.2",
@@ -27,6 +28,7 @@
     "eslint": "^9.39.5",
     "eslint-config-next": "^16.3.2",
     "postcss": "^8.5.6",
+    "sharp": "^0.35.5",
     "tailwindcss": "^4.1.13",
     "typescript": "^5.9.2"
   }

@@ -2,6 +2,41 @@
 
 import { useEffect, useRef, useState } from "react";
 
+/**
+ * Tek bir paylaşılan IntersectionObserver.
+ *
+ * Sayfada 45'in üzerinde beliren blok var; her biri kendi gözlemcisini
+ * oluşturunca ilk yüklemede kayda değer bir maliyet çıkıyordu. Hepsi
+ * aynı gözlemciye kaydoluyor, geri çağrılar bir haritadan dağıtılıyor.
+ */
+type Geri = (gorunur: boolean) => void;
+
+const kayitlar = new WeakMap<Element, { geri: Geri; birKez: boolean }>();
+let gozlemci: IntersectionObserver | null = null;
+
+function gozlemciyiAl() {
+  if (gozlemci) return gozlemci;
+  gozlemci = new IntersectionObserver(
+    (girisler) => {
+      for (const g of girisler) {
+        const kayit = kayitlar.get(g.target);
+        if (!kayit) continue;
+        if (g.isIntersecting) {
+          kayit.geri(true);
+          if (kayit.birKez) {
+            gozlemci!.unobserve(g.target);
+            kayitlar.delete(g.target);
+          }
+        } else if (!kayit.birKez) {
+          kayit.geri(false);
+        }
+      }
+    },
+    { threshold: 0.15, rootMargin: "0px 0px -8% 0px" }
+  );
+  return gozlemci;
+}
+
 function useInView<T extends HTMLElement>(once = true) {
   const ref = useRef<T>(null);
   const [visible, setVisible] = useState(false);
@@ -9,21 +44,13 @@ function useInView<T extends HTMLElement>(once = true) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            setVisible(true);
-            if (once) io.unobserve(e.target);
-          } else if (!once) {
-            setVisible(false);
-          }
-        });
-      },
-      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" }
-    );
+    const io = gozlemciyiAl();
+    kayitlar.set(el, { geri: setVisible, birKez: once });
     io.observe(el);
-    return () => io.disconnect();
+    return () => {
+      io.unobserve(el);
+      kayitlar.delete(el);
+    };
   }, [once]);
 
   return { ref, visible };
@@ -179,6 +206,8 @@ export function Marquee({
   reverse?: boolean;
   size?: "lg" | "sm";
 }) {
+  // Şerit ekrandan çıkınca animasyonu durdur (boşuna GPU harcamasın)
+  const { ref, visible } = useInView<HTMLDivElement>(false);
   const doubled = [...items, ...items];
   const text =
     size === "lg"
@@ -186,7 +215,10 @@ export function Marquee({
       : "text-sm font-medium tracking-tight text-muted sm:text-base";
 
   return (
-    <div className={`overflow-hidden ${className}`}>
+    <div
+      ref={ref}
+      className={`overflow-hidden ${visible ? "" : "marquee-durdur"} ${className}`}
+    >
       <div className={`marquee-track ${reverse ? "marquee-reverse" : ""}`}>
         {doubled.map((item, i) => (
           <span
@@ -204,7 +236,11 @@ export function Marquee({
 
 /**
  * Kelime kelime koyulaşan paragraf.
- * Sayfa kaydıkça metin soluk griden tam renge geçer.
+ *
+ * Önceki sürüm her kaydırma karesinde ~45 span'ın rengini color-mix ile
+ * yeniden hesaplıyordu; bu, ölçümde en büyük takılma kaynağıydı.
+ * Şimdi paragraf görünür olduğunda tek bir sınıf ekleniyor ve kelimeler
+ * CSS gecikmeleriyle sırayla koyulaşıyor — kaydırma başına maliyet yok.
  */
 export function ScrollText({
   text,
@@ -213,57 +249,23 @@ export function ScrollText({
   text: string;
   className?: string;
 }) {
-  const ref = useRef<HTMLParagraphElement>(null);
-  // JS çalışmazsa metin tam okunur kalsın diye başlangıç değeri 1.
-  const [p, setP] = useState(1);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    let raf = 0;
-    const update = () => {
-      const r = el.getBoundingClientRect();
-      const start = window.innerHeight * 0.85;
-      const end = window.innerHeight * 0.25;
-      const raw = (start - r.top) / (start - end);
-      setP(Math.max(0, Math.min(1, raw)));
-      raf = 0;
-    };
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(update);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-      if (raf) cancelAnimationFrame(raf);
-    };
-  }, []);
-
+  const { ref, visible } = useInView<HTMLParagraphElement>();
   const words = text.split(" ");
 
   return (
-    <p ref={ref} className={className}>
-      {words.map((w, i) => {
-        // Her kelimenin kendi eşiği var; ilerleme geçtikçe koyulaşır.
-        const t = i / words.length;
-        const on = Math.max(0, Math.min(1, (p - t * 0.85) / 0.15));
-        return (
-          <span
-            key={i}
-            style={{
-              color: `color-mix(in srgb, var(--color-ink) ${Math.round(on * 100)}%, var(--color-faint))`,
-              transition: "color .25s linear",
-            }}
-          >
-            {w}
-            {i < words.length - 1 ? " " : ""}
-          </span>
-        );
-      })}
+    <p
+      ref={ref}
+      className={`kelime-akis ${visible ? "is-visible" : ""} ${className}`}
+    >
+      {words.map((w, i) => (
+        <span
+          key={i}
+          style={{ transitionDelay: `${Math.min(i * 28, 1400)}ms` }}
+        >
+          {w}
+          {i < words.length - 1 ? " " : ""}
+        </span>
+      ))}
     </p>
   );
 }

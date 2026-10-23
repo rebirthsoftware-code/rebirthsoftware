@@ -47,7 +47,7 @@ export function HeroMockup() {
   return (
     <div ref={ref} className="relative w-full max-w-[520px]">
       <div
-        className="relative rounded-xl border border-line bg-white p-2.5 shadow-[0_40px_80px_-50px_rgba(20,20,15,0.45)]"
+        className="relative rounded-xl border border-line bg-white p-2.5 shadow-[0_40px_80px_-50px_rgba(14,35,59,0.45)]"
         style={{
           transform: `perspective(1400px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
           transition: "transform .5s cubic-bezier(.16,1,.3,1)",
@@ -117,7 +117,7 @@ export function HeroMockup() {
         ].map((m, i) => (
           <div
             key={m.label}
-            className="rounded-lg border border-line bg-white px-3.5 py-2.5 shadow-[0_10px_30px_-20px_rgba(20,20,15,0.5)]"
+            className="rounded-lg border border-line bg-white px-3.5 py-2.5 shadow-[0_10px_30px_-20px_rgba(14,35,59,0.5)]"
           >
             <div className="flex items-baseline gap-1">
               <span className="text-lg font-bold tracking-tight text-ink">

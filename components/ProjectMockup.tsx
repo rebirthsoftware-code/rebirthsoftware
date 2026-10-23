@@ -157,7 +157,7 @@ function DashboardMock({ seed }: { seed: number }) {
                 style={{
                   height: `${h}%`,
                   background:
-                    i === hot ? "var(--color-flame)" : "rgb(20 20 15 / 0.12)",
+                    i === hot ? "var(--color-flame)" : "rgb(14 35 59 / 0.12)",
                 }}
               />
             ))}
@@ -173,7 +173,7 @@ function DashboardMock({ seed }: { seed: number }) {
                   className="h-1.5 w-3 rounded-full"
                   style={{
                     background:
-                      i === 1 ? "var(--color-flame)" : "rgb(20 20 15 / 0.1)",
+                      i === 1 ? "var(--color-flame)" : "rgb(14 35 59 / 0.1)",
                   }}
                 />
               </div>
@@ -204,8 +204,8 @@ function MobileMock({ seed }: { seed: number }) {
           {[
             "var(--color-ink)",
             "var(--color-flame)",
-            "rgb(20 20 15 / 0.3)",
-            "rgb(20 20 15 / 0.12)",
+            "rgb(14 35 59 / 0.3)",
+            "rgb(14 35 59 / 0.12)",
           ].map((c, i) => (
             <span
               key={i}

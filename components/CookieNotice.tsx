@@ -45,7 +45,7 @@ export function CookieNotice() {
           : "pointer-events-none translate-y-4 opacity-0"
       }`}
     >
-      <div className="rounded-lg border border-line bg-white p-5 shadow-[0_24px_50px_-30px_rgba(20,20,15,0.5)]">
+      <div className="rounded-lg border border-line bg-white p-5 shadow-[0_24px_50px_-30px_rgba(14,35,59,0.5)]">
         <p className="text-sm leading-relaxed text-muted">
           Bu sitede yalnızca çalışması için gerekli çerezler ve anonim ziyaret
           ölçümü kullanılır. Ayrıntı için{" "}

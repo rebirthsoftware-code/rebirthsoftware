@@ -225,7 +225,7 @@ export default function HomePage() {
                   className="group block"
                   draggable={false}
                 >
-                  <div className="overflow-hidden rounded-lg border border-line bg-white shadow-[0_20px_50px_-40px_rgba(20,20,15,0.5)] transition duration-500 group-hover:shadow-[0_28px_60px_-38px_rgba(20,20,15,0.55)]">
+                  <div className="overflow-hidden rounded-lg border border-line bg-white shadow-[0_20px_50px_-40px_rgba(14,35,59,0.5)] transition duration-500 group-hover:shadow-[0_28px_60px_-38px_rgba(14,35,59,0.55)]">
                     <div className="aspect-16/10">
                       <ProjectVisual project={project} zoomOnHover />
                     </div>

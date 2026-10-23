@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { site, whatsappLink } from "@/lib/site";
 import { services } from "@/lib/services";
-import { Logo } from "./Header";
+import { LogoLockup } from "./Logo";
 import { Container } from "./ui";
 import { Wordmark } from "./Wordmark";
 
@@ -13,12 +13,7 @@ export function Footer() {
       <Container className="py-16 sm:py-20">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <div className="flex items-center gap-3">
-              <Logo />
-              <span className="text-[17px] font-bold tracking-tight text-ink">
-                rebirth<span className="text-flame">.</span>
-              </span>
-            </div>
+            <LogoLockup className="h-24 w-auto" />
             <p className="mt-6 max-w-xs text-[15px] leading-relaxed text-muted">
               Kurumsal web siteleri ve kişiye özel web yazılımları. Hazır tema
               değil, işinize göre kodlanan çözümler.

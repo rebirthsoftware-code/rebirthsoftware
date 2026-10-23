@@ -8,6 +8,7 @@ import { Icon } from "./Icon";
 import { MenuToggle } from "./MenuToggle";
 import { MobileMenu, type NavItem } from "./MobileMenu";
 import { Container } from "./ui";
+import { LogoMark } from "./Logo";
 
 const nav: NavItem[] = [
   { href: "/hakkimizda", label: "Biz", hint: "Nasıl çalışan bir ekibiz" },
@@ -71,7 +72,9 @@ export function Header() {
       >
         <div
           className={`transition-colors duration-500 ${
-            solid && !open ? "border-b border-line bg-paper/85 backdrop-blur-xl" : ""
+            // Saydam + backdrop-blur, kaydırmanın her karesinde tam genişlikte
+            // yeniden boyama demek. Düz zemin görsel olarak aynı, bedavaya geliyor.
+            solid && !open ? "border-b border-line bg-paper" : ""
           }`}
         >
           <Container>
@@ -82,9 +85,14 @@ export function Header() {
                 aria-label="Ana sayfa"
                 onClick={() => setOpen(false)}
               >
-                <Logo />
-                <span className="text-[17px] font-bold tracking-tight text-ink">
-                  rebirth<span className="text-flame">.</span>
+                <LogoMark className="h-9 w-auto transition-transform duration-500 group-hover:scale-105" />
+                <span className="flex flex-col leading-none">
+                  <span className="text-[15px] font-bold tracking-[0.12em] text-ink">
+                    REBIRTH
+                  </span>
+                  <span className="mt-1 text-[9px] font-semibold tracking-[0.2em] text-muted">
+                    SOFTWARE SYSTEMS
+                  </span>
                 </span>
               </Link>
 
@@ -141,26 +149,5 @@ export function Header() {
         returnFocusTo={toggleRef}
       />
     </>
-  );
-}
-
-export function Logo({ className = "h-9 w-9" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 40 40" className={className} aria-hidden="true">
-      <circle
-        cx="20"
-        cy="20"
-        r="19"
-        fill="none"
-        stroke="currentColor"
-        strokeOpacity="0.18"
-      />
-      <path
-        d="M13 29V11h8c3.7 0 6.2 2.1 6.2 5.5 0 2.6-1.5 4.4-3.9 5.1L28 29h-4.6l-4-7.2H17V29h-4Zm4-10.6h3.4c1.8 0 2.9-1 2.9-2.5s-1.1-2.4-2.9-2.4H17v4.9Z"
-        fill="currentColor"
-        className="text-ink"
-      />
-      <circle cx="31" cy="10" r="3.5" className="fill-flame" />
-    </svg>
   );
 }

@@ -125,7 +125,7 @@ export function ProjectRow({
       {/* Hover önizlemesi — sadece geniş ekranda */}
       <div
         aria-hidden="true"
-        className={`pointer-events-none absolute top-0 left-0 z-20 hidden aspect-4/3 w-72 overflow-hidden rounded-md border border-line bg-white shadow-[0_30px_60px_-35px_rgba(20,20,15,0.5)] lg:block ${
+        className={`pointer-events-none absolute top-0 left-0 z-20 hidden aspect-4/3 w-72 overflow-hidden rounded-md border border-line bg-white shadow-[0_30px_60px_-35px_rgba(14,35,59,0.5)] lg:block ${
           hover ? "opacity-100" : "opacity-0"
         }`}
         style={{
@@ -134,7 +134,7 @@ export function ProjectRow({
             "transform .45s cubic-bezier(.16,1,.3,1), opacity .35s ease",
         }}
       >
-        <ProjectVisual project={project} />
+        <ProjectVisual project={project} sizes="18rem" />
       </div>
     </Link>
   );

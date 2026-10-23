@@ -18,8 +18,8 @@ export default function OpengraphImage() {
           justifyContent: "center",
           padding: "80px",
           background:
- "linear-gradient(140deg, #fbfaf7 0%, #f3f1ec 60%, #eae7e0 100%)",
-          color: "#14140f",
+ "linear-gradient(140deg, #fbfaf9 0%, #f1f2f0 60%, #e6e8e7 100%)",
+          color: "#0e233b",
           fontFamily: "sans-serif",
         }}
       >
@@ -58,7 +58,7 @@ export default function OpengraphImage() {
           style={{
             marginTop: 28,
             fontSize: 30,
-            color: "#5c5c53",
+            color: "#56687c",
             maxWidth: 900,
           }}
         >

@@ -86,7 +86,10 @@ export default async function ProjectDetailPage({
 
               <div className="lg:col-span-5">
                 <div className="aspect-16/10 overflow-hidden rounded-sm border border-line">
-                  <ProjectVisual project={project} />
+                  <ProjectVisual
+                    project={project}
+                    sizes="(min-width: 1024px) 34rem, 92vw"
+                  />
                 </div>
               </div>
             </div>

@@ -130,6 +130,11 @@ test("iç bağlantıların hiçbiri kırık değil", async ({ page, request }) =
 
 test("proje görselleri yükleniyor (basePath dahil)", async ({ page }) => {
   await page.goto(yol("/projeler"), { waitUntil: "networkidle" });
+  // Tembel yüklenen görseller (ör. footer logosu) da kapsama girsin diye
+  // sayfanın sonuna inip yüklenmelerini bekliyoruz.
+  await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+  await page.waitForLoadState("networkidle");
+
   const imgs = page.locator("img");
   const adet = await imgs.count();
   expect(adet, "projeler sayfasında görsel bulunmalı").toBeGreaterThan(0);
