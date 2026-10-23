@@ -29,6 +29,7 @@ npm run lint       # ESLint
 npm run typecheck  # tsc --noEmit
 npm run build      # üretim derlemesi
 npm run test       # Playwright testleri (derleme yapılmış olmalı)
+npm run gorsel     # proje görsellerinin küçük varyantlarını ve logoyu üretir
 ```
 
 ### Testler ne kontrol ediyor?
@@ -162,6 +163,11 @@ Tüm site bu tek dosyadan beslenir.
 Ekran görüntülerini `public/projeler/` klasörüne koyun (1600×1000, WebP önerilir).
 Görsel yolunu her zaman `/projeler/...` şeklinde yazın; `lib/asset.ts` alt dizinli
 yayında (GitHub Pages) önekini otomatik ekler.
+
+Görseli koyduktan sonra **`npm run gorsel`** çalıştırın: tam boy dosyadan 640 ve
+1200 piksellik varyantları üretir. Kartlar bunları `srcset` ile sunduğu için
+ziyaretçi 1,6 megapiksellik dosyayı boşuna indirip çözmez. Aynı komut logo
+varlıklarını da `assets/logo-kaynak.png` dosyasından yeniden üretir.
 Görsel eklenmezse kart, müşteri adının baş harflerini gösteren nötr bir yer
 tutucu kullanır — `gradient` alanını yalnızca özellikle renkli bir arka plan
 istiyorsanız doldurun.
