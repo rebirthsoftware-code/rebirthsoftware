@@ -29,6 +29,29 @@ export type Project = {
  */
 export const projects: Project[] = [
   {
+    slug: "bambaska-waffle",
+    title: "Bambaşka Waffle",
+    client: "Bambaşka Waffle",
+    sector: "Tatlı & kafe",
+    year: "2026",
+    type: "Kurumsal Web Sitesi",
+    url: "https://bambaskawaffle.com",
+    image: "/projeler/bambaska-waffle.webp",
+    featured: true,
+    summary:
+      "Karabük'te 2019'dan beri hizmet veren waffle ve tatlı markası için menüyü, mekânı ve franchise başvurusunu tek sayfada toplayan tanıtım sitesi.",
+    challenge:
+      "Menü yalnızca Instagram paylaşımlarında ve masadaki listede duruyordu; gelmeden önce ne yiyeceğine bakmak isteyen için derli toplu bir kaynak yoktu. Franchise soruları da doğrudan mesaj kutusuna düşüyor, her biri tek tek yanıtlanıyordu.",
+    solution:
+      "Markanın koyu yeşil ve altın paletini, iştah açıcı ürün fotoğraflarını merkeze alan bir görsel dil kurduk. Altı kategoriye ayrılmış otuzdan fazla ürün fiyatlarıyla listelendi; hazırlanış süreci, mekân anlatımı ve marka hikâyesi ayrı bölümlere yerleştirildi. Franchise için başvuru formu eklenerek talepler tek kanala toplandı.",
+    result: [
+      "Menünün tamamı, kategorileri ve fiyatlarıyla site üzerinden geziliyor",
+      "Franchise başvuruları form üzerinden geliyor; her soru tek tek yanıtlanmıyor",
+      "Konum, telefon, yol tarifi ve Instagram tek noktada toplandı",
+    ],
+    stack: ["Next.js", "Görsel optimizasyonu", "Franchise başvuru formu", "Google Maps"],
+  },
+  {
     slug: "tugce-ayag-esin-hukuk",
     title: "Av. Tuğçe Ayağ Esin Hukuk Bürosu",
     client: "Av. Tuğçe Ayağ Esin",
