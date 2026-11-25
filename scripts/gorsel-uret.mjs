@@ -11,7 +11,7 @@
  *     Kaynak: public/logo/kaynak.png (düz lacivert çizim, beyaz zemin).
  */
 import sharp from "sharp";
-import { readdirSync, existsSync, statSync } from "node:fs";
+import { readdirSync, existsSync, mkdirSync, statSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -70,6 +70,7 @@ async function alfayaCevir(kaynak, { left, top, width, height }, pad = 6) {
 }
 
 async function logoVarliklari() {
+  mkdirSync(join(KOK, "public/pwa"), { recursive: true });
   const kaynak = join(KOK, "assets/logo-kaynak.png");
   if (!existsSync(kaynak)) {
     console.log("   assets/logo-kaynak.png yok, logo adımı atlandı.");
@@ -95,9 +96,14 @@ async function logoVarliklari() {
 
   // Favicon ve Apple ikonu: şeffaf logo koyu tarayıcı arayüzünde kaybolmasın
   // diye kağıt zemine yerleştiriliyor.
+  // PWA ikonları (manifest.webmanifest): maskable sürümde Android'in
+  // yuvarlak/kare maske kırpması için daha geniş güvenli alan bırakılıyor.
   for (const [dosya, boy, ic] of [
     ["app/icon.png", 256, 48],
     ["app/apple-icon.png", 180, 30],
+    ["public/pwa/ikon-192.png", 192, 32],
+    ["public/pwa/ikon-512.png", 512, 86],
+    ["public/pwa/ikon-maskable-512.png", 512, 128],
   ]) {
     const mark = await isaret
       .clone()

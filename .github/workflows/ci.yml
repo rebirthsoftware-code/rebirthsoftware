@@ -1,5 +1,6 @@
-# Her push ve pull request'te kaliteyi kontrol eder.
-# Yayın iş akışı (github-pages.yml) bundan bağımsızdır.
+# Her push ve pull request'te kaliteyi kontrol eder: önce kurumsal site,
+# ayrı bir işte de yönetim paneli (admin/). Yayın iş akışı
+# (github-pages.yml) bundan bağımsızdır.
 
 name: Kalite kontrol
 
@@ -72,3 +73,46 @@ jobs:
           BASE_URL=http://localhost:4300 \
           BASE_PATH=/${{ github.event.repository.name }} \
           npm run test
+
+  panel:
+    name: Yönetim paneli (admin/)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: admin
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: admin/package-lock.json
+
+      - name: Bağımlılıkları kur
+        run: npm ci
+
+      - name: Kod denetimi (ESLint)
+        run: npm run lint
+
+      - name: Tip denetimi
+        run: npm run typecheck
+
+      - name: Derleme
+        run: npm run build
+
+      - name: Tarayıcıyı kur
+        run: npx playwright install --with-deps chromium
+
+      - name: Testler (giriş, içerik formları, teklif ucu, PWA)
+        run: npm run test
+
+      - name: Başarısız test çıktıları
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-raporu-panel
+          path: |
+            admin/test-results/
+            admin/playwright-report/
+          retention-days: 7

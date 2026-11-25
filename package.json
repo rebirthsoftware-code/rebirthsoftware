@@ -11,7 +11,11 @@
     "typecheck": "tsc --noEmit",
     "check": "npm run lint && npm run typecheck && npm run build && npm run test",
     "test": "playwright test",
-    "gorsel": "node scripts/gorsel-uret.mjs"
+    "gorsel": "node scripts/gorsel-uret.mjs",
+    "dev:admin": "npm --prefix admin run dev",
+    "build:admin": "npm --prefix admin run build",
+    "test:admin": "npm --prefix admin run test",
+    "check:admin": "npm --prefix admin run check"
   },
   "dependencies": {
     "next": "^16.3.2",

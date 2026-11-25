@@ -23,6 +23,15 @@ type Status = "idle" | "loading" | "success" | "error";
  */
 const isStaticExport = process.env.NEXT_PUBLIC_STATIC_EXPORT === "true";
 
+/**
+ * Yönetim panelinin teklif API adresi (örn.
+ * https://yonetim.rebirthsoftware.com/api/teklif). Tanımlıysa form, statik
+ * dışa aktarımda da dahil olmak üzere her modda talebi doğrudan buraya
+ * gönderir ve talepler panelin "Teklifler" listesine düşer. Tanımlı değilse
+ * eski davranış korunur: statikte WhatsApp, sunucuda /api/teklif.
+ */
+const teklifApi = process.env.NEXT_PUBLIC_TEKLIF_API;
+
 export function ContactForm({
   defaultService,
   useQueryService,
@@ -34,6 +43,8 @@ export function ContactForm({
   const searchParams = useSearchParams();
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
+  /** Başarı ekranında, talebin WhatsApp'a yönlendirilerek mi iletildiğini gösterir */
+  const [viaWhatsApp, setViaWhatsApp] = useState(false);
 
   const querySlug = useQueryService ? searchParams.get("hizmet") : null;
   const selectedService =
@@ -55,8 +66,8 @@ export function ContactForm({
       website: String(fd.get("website") ?? ""),
     };
 
-    // Statik ortam: sunucu yok, WhatsApp'a yönlendir.
-    if (isStaticExport) {
+    // Statik ortam ve harici API yok: sunucu da yok, WhatsApp'a yönlendir.
+    if (isStaticExport && !teklifApi) {
       const localErrors: Record<string, string> = {};
       if (payload.name.trim().length < 2)
         localErrors.name = "Lütfen adınızı yazın.";
@@ -90,15 +101,18 @@ export function ContactForm({
 
       window.open(whatsappLink(text), "_blank", "noopener,noreferrer");
       form.reset();
+      setViaWhatsApp(true);
       setStatus("success");
       return;
     }
 
     setStatus("loading");
     setErrors({});
+    setViaWhatsApp(false);
 
     try {
-      const res = await fetch("/api/teklif", {
+      // Harici API (yönetim paneli) tanımlıysa oraya, değilse site API'sine.
+      const res = await fetch(teklifApi || "/api/teklif", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -125,10 +139,10 @@ export function ContactForm({
           <Icon name="check" className="h-7 w-7" />
         </span>
         <h3 className="mt-5 text-xl font-semibold text-ink">
-          {isStaticExport ? "WhatsApp'a yönlendirildiniz" : "Talebiniz bize ulaştı"}
+          {viaWhatsApp ? "WhatsApp'a yönlendirildiniz" : "Talebiniz bize ulaştı"}
         </h3>
         <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-muted">
-          {isStaticExport
+          {viaWhatsApp
             ? "Bilgileriniz hazır bir mesaja dönüştürüldü. WhatsApp penceresi açılmadıysa aşağıdaki butonu kullanabilirsiniz."
             : "En geç 1 iş günü içinde size dönüş yapacağız. Daha hızlı ilerlemek isterseniz WhatsApp'tan da yazabilirsiniz."}
         </p>
@@ -279,7 +293,7 @@ export function ContactForm({
         )}
       </button>
       <p className="mt-3 text-xs text-muted">
-        {isStaticExport
+        {isStaticExport && !teklifApi
           ? "Bu önizleme sürümünde form, doldurduğunuz bilgileri WhatsApp mesajına dönüştürür."
           : "Bilgileriniz üçüncü kişilerle paylaşılmaz. Genellikle 1 iş günü içinde dönüş yapıyoruz."}
       </p>

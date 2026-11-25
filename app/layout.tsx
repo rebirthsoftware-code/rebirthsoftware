@@ -32,6 +32,8 @@ export const metadata: Metadata = {
     canonical: "/",
     types: { "application/rss+xml": "/feed.xml" },
   },
+  manifest: "/manifest.webmanifest",
+  appleWebApp: { capable: true, title: site.shortName, statusBarStyle: "default" },
   openGraph: {
     type: "website",
     locale: "tr_TR",

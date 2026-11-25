@@ -1,6 +1,12 @@
+import siteJson from "@/content/site.json";
+
 /**
  * Sitenin tek kaynaklı ayar dosyası.
- * Telefon, e-posta, adres ve sosyal medya bilgilerini SADECE burada güncelle.
+ *
+ * Telefon, e-posta, adres, sosyal medya ve istatistikler artık
+ * `content/site.json` dosyasında durur ve yönetim panelinden düzenlenebilir.
+ * Buradaki alanlar (ad, URL, başlık, açıklama, slogan, kuruluş yılı) ise
+ * kodla birlikte yaşar; SADECE burada güncelle.
  */
 export const site = {
   name: "Rebirth Software",
@@ -13,27 +19,11 @@ export const site = {
   slogan: "Fikrinizi çalışan bir yazılıma dönüştürüyoruz.",
   founded: 2019,
 
-  // --- İLETİŞİM: kendi bilgilerinle değiştir ---
-  phone: "0538 212 03 17",
-  phoneHref: "tel:+905382120317",
-  whatsapp: "905382120317", // ülke kodu + numara, boşluksuz
-  email: "info@rebirthsoftware.com",
-  city: "İstanbul",
-  country: "Türkiye",
-  address: "İstanbul, Türkiye",
-
-  social: {
-    linkedin: "https://www.linkedin.com/",
-    github: "https://github.com/rebirthsoftware-code",
-    instagram: "https://www.instagram.com/",
-  },
-
-  stats: [
-    { value: "8", label: "Yayındaki referans" }, // TODO: gerçek proje sayınızla güncelleyin
-    { value: "6+", label: "Yıllık deneyim" },
-    { value: "%98", label: "Ortalama PageSpeed skoru" },
-    { value: "2 gün", label: "Kurumsal sitede teslim" },
-  ],
+  // --- İLETİŞİM, SOSYAL MEDYA ve İSTATİSTİKLER: content/site.json ---
+  // phone, phoneHref, whatsapp (ülke kodu + numara, boşluksuz), email,
+  // city, country, address, social { linkedin, github, instagram },
+  // stats [{ value, label }]
+  ...siteJson,
 } as const;
 
 export const whatsappLink = (message?: string) =>
