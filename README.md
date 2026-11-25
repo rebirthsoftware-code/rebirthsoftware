@@ -1,7 +1,15 @@
-# Rebirth Software — Kurumsal Web Sitesi
+# Rebirth Software — Kurumsal Web Sitesi + Yönetim Paneli
 
-Kurumsal web sitesi ve kişiye özel yazılım hizmetleri için hazırlanmış,
-Vercel üzerinde çalışan kurumsal tanıtım sitesi.
+Bu depoda iki ayrı uygulama var:
+
+| Klasör | Ne | Nerede yayınlanır |
+|--------|----|-------------------|
+| `/` (kök) | Kurumsal tanıtım sitesi; telefona "ana ekrana ekle" ile uygulama gibi kurulabilir | GitHub Pages (`rebirthsoftware-code.github.io/rebirthsoftware`) veya Vercel |
+| `admin/` | **Yönetim paneli**: site içeriği, teklif talepleri, müşteri siteleri (bkz. bölüm 8) | Vercel, ayrı proje, ayrı adres (ör. `yonetim.rebirthsoftware.com`) |
+
+Site içeriği (projeler, yazılar, hizmetler, iletişim) `content/*.json`
+dosyalarında durur; panel bu dosyaları GitHub üzerinden düzenler, site
+otomatik yeniden yayınlanır.
 
 **Teknolojiler:** Next.js 16 (App Router) · TypeScript · Tailwind CSS 4 · Vercel
 **Kalite:** ESLint · TypeScript kontrolü · Playwright (sayfa, erişilebilirlik, form, bağlantı testleri)
@@ -118,26 +126,26 @@ npm run build:static  # çıktı: out/
 
 | # | Yapılacak | Dosya |
 |---|-----------|-------|
-| 1 | Telefon, WhatsApp, e-posta, adres ve sosyal medya adreslerini yazın | `lib/site.ts` |
-| 2 | **Örnek referans projelerini kendi gerçek projelerinizle değiştirin** | `lib/projects.ts` |
-| 3 | İstatistikleri (proje sayısı, deneyim yılı) gerçek rakamlarla güncelleyin | `lib/site.ts` → `stats` |
-| 4 | Hizmet açıklamalarını kendi anlatımınıza göre düzenleyin | `lib/services.ts` |
+| 1 | Telefon, WhatsApp, e-posta, adres ve sosyal medya adreslerini yazın | `content/site.json` (ya da panel → Site bilgileri) |
+| 2 | Referans projeleri güncel tutun | `content/projeler.json` (ya da panel → Projeler) |
+| 3 | İstatistikleri (proje sayısı, deneyim yılı) gerçek rakamlarla güncelleyin | `content/site.json` → `stats` |
+| 4 | Hizmet açıklamalarını kendi anlatımınıza göre düzenleyin | `content/hizmetler.json` (ya da panel → Hizmetler) |
 | 5 | KVKK metnine şirket unvanı / adres bilgilerinizi ekleyin | `app/kvkk/page.tsx` |
-| 6 | Teklif formu e-postası için `RESEND_API_KEY` tanımlayın | Vercel → Env Vars |
-
-> ⚠️ `lib/projects.ts` içindeki projeler **örnek içeriktir**. Siteyi
-> yayına almadan önce kendi gerçek işlerinizle değiştirin.
+| 6 | Teklif taleplerinin panele düşmesi için `NEXT_PUBLIC_TEKLIF_API` tanımlayın | bölüm 8 |
 
 ---
 
 ## 4. İçerik nasıl güncellenir?
 
+> En kolay yol **yönetim paneli** (bölüm 8). Aşağıdaki dosyaları elle
+> düzenlemek de mümkündür; panel ve dosyalar aynı veriyi kullanır.
+
 ### İletişim bilgileri
-`lib/site.ts` — telefon, WhatsApp numarası, e-posta, şehir, sosyal medya.
-Tüm site bu tek dosyadan beslenir.
+`content/site.json` — telefon, WhatsApp numarası, e-posta, şehir, sosyal medya,
+ana sayfadaki rakamlar. Tüm site bu tek dosyadan beslenir (`lib/site.ts` okur).
 
 ### Yeni referans projesi ekleme
-`lib/projects.ts` içindeki diziye yeni bir nesne ekleyin:
+`content/projeler.json` dizisine yeni bir nesne ekleyin (panelde: Projeler → Yeni proje):
 
 ```ts
 {
@@ -172,7 +180,7 @@ tutucu kullanır — `gradient` alanını yalnızca özellikle renkli bir arka p
 istiyorsanız doldurun.
 
 ### Hizmet ekleme / çıkarma
-`lib/services.ts`. Buraya eklediğiniz her hizmet otomatik olarak
+`content/hizmetler.json`. Buraya eklediğiniz her hizmet otomatik olarak
 ana sayfada, hizmetler sayfasında, alt menüde, teklif formundaki seçim
 listesinde ve site haritasında görünür.
 
@@ -181,7 +189,7 @@ listesinde ve site haritasında görünür.
 sektörler ve genel sık sorulan sorular.
 
 ### Blog yazısı ekleme
-`lib/posts.ts` içindeki diziye yeni bir nesne ekleyin; liste sayfası, detay
+`content/yazilar.json` dizisine yeni bir nesne ekleyin (panelde: Yazılar → Yeni yazı); liste sayfası, detay
 sayfası, ana sayfadaki blog bölümü, site haritası ve RSS otomatik güncellenir.
 
 ```ts
@@ -204,7 +212,16 @@ sayfası, ana sayfadaki blog bölümü, site haritası ve RSS otomatik güncelle
 
 ## 5. Teklif formu nasıl çalışıyor?
 
-Form `POST /api/teklif` adresine gider (`app/api/teklif/route.ts`).
+Üç olasılık var; form hangisinin geçerli olduğunu kendisi anlar:
+
+1. **`NEXT_PUBLIC_TEKLIF_API` tanımlıysa** (önerilen) → talep yönetim paneline
+   gider, **Teklifler** listesinde görünür, GitHub Pages'te de çalışır. Bölüm 8.
+2. Tanımlı değilse ve site Vercel'deyse → `POST /api/teklif`
+   (`app/api/teklif/route.ts`), aşağıdaki gibi e-posta gönderir.
+3. Tanımlı değilse ve site GitHub Pages'teyse → doldurulan bilgiler hazır bir
+   WhatsApp mesajına çevrilir.
+
+Vercel'deki `/api/teklif` için:
 
 - `RESEND_API_KEY` **tanımlıysa** → talep e-posta olarak `CONTACT_TO_EMAIL`
   adresine gönderilir; yanıtla dediğinizde doğrudan müşteriye gider (reply-to).
@@ -254,3 +271,78 @@ bulunur.
 Yayına aldıktan sonra:
 [Google Search Console](https://search.google.com/search-console)'a alan adınızı
 ekleyip `sitemap.xml` adresini gönderin.
+
+---
+
+## 8. Yönetim paneli (`admin/`)
+
+Siteden **ayrı** bir uygulama: kendi adresi, kendi Vercel projesi, tek
+parolayla giriş. Telefona "ana ekrana ekle" ile kurulur; telefonda alt sekme
+çubuğu, bilgisayarda sol menüyle çalışır.
+
+| Bölüm | Ne yapar |
+|-------|----------|
+| Özet | Bekleyen teklif sayısı, içerik sayıları, son yayın durumu, yaklaşan yenilemeler |
+| Teklifler | Siteden gelen talepler; yanıtlandı işaretleme, not ekleme, e-posta / WhatsApp kısayolu |
+| Projeler | Referans ekle / düzenle / sil / sırala; ekran görüntüsü yükle (640 ve 1200 px varyantları otomatik üretilir) |
+| Yazılar | Blog yazısı yaz; sade metin (`## başlık`, `- madde`) sitenin blok biçimine çevrilir |
+| Hizmetler | Hizmet metinleri, özellikler, SSS, simge |
+| Müşteri siteleri | Yaptığınız sitelerin listesi, yenileme tarihleri (45 gün kala uyarı), erişilebilirlik kontrolü |
+| Site bilgileri | Telefon, WhatsApp, e-posta, sosyal medya, ana sayfadaki rakamlar |
+
+**Veri nerede?** Panelin kendi veritabanı yoktur. Her kayıt, sitenin GitHub
+deposundaki `content/*.json` dosyasına **tek commit** olarak yazılır; GitHub
+Pages iş akışı siteyi 1-2 dakikada yeniden yayınlar. Teklif talepleri aynı
+depoda `teklif` etiketli **issue** olarak tutulur (GitHub bildirimi de gelir).
+Böylece ek hizmet, ek maliyet ve yedekleme derdi yoktur; her değişikliğin
+geçmişi git'tedir.
+
+### Kurulum (bir kez)
+
+1. **GitHub token:** GitHub → Settings → Developer settings → Fine-grained
+   tokens → *Generate new token*. Yalnızca bu depo; izinler: **Contents: Read
+   and write**, **Issues: Read and write**, **Actions: Read**. Token'ı kopyalayın.
+2. **Vercel projesi:** Vercel → Add New → Project → bu repo → **Root Directory:
+   `admin`**. Environment Variables bölümüne `admin/.env.example` içindekileri
+   girin; en azından:
+   - `ADMIN_PAROLA` — panel giriş parolası (uzun olsun)
+   - `GITHUB_TOKEN`, `GITHUB_REPO=rebirthsoftware-code/rebirthsoftware`,
+     `GITHUB_BRANCH` — sitenin yayınlandığı dal (şu an `claude/website-review-fztdup`;
+     varsayılan dalı `main` yaparsanız burayı da değiştirin)
+   - `SITE_ORIGINS` — sitenin adresleri, virgülle (`https://rebirthsoftware-code.github.io,https://www.rebirthsoftware.com`)
+   - `NEXT_PUBLIC_PANEL_URL` — panelin adresi
+3. **Alan adı:** Vercel → Settings → Domains → ör. `yonetim.rebirthsoftware.com`.
+4. **Siteyi panele bağlayın:** `.github/workflows/github-pages.yml` içindeki
+   derleme adımına `NEXT_PUBLIC_TEKLIF_API: https://yonetim.rebirthsoftware.com/api/teklif`
+   ortam değişkenini ekleyin (Vercel'de yayınlıyorsanız Vercel → Env Vars).
+   Bundan sonra teklif formu panele düşer.
+5. **Telefona kurun:** paneli Android Chrome'da açıp *Ana ekrana ekle*,
+   iPhone Safari'de *Paylaş → Ana Ekrana Ekle*.
+
+### Geliştirme
+
+```bash
+cd admin
+cp .env.example .env.local      # ADMIN_PAROLA yazın; GITHUB_TOKEN boş kalabilir
+npm install
+npm run dev                     # http://localhost:3100
+```
+
+`GITHUB_TOKEN` boşken panel **yerel modda** çalışır: `../content` klasörünü
+doğrudan okur/yazar, teklifler `admin/.yerel/teklifler.json` dosyasına düşer.
+Kök dizinde `npm run dev` ile siteyi de açarsanız panelde yaptığınız
+değişiklik sitede anında görünür. Testler (`npm test`) de bu modda, geçici
+bir kopya üzerinde koşar; GitHub'a dokunmaz.
+
+**Dosyalar (`admin/`)**
+
+```
+app/giris                     Parola ile giriş (imzalı çerez, 30 gün)
+app/(panel)/…                 Korunan sayfalar; eylemler.ts tüm yazma işlemleri
+app/api/teklif/route.ts       Sitenin formunun gönderdiği uç (CORS, hız sınırı, bot tuzağı)
+lib/depo.ts                   GitHub (Git Data API, tek commit) ya da yerel dosya deposu
+lib/icerik.ts, lib/tipler.ts  İçerik tipleri, doğrulama, slug ve yazı gövdesi dönüşümü
+lib/gorsel.ts                 Proje görseli → webp 1600/1200/640
+tests/panel.spec.ts           Giriş, formlar, teklif ucu, PWA, telefon düzeni
+```
+

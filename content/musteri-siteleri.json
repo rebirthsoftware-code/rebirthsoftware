@@ -1,0 +1,82 @@
+[
+  {
+    "id": "bambaska-waffle",
+    "ad": "Bambaşka Waffle",
+    "musteri": "Bambaşka Waffle",
+    "adres": "https://bambaskawaffle.com",
+    "barindirma": "Diğer",
+    "yenilemeTarihi": "",
+    "notlar": "",
+    "aktif": true
+  },
+  {
+    "id": "tugce-ayag-esin-hukuk",
+    "ad": "Av. Tuğçe Ayağ Esin Hukuk Bürosu",
+    "musteri": "Av. Tuğçe Ayağ Esin",
+    "adres": "https://www.tugceayagesin.com",
+    "barindirma": "Diğer",
+    "yenilemeTarihi": "",
+    "notlar": "",
+    "aktif": true
+  },
+  {
+    "id": "alicilar-sigorta",
+    "ad": "Alıcılar Sigorta",
+    "musteri": "Alıcılar Sigorta",
+    "adres": "https://alicilarsigorta.com",
+    "barindirma": "Diğer",
+    "yenilemeTarihi": "",
+    "notlar": "",
+    "aktif": true
+  },
+  {
+    "id": "alicilar-beton",
+    "ad": "Alıcılar Beton",
+    "musteri": "Alıcılar Grup",
+    "adres": "https://www.alicilarbeton.com",
+    "barindirma": "Diğer",
+    "yenilemeTarihi": "",
+    "notlar": "",
+    "aktif": true
+  },
+  {
+    "id": "tat-pastanesi",
+    "ad": "Tat Pastanesi",
+    "musteri": "Tat Pastanesi",
+    "adres": "http://www.tatpastanesi.com",
+    "barindirma": "Diğer",
+    "yenilemeTarihi": "",
+    "notlar": "",
+    "aktif": true
+  },
+  {
+    "id": "endamsince-1979",
+    "ad": "Endamsince 1979 Kurumsal Sitesi",
+    "musteri": "Endamsince Erkek Kuaför",
+    "adres": "https://endamsince1979.com",
+    "barindirma": "Diğer",
+    "yenilemeTarihi": "",
+    "notlar": "",
+    "aktif": true
+  },
+  {
+    "id": "yusuferoglu-hair-art-vip",
+    "ad": "Yusuferoğlu Hair Art VIP",
+    "musteri": "Yusuferoğlu Hair Art VIP",
+    "adres": "https://yusuferogluhairartvip.com",
+    "barindirma": "Diğer",
+    "yenilemeTarihi": "",
+    "notlar": "",
+    "aktif": true
+  },
+  {
+    "id": "pastalia-bostanli",
+    "ad": "Pastalia Bostanlı",
+    "musteri": "Pastalia",
+    "adres": "https://pastaliabostanli.com",
+    "barindirma": "Diğer",
+    "yenilemeTarihi": "",
+    "notlar": "",
+    "aktif": true
+  }
+]
